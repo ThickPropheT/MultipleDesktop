@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using wRegistry = Microsoft.Win32.Registry;
+using uRegistry = Microsoft.Win32.Registry;
 
 namespace MultipleDesktop.Windows
 {
@@ -58,35 +58,46 @@ namespace MultipleDesktop.Windows
             const int maxPath = 260;
             var pathBuffer = new string(default(char), maxPath);
 
+            byte tile;
+            byte style;
             lock (loadLock)
             {
+                using (var key = uRegistry.CurrentUser.OpenSubKey(
+                    Registry.Desktop.SubKey, true))
+                {
+                    byte.TryParse(key.GetValue(
+                        Registry.Desktop.TileWallpaper.Value).ToString(), out tile);
+
+                    byte.TryParse(key.GetValue(
+                        Registry.Desktop.WallpaperStyle.Value).ToString(), out style);
+                }
+
                 NativeMethods.SystemParametersInfo(
-            NativeMethods.SPI_GETDESKWALLPAPER,
-            pathBuffer.Length,
-            pathBuffer,
-            0);
+                    NativeMethods.SPI_GETDESKWALLPAPER,
+                    pathBuffer.Length,
+                    pathBuffer,
+                    0);
             }
 
             var path = pathBuffer.Substring(0, pathBuffer.IndexOf(default(char)));
 
-            // TODO load fit
-            return new Background(path, default(Fit));
+            return new Background(path, Registry.Desktop.Fit.FromData(tile, style));
         }
 
         private static void SaveBackground(IBackground background, object saveLock)
         {
             lock (saveLock)
             {
-                using (var key = wRegistry.CurrentUser.OpenSubKey(
+                using (var key = uRegistry.CurrentUser.OpenSubKey(
                     Registry.Desktop.SubKey, true))
                 {
                     key.SetValue(
-                        Registry.Desktop.TileWallpaper.Key,
-                        Registry.Desktop.TileWallpaper.DataFromFit(background.Fit));
+                        Registry.Desktop.TileWallpaper.Value,
+                        Registry.Desktop.TileWallpaper.DataFromFit(background.Fit).ToString());
 
                     key.SetValue(
-                        Registry.Desktop.WallpaperStyle.Key,
-                        Registry.Desktop.TileWallpaper.DataFromFit(background.Fit));
+                        Registry.Desktop.WallpaperStyle.Value,
+                        Registry.Desktop.WallpaperStyle.DataFromFit(background.Fit).ToString());
                 }
 
                 NativeMethods.SystemParametersInfo(
@@ -102,7 +113,7 @@ namespace MultipleDesktop.Windows
         {
             var sessionId = Process.GetCurrentProcess().SessionId;
 
-            using (var subKey = wRegistry.CurrentUser.OpenSubKey(
+            using (var subKey = uRegistry.CurrentUser.OpenSubKey(
                 Registry.Desktop.CurrentVirtualDesktop.SubKeyFor(sessionId)))
             {
                 // TODO CurrentVirtualDesktop value is null from Start until
@@ -118,7 +129,7 @@ namespace MultipleDesktop.Windows
 
         public IEnumerable<Guid> LoadDesktopUuidList()
         {
-            using (var subKey = wRegistry.CurrentUser.OpenSubKey(
+            using (var subKey = uRegistry.CurrentUser.OpenSubKey(
                 Registry.Desktop.VirtualDesktopIDs.SubKey))
             {
                 var guidsValue = (byte[])subKey.GetValue(

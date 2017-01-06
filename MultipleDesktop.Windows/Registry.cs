@@ -1,5 +1,5 @@
-﻿using MultipleDesktop.Mvc.Desktop;
-using System;
+﻿using System;
+using uFit = MultipleDesktop.Mvc.Desktop.Fit;
 
 namespace MultipleDesktop.Windows
 {
@@ -33,17 +33,17 @@ namespace MultipleDesktop.Windows
 
             internal static class TileWallpaper
             {
-                internal const string Key = nameof(TileWallpaper);
+                internal const string Value = nameof(TileWallpaper);
 
-                private static class Data
+                internal static class Data
                 {
-                    internal const string NotTiled = "0";
-                    internal const string Tiled = "1";
+                    internal const byte NotTiled = 0;
+                    internal const byte Tiled = 1;
                 }
 
-                internal static string DataFromFit(Fit fit)
+                internal static byte DataFromFit(uFit fit)
                 {
-                    return fit == Fit.Tile
+                    return fit == uFit.Tile
                         ? Data.Tiled
                         : Data.NotTiled;
                 }
@@ -51,29 +51,54 @@ namespace MultipleDesktop.Windows
 
             internal static class WallpaperStyle
             {
-                internal const string Key = nameof(WallpaperStyle);
+                internal const string Value = nameof(WallpaperStyle);
 
-                private static class Data
+                internal static class Data
                 {
-                    internal static readonly string TileOrCenter = "0";
-                    internal static readonly string Stretch = "2";
-                    internal static readonly string Fit = "6";
-                    internal static readonly string Fill = "7";
+                    internal static readonly byte TileOrCenter = 0;
+                    internal static readonly byte Stretch = 2;
+                    internal static readonly byte Fit = 6;
+                    internal static readonly byte Fill = 10;
+                    internal static readonly byte Span = 22;
                 }
 
-                internal static string DataFromFit(Fit fit)
+                internal static byte DataFromFit(uFit fit)
                 {
                     switch (fit)
                     {
-                        case Fit.Tile:
-                        case Fit.Center:
+                        case uFit.Tile:
+                        case uFit.Center:
                             return Data.TileOrCenter;
-                        case Fit.Stretch:
+                        case uFit.Stretch:
                             return Data.Stretch;
-                        case Fit.Fit:
+                        case uFit.Fit:
                             return Data.Fit;
-                        case Fit.Fill:
+                        case uFit.Fill:
                             return Data.Fill;
+                        default:
+                            throw new NotSupportedException();
+                    }
+                }
+            }
+
+            internal static class Fit
+            {
+                internal static uFit FromData(byte tile, byte style)
+                {
+                    switch (style)
+                    {
+                        case 0:
+                            return tile == 1
+                                ? uFit.Tile
+                                : uFit.Center;
+                        case 2:
+                            return uFit.Stretch;
+                        case 6:
+                            return uFit.Fit;
+                        case 10:
+                            return uFit.Fill;
+                        case 22:
+                            return uFit.Span;
                         default:
                             throw new NotSupportedException();
                     }

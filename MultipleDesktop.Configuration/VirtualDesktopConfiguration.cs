@@ -42,7 +42,6 @@ namespace MultipleDesktop.Configuration
             }
         }
 
-        [DefaultValue(default(Fit))]
         [XmlAttribute("background-fit")]
         public Fit FitAttribute
         {
