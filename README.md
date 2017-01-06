@@ -7,8 +7,7 @@ Compatibile With:
 
 Features:
 ---------
-- Set individual background wallpaper image for each enabled virtual desktop
-- Set individual background wallpaper fit for each enabled virtual desktop
+- Set individual background wallpaper for each enabled virtual desktop
 - Specify wallpaper image using Windows 10 Settings App > Personalization > Background
 - Specify wallpaper image for up to 4 virtual desktops using app UI
 - Hide app to the System Tray to reduce clutter
@@ -16,6 +15,7 @@ Features:
 
 Coming Soon:
 ------------
+- Set background wallpaper fit
 - Set background color
 - Set background slideshow
 - Specify any number of wallpaper images using app UI

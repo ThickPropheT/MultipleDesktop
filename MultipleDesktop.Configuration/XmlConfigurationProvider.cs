@@ -24,18 +24,6 @@ namespace MultipleDesktop.Configuration
 
         public IoResult Load(string fromPath, out IAppConfiguration configuration)
         {
-            return LoadFromFile(fromPath, out configuration);
-        }
-
-        //private IoResult LoadFromIsolatedStorage(string fromPath, out IAppConfiguration configuration)
-        //{
-        //    var isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
-
-
-        //}
-
-        private IoResult LoadFromFile(string fromPath, out IAppConfiguration configuration)
-        {
             configuration = null;
 
             var serializer = new XmlSerializer(typeof(AppConfiguration));
