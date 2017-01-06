@@ -3,4 +3,11 @@ An Application that enables the user to configure individual background wallpape
 
 Compatibile With:
 -----------------
-Windows 10 Professional 64 Bit
+- Windows 10 Professional 64 Bit
+
+Features:
+---------
+- Set individual background wallpaper for each enabled virtual desktop
+- Specify wallpaper image using Windows 10 Settings App > Personalization > Background
+- Specify wallpaper image for up to 4 virtual desktops using app UI
+- Hide app to the System Tray to reduce clutter
