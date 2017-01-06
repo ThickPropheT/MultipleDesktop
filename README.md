@@ -19,3 +19,4 @@ Coming Soon:
 - Set background color
 - Set background slideshow
 - Specify any number of wallpaper images using app UI
+- Save configuration to Isolated Storage
