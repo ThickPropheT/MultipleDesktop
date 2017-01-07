@@ -10,7 +10,7 @@ namespace MultipleDesktop.Configuration
     [XmlType("desktop")]
     public class VirtualDesktopConfiguration : IVirtualDesktopConfiguration
     {
-        private readonly IConfigurationFactory _configurationFactory;
+        private IConfigurationFactory _configurationFactory;
 
         private string _backgroundPath;
         private Fit _fit;
@@ -38,7 +38,7 @@ namespace MultipleDesktop.Configuration
 
                 TargetDesktop.Background =
                     _configurationFactory
-                        .BackgroundFrom(value, Fit);
+                        .BackgroundFrom(value, _fit);
             }
         }
 
@@ -78,15 +78,15 @@ namespace MultipleDesktop.Configuration
 
         public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
         {
-            _configurationFactory = factory;
-
-            BindToTarget(targetDesktop);
+            BindToTarget(targetDesktop, factory);
             // should take values from desktop
             UpdateFromTarget();
         }
 
-        public void BindToTarget(IVirtualDesktop value)
+        public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
         {
+            _configurationFactory = factory;
+
             if (TargetDesktop != null)
             {
                 TargetDesktop.PropertyChanged -= Target_PropertyChanged;
@@ -97,6 +97,8 @@ namespace MultipleDesktop.Configuration
             if (value != null)
             {
                 value.PropertyChanged += Target_PropertyChanged;
+
+                value.Background = _configurationFactory.BackgroundFrom(_backgroundPath, _fit);
             }
         }
 

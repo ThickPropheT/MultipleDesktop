@@ -2,6 +2,7 @@
 using MultipleDesktop.Mvc;
 using MultipleDesktop.Windows.Forms.Application;
 using MultipleDesktop.Windows.Forms.View;
+using MultipleDesktop.Windows.Interop.Shell;
 using System.IO.Windows;
 using System.Windows.Forms;
 
@@ -21,10 +22,15 @@ namespace MultipleDesktop.Windows.Forms
 
             var configurationFactory = new XmlConfigurationFactory();
 
+            var adapter = new WindowsShellAdapter(configurationFactory);
+
             var controller = new AppController(
                 view,
                 FileSystem.GetFileSystem(),
-                new VirtualDesktopStateProvider(new WindowsDesktopRegistry()),
+                new VirtualDesktopStateProvider(
+                    new WindowsDesktop(adapter),
+                    adapter,
+                    configurationFactory),
                 new XmlConfigurationProvider(configurationFactory),
                 configurationFactory);
 

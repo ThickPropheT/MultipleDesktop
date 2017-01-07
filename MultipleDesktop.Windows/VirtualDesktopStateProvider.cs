@@ -1,5 +1,6 @@
-﻿using MultipleDesktop.Mvc;
+﻿using MultipleDesktop.Mvc.Configuration;
 using MultipleDesktop.Mvc.Desktop;
+using MultipleDesktop.Windows.Interop;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace MultipleDesktop.Windows
     public class VirtualDesktopStateProvider : IVirtualDesktopState
     {
         private readonly IWindowsDesktop _windowsDesktop;
+        private readonly IWindowsDesktopAdapter _adapter;
+        private readonly IConfigurationFactory _desktopFactory;
 
         private readonly Timer _updateTimer;
 
@@ -20,7 +23,7 @@ namespace MultipleDesktop.Windows
 
         public IEnumerable<uIVirtualDesktop> AllDesktops =>
             GetAllDesktopsAtomic(
-                _windowsDesktop.LoadDesktopUuidList()
+                _adapter.LoadDesktopUuidList()
                     .Count());
 
         public uIVirtualDesktop Current { get; private set; }
@@ -28,13 +31,15 @@ namespace MultipleDesktop.Windows
         public event PropertyChangingEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public VirtualDesktopStateProvider(IWindowsDesktop windowsDesktop)
+        public VirtualDesktopStateProvider(IWindowsDesktop windowsDesktop, IWindowsDesktopAdapter adapter, IConfigurationFactory factory)
         {
             _windowsDesktop = windowsDesktop;
+            _adapter = adapter;
+            _desktopFactory = factory;
 
-            _updateTimer = new Timer(Constants.Default.Ui.UpdateRate.TotalMilliseconds)
+            _updateTimer = new Timer(Mvc.Constants.Default.Ui.UpdateRate.TotalMilliseconds)
             {
-                AutoReset = true
+                AutoReset = false
             };
 
             _updateTimer.Elapsed += _updateTimer_Elapsed;
@@ -49,15 +54,24 @@ namespace MultipleDesktop.Windows
 
         private void _updateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            UpdateFromWindowsRegistry();
+            _updateTimer.Stop();
+
+            try
+            {
+                UpdateFromWindows();
+            }
+            finally
+            {
+                _updateTimer.Start();
+            }
         }
 
-        private void UpdateFromWindowsRegistry()
+        private void UpdateFromWindows()
         {
             var currentBackground = _windowsDesktop.Background;
             _windowsDesktop.Update();
 
-            var uuids = _windowsDesktop.LoadDesktopUuidList();
+            var uuids = _adapter.LoadDesktopUuidList();
 
             var latestDesktops = GetAllDesktopsAtomic(uuids.Count());
 
@@ -76,7 +90,7 @@ namespace MultipleDesktop.Windows
                 }
                 catch (Exception ex)
                 {
-                    OnPropertyChanging(new Mvc.Desktop.PropertyChangingEventArgs(nameof(AllDesktops), ex));
+                    OnPropertyChanging(new PropertyRollBackChangesEventArgs(nameof(AllDesktops), ex));
 
                     success = false;
                 }
@@ -136,7 +150,7 @@ namespace MultipleDesktop.Windows
 
         private void LoadBackgroundList()
         {
-            var uuids = _windowsDesktop.LoadDesktopUuidList();
+            var uuids = _adapter.LoadDesktopUuidList();
             var numberOfUuids = uuids.Count();
 
             var allDesktops = GetAllDesktopsAtomic(numberOfUuids);
@@ -148,6 +162,7 @@ namespace MultipleDesktop.Windows
 
         private void LoadBackgroundList(IList<uIVirtualDesktop> list, IEnumerable<Guid> uuids)
         {
+            uint index = 0;
             foreach (var guid in uuids)
             {
                 var existingDesktop = list.FirstOrDefault(desktop => desktop.Guid.Equals(guid));
@@ -155,7 +170,9 @@ namespace MultipleDesktop.Windows
                 if (existingDesktop != null)
                     list.Remove(existingDesktop);
 
-                list.Add(new VirtualDesktop(guid, _windowsDesktop));
+                list.Add(_desktopFactory.DesktopFrom(guid, index, _windowsDesktop));
+
+                index++;
             }
         }
 

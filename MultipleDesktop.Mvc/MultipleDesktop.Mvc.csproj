@@ -47,6 +47,8 @@
     <Compile Include="Configuration\DesktopConfigurationMapper.cs" />
     <Compile Include="Desktop\Fit.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Desktop\PropertyChangingEventArgsExtensions.cs" />
+    <Compile Include="Desktop\PropertyRollBackChangesEventArgs.cs" />
     <Compile Include="IAppView.cs" />
     <Compile Include="IAppController.cs" />
     <Compile Include="Desktop\IBackground.cs" />

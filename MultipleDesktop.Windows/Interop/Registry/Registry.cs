@@ -1,7 +1,7 @@
 ﻿using System;
 using uFit = MultipleDesktop.Mvc.Desktop.Fit;
 
-namespace MultipleDesktop.Windows
+namespace MultipleDesktop.Windows.Interop.Registry
 {
     internal static class Registry
     {

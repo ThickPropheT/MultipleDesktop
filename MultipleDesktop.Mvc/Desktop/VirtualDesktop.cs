@@ -28,6 +28,8 @@ namespace MultipleDesktop.Mvc.Desktop
 
         public Guid Guid { get; }
 
+        public uint Index { get; }
+
         public bool IsCurrent
         {
             get { return _isCurrent; }
@@ -45,14 +47,15 @@ namespace MultipleDesktop.Mvc.Desktop
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public VirtualDesktop(Guid guid, ISystemDesktop systemDesktop)
+        public VirtualDesktop(Guid guid, uint index, ISystemDesktop systemDesktop)
         {
             Guid = guid;
+            Index = index;
 
             _systemDesktop = systemDesktop;
             systemDesktop.PropertyChanged += SystemDesktop_PropertyChanged;
 
-            _background = systemDesktop.Background;
+            _isCurrent = Equals(guid, systemDesktop.Guid);
         }
 
         private void SystemDesktop_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -14,6 +14,6 @@ namespace MultipleDesktop.Mvc.Configuration
 
         IVirtualDesktop TargetDesktop { get; }
 
-        void BindToTarget(IVirtualDesktop target);
+        void BindToTarget(IVirtualDesktop target, IConfigurationFactory factory);
     }
 }

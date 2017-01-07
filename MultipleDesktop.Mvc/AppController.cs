@@ -167,7 +167,7 @@ namespace MultipleDesktop.Mvc
                 // should NOT overwrite configuration values
                 // when pair.Desktop is null (did not match an enabled desktop)
                 // the configuration becomes unbound.
-                pair.Configuration.BindToTarget(pair.Desktop);
+                pair.Configuration.BindToTarget(pair.Desktop, _configurationFactory);
             }
 
             DesktopConfigurations = pairs.Select(pair => pair.Configuration);
@@ -199,7 +199,7 @@ namespace MultipleDesktop.Mvc
 
                 if (matchingConfiguration != null)
                     // should NOT overwrite configuration values
-                    matchingConfiguration.BindToTarget(desktop);
+                    matchingConfiguration.BindToTarget(desktop, _configurationFactory);
 
                 else
                     desktopConfigurations.Add(_configurationFactory.ConfigurationFor(desktop));
@@ -213,7 +213,7 @@ namespace MultipleDesktop.Mvc
         public void Save()
         {
             _configurationProvider.Save(
-                _configurationFactory.AppConfigurationFor(_desktopConfigurations),
+                _configurationFactory.AppConfigurationFrom(_desktopConfigurations),
                 Constants.Default.Config.FileName);
         }
 

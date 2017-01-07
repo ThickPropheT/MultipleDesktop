@@ -1,5 +1,6 @@
 ﻿using MultipleDesktop.Mvc.Configuration;
 using MultipleDesktop.Mvc.Desktop;
+using System;
 using System.Collections.Generic;
 
 namespace MultipleDesktop.Configuration
@@ -22,7 +23,7 @@ namespace MultipleDesktop.Configuration
             return new Background(configuration.BackgroundPath, configuration.Fit);
         }
 
-        public IAppConfiguration AppConfigurationFor(IEnumerable<IVirtualDesktopConfiguration> configurations)
+        public IAppConfiguration AppConfigurationFrom(IEnumerable<IVirtualDesktopConfiguration> configurations)
         {
             return new AppConfiguration(configurations, this);
         }
@@ -30,6 +31,11 @@ namespace MultipleDesktop.Configuration
         public IBackground BackgroundFrom(string backgroundPath, Fit fit)
         {
             return new Background(backgroundPath, fit);
+        }
+
+        public IVirtualDesktop DesktopFrom(Guid guid, uint index, ISystemDesktop systemDesktop)
+        {
+            return new VirtualDesktop(guid, index, systemDesktop);
         }
 
         /// <summary>
