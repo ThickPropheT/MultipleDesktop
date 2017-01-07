@@ -21,3 +21,4 @@ Coming Soon:
 - Set background slideshow
 - Specify any number of wallpaper images using app UI
 - Save configuration to Isolated Storage
+- Support for more versions of Windows 10
