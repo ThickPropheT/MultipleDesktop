@@ -21,10 +21,7 @@ namespace MultipleDesktop.Windows.Forms.View
             _configuration = configuration;
             configuration.PropertyChanged += Configuration_PropertyChanged;
 
-            this.InvokeIfRequired(view =>
-            {
-                txtPic1.Text = configuration.BackgroundPath;
-            });
+            txtPic1.Text = configuration.BackgroundPath;
         }
 
         private void Configuration_PropertyChanged(object sender, PropertyChangedEventArgs e)
