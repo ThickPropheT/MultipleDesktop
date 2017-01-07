@@ -81,6 +81,8 @@ namespace MultipleDesktop.Configuration
             _configurationFactory = factory;
 
             BindToTarget(targetDesktop);
+            // should take values from desktop
+            UpdateFromTarget();
         }
 
         public void BindToTarget(IVirtualDesktop value)
@@ -95,8 +97,6 @@ namespace MultipleDesktop.Configuration
             if (value != null)
             {
                 value.PropertyChanged += Target_PropertyChanged;
-
-                UpdateFromTarget();
             }
         }
 
@@ -137,7 +137,7 @@ namespace MultipleDesktop.Configuration
 
         public override string ToString()
         {
-            return Guid.ToString();
+            return $"{Guid.ToString()}, {BackgroundPath}, {Fit}";
         }
     }
 }

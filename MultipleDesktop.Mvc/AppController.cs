@@ -164,6 +164,7 @@ namespace MultipleDesktop.Mvc
 
             foreach (var pair in pairs)
             {
+                // should NOT overwrite configuration values
                 // when pair.Desktop is null (did not match an enabled desktop)
                 // the configuration becomes unbound.
                 pair.Configuration.BindToTarget(pair.Desktop);
@@ -197,6 +198,7 @@ namespace MultipleDesktop.Mvc
                         configuration.IsConfigurationFor(desktop));
 
                 if (matchingConfiguration != null)
+                    // should NOT overwrite configuration values
                     matchingConfiguration.BindToTarget(desktop);
 
                 else
