@@ -7,7 +7,7 @@ using uRegistry = Microsoft.Win32.Registry;
 
 namespace MultipleDesktop.Windows
 {
-    public class WindowsDesktop : IWindowsDesktop
+    public class WindowsDesktopRegistry : IWindowsDesktop
     {
         private IBackground _background;
 
@@ -27,7 +27,7 @@ namespace MultipleDesktop.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WindowsDesktop()
+        public WindowsDesktopRegistry()
         {
             _background = LoadBackground(_ioLock);
         }

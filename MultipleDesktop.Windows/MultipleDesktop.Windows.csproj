@@ -41,11 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IWindowsDesktop.cs" />
-    <Compile Include="WindowsDesktop.cs" />
+    <Compile Include="WindowsDesktopRegistry.cs" />
     <Compile Include="VirtualDesktopStateProvider.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry.cs" />
+    <Compile Include="WindowsDesktopShell.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultipleDesktop.Mvc\MultipleDesktop.Mvc.csproj">
