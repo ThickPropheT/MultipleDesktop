@@ -21,15 +21,19 @@ namespace MultipleDesktop.Windows.Interop.Shell
 
         internal static class CLSID
         {
-            internal static readonly Guid CLSID_DesktopWallpaper = new Guid("C2CF3110-460E-4fc1-B9D0-8A1C0C9CC4BD");
+            internal static readonly Guid DesktopWallpaper = new Guid("C2CF3110-460E-4fc1-B9D0-8A1C0C9CC4BD");
 
-            internal static readonly Guid CLSID_VirtualDesktopManager = new Guid("AA509086-5CA9-4C25-8F95-589D3C07B48A");
-            internal static readonly Guid CLSID_ImmersiveShell = new Guid("C2F03A33-21F5-47FA-B4BB-156362A2F239");
+            internal static readonly Guid VirtualDesktopManager = new Guid("AA509086-5CA9-4C25-8F95-589D3C07B48A");
+            internal static readonly Guid ImmersiveShell = new Guid("C2F03A33-21F5-47FA-B4BB-156362A2F239");
         }
 
         internal static class GUID
         {
-            internal static Guid VirtualDesktopAPIUnknown = new Guid("c5e0cdca-7b6e-41b2-9fc4-d93975cc467b");
+            /// <summary>
+            /// Not sure what service this GUID represents.
+            /// Source : https://github.com/Grabacr07/VirtualDesktop
+            /// </summary>
+            internal static Guid VirtualDesktopAPIUnknown = new Guid("C5E0CDCA-7B6E-41B2-9FC4-D93975CC467B");
         }
 
         [ComImport]

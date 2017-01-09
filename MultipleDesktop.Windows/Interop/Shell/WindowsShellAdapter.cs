@@ -22,11 +22,11 @@ namespace MultipleDesktop.Windows.Interop.Shell
         {
             _factory = factory;
 
-            _desktop = CreateInstance<IDesktopWallpaper>(CLSID.CLSID_DesktopWallpaper);
+            _desktop = CreateInstance<IDesktopWallpaper>(CLSID.DesktopWallpaper);
 
-            _manager = CreateInstance<IVirtualDesktopManager>(CLSID.CLSID_VirtualDesktopManager);
+            _manager = CreateInstance<IVirtualDesktopManager>(CLSID.VirtualDesktopManager);
 
-            var shell = CreateInstance<uIServiceProvider>(CLSID.CLSID_ImmersiveShell);
+            var shell = CreateInstance<uIServiceProvider>(CLSID.ImmersiveShell);
 
             object managerResult;
             shell.QueryService(
