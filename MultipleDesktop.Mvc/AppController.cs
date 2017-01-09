@@ -173,41 +173,55 @@ namespace MultipleDesktop.Mvc
             DesktopConfigurations = pairs.Select(pair => pair.Configuration);
         }
 
-        // TODO break this out into more specific methods for each task
         public void Load()
+        {
+            var desktopConfigurations = LoadConfigurations(_configurationProvider);
+
+            MapConfigurationToVirtualDesktop(
+                _desktopProvider.AllDesktops,
+                desktopConfigurations,
+                _configurationFactory);
+
+            DesktopConfigurations = desktopConfigurations;
+
+            _desktopProvider.Load();
+        }
+
+        private static IList<IVirtualDesktopConfiguration> LoadConfigurations(IConfigurationProvider configurationProvider)
         {
             var configFileName = Constants.Default.Config.FileName;
 
-            // TODO app config load task
             IAppConfiguration appConfiguration;
-            var result = _configurationProvider.Load(configFileName, out appConfiguration);
+            var result = configurationProvider.Load(configFileName, out appConfiguration);
 
             if (result.DoesExist == false || result.ReadError == true)
-                result = _configurationProvider.Create(configFileName, out appConfiguration);
+                result = configurationProvider.Create(configFileName, out appConfiguration);
 
             if (result.DidFail)
                 throw result.Exception;
 
-            // TODO map config to desktop task
-            var desktopConfigurations = appConfiguration.GetAll().ToList();
+            return appConfiguration.GetAll().ToList();
+        }
 
-            foreach (var desktop in _desktopProvider.AllDesktops)
+        private static void MapConfigurationToVirtualDesktop(
+            IEnumerable<IVirtualDesktop> desktops,
+            IList<IVirtualDesktopConfiguration> configurations,
+            IConfigurationFactory configurationFactory)
+        {
+
+            foreach (var desktop in desktops)
             {
-                var matchingConfiguration = desktopConfigurations.FirstOrDefault(
+                var matchingConfiguration = configurations.FirstOrDefault(
                     configuration =>
                         configuration.IsConfigurationFor(desktop));
 
                 if (matchingConfiguration != null)
                     // should NOT overwrite configuration values
-                    matchingConfiguration.BindToTarget(desktop, _configurationFactory);
+                    matchingConfiguration.BindToTarget(desktop, configurationFactory);
 
                 else
-                    desktopConfigurations.Add(_configurationFactory.ConfigurationFor(desktop));
+                    configurations.Add(configurationFactory.ConfigurationFor(desktop));
             }
-
-            DesktopConfigurations = desktopConfigurations;
-
-            _desktopProvider.Load();
         }
 
         public void Save()

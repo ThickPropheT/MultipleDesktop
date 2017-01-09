@@ -1,27 +1,5 @@
-﻿AppView.OnFOrmClosing(...)
-	// TODO check CloseReason before committing to close
-
-Fit.Span
-    // TODO found in Settings > Personalization > Background
-    // TODO find in documentation
-
-WindowsRegistryDesktopProvider.SaveBackground(...)
-	// TODO consider moving to thread with cancellation token
-
-DesktopConfiguration
-    // TODO consider making DesktopConfiguration an owner of the
-    // TODO Desktop that it configures
-
-WindowsDesktop.LoadCurrentDesktopUuid
+﻿WindowsDesktop.LoadCurrentDesktopUuid
 	// TODO CurrentVirtualDesktop value is null from Start until
 	// TODO a desktop is switched
 
-WIndowsDesktop.LoadBackground
-	// TODO load fit
-
-Validate loaded config values
-
-Attempt Make AppView UI optional
-	Hook into registry and cache desktop settings as set thru Windows Settings App
-
-Investigate registry uuids for both 32 & 64 bit OSes
+Investigate registry/shell compatibility for 32 & 64 bit OSes
