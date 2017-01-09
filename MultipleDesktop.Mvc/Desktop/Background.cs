@@ -2,9 +2,9 @@
 {
     public class Background : IBackground
     {
-        public string Path { get; set; }
+        public string Path { get; }
 
-        public Fit Fit { get; set; }
+        public Fit Fit { get; }
 
         public Background(string path, Fit fit)
         {

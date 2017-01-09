@@ -1,8 +1,10 @@
-﻿namespace MultipleDesktop.Mvc.Desktop
+﻿using System.Drawing;
+
+namespace MultipleDesktop.Mvc.Desktop
 {
     public interface IBackground
     {
-        string Path { get; set; }
+        string Path { get; }
 
         Fit Fit { get; }
     }
