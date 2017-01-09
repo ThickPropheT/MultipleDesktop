@@ -3,3 +3,5 @@
 	// TODO a desktop is switched
 
 Investigate registry/shell compatibility for 32 & 64 bit OSes
+
+Switch to TDD & back-test existing code
