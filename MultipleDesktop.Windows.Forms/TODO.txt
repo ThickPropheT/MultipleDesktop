@@ -5,3 +5,6 @@
 Investigate registry/shell compatibility for 32 & 64 bit OSes
 
 Switch to TDD & back-test existing code
+
+Investigate use of IVirtualDesktopNotificationService
+	to receive state updates rather than poll for state updates
