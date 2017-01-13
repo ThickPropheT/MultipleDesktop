@@ -17,9 +17,13 @@ Features:
 
 Coming Soon:
 ------------
-- Set background color
-- Set background slideshow
-- Specify any number of wallpaper images using app UI
-- Save configuration to Isolated Storage
-- Support for more versions of Windows 10
-- Unit tests
+- Features
+	- Set background color
+	- Set background slideshow
+	- Specify any number of wallpaper images using app UI
+	- Save configuration to Isolated Storage
+	- Support for more versions of Windows 10
+	
+- Implementation
+	- Unit tests
+	- Virtual Desktop change notification rather than state polling system
