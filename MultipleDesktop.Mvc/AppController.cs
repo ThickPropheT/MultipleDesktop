@@ -29,7 +29,7 @@ namespace MultipleDesktop.Mvc
                 _changing = _provider.AllDesktops;
             }
 
-            private void Provider_PropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
+            private void Provider_PropertyChanging(object sender, PropertyChangingEventArgs e)
             {
                 switch (e.PropertyName)
                 {
@@ -75,7 +75,7 @@ namespace MultipleDesktop.Mvc
         private readonly IAppView _view;
         private readonly IFileSystem _fileSystem;
         private readonly IVirtualDesktopState _desktopProvider;
-        private readonly IConfigurationProvider _configurationProvider;
+        private readonly IConfigurationController _configurationController;
         private readonly IConfigurationFactory _configurationFactory;
 
         private IEnumerable<IVirtualDesktopConfiguration> _desktopConfigurations =
@@ -101,7 +101,7 @@ namespace MultipleDesktop.Mvc
             IAppView view,
             IFileSystem fileSystem,
             IVirtualDesktopState desktopProvider,
-            IConfigurationProvider configurationProvider,
+            IConfigurationController configurationController,
             IConfigurationFactory configurationFactory)
         {
             _view = view;
@@ -110,11 +110,11 @@ namespace MultipleDesktop.Mvc
             _desktopProvider = desktopProvider;
             desktopProvider.PropertyChanging += DesktopProvider_PropertyChanging;
 
-            _configurationProvider = configurationProvider;
+            _configurationController = configurationController;
             _configurationFactory = configurationFactory;
         }
 
-        private void DesktopProvider_PropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
+        private void DesktopProvider_PropertyChanging(object sender, PropertyChangingEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -175,7 +175,10 @@ namespace MultipleDesktop.Mvc
 
         public void Load()
         {
-            var desktopConfigurations = LoadConfigurations(_configurationProvider);
+            var desktopConfigurations =
+                _configurationController.Load()
+                    .GetAll()
+                    .ToList();
 
             MapConfigurationToVirtualDesktop(
                 _desktopProvider.AllDesktops,
@@ -185,22 +188,6 @@ namespace MultipleDesktop.Mvc
             DesktopConfigurations = desktopConfigurations;
 
             _desktopProvider.Load();
-        }
-
-        private static IList<IVirtualDesktopConfiguration> LoadConfigurations(IConfigurationProvider configurationProvider)
-        {
-            var configFileName = Constants.Default.Config.FileName;
-
-            IAppConfiguration appConfiguration;
-            var result = configurationProvider.Load(configFileName, out appConfiguration);
-
-            if (result.DoesExist == false || result.ReadError == true)
-                result = configurationProvider.Create(configFileName, out appConfiguration);
-
-            if (result.DidFail)
-                throw result.Exception;
-
-            return appConfiguration.GetAll().ToList();
         }
 
         private static void MapConfigurationToVirtualDesktop(
@@ -226,9 +213,8 @@ namespace MultipleDesktop.Mvc
 
         public void Save()
         {
-            _configurationProvider.Save(
-                _configurationFactory.AppConfigurationFrom(_desktopConfigurations),
-                Constants.Default.Config.FileName);
+            _configurationController.Save(
+                _configurationFactory.AppConfigurationFrom(_desktopConfigurations));
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

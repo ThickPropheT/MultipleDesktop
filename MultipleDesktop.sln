@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.IO", "System\System.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.IO.Windows", "System\System.IO.Windows\System.IO.Windows.csproj", "{DE2550AA-3005-48A4-8E41-2D80440837BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6C86B913-B4AA-42BD-B00B-38255BED06EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.MultipleDesktop", "Test\Test.MultipleDesktop\Test.MultipleDesktop.csproj", "{6D1C66BB-7D23-47AB-ACE0-0B1C991C23D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +49,14 @@ Global
 		{DE2550AA-3005-48A4-8E41-2D80440837BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE2550AA-3005-48A4-8E41-2D80440837BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE2550AA-3005-48A4-8E41-2D80440837BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D1C66BB-7D23-47AB-ACE0-0B1C991C23D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D1C66BB-7D23-47AB-ACE0-0B1C991C23D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D1C66BB-7D23-47AB-ACE0-0B1C991C23D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D1C66BB-7D23-47AB-ACE0-0B1C991C23D3} = {6C86B913-B4AA-42BD-B00B-38255BED06EB}
 	EndGlobalSection
 EndGlobal

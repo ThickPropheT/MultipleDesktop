@@ -27,11 +27,15 @@ namespace MultipleDesktop.Windows.Forms
             var controller = new AppController(
                 view,
                 FileSystem.GetFileSystem(),
+
                 new VirtualDesktopStateProvider(
                     new WindowsDesktop(adapter),
                     adapter,
                     configurationFactory),
-                new XmlConfigurationProvider(configurationFactory),
+
+                new ConfigurationController(
+                    new XmlConfigurationProvider(configurationFactory)),
+
                 configurationFactory);
 
             view.Controller = controller;
