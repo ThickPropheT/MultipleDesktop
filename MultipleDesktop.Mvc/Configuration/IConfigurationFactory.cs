@@ -8,7 +8,6 @@ namespace MultipleDesktop.Mvc.Configuration
     {
         IVirtualDesktopConfiguration ConfigurationFor(IVirtualDesktop desktop);
         IAppConfiguration AppConfigurationFrom(IEnumerable<IVirtualDesktopConfiguration> configurations);
-        IBackground BackgroundFrom(IVirtualDesktopConfiguration configuration);
         IBackground BackgroundFrom(string backgroundPath, Fit fit);
         IVirtualDesktop DesktopFrom(Guid guid, uint index, ISystemDesktop systemDesktop);
     }

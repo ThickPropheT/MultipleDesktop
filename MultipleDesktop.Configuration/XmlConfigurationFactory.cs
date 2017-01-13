@@ -18,11 +18,6 @@ namespace MultipleDesktop.Configuration
             return new VirtualDesktopConfiguration(desktop, this);
         }
 
-        public IBackground BackgroundFrom(IVirtualDesktopConfiguration configuration)
-        {
-            return new Background(configuration.BackgroundPath, configuration.Fit);
-        }
-
         public IAppConfiguration AppConfigurationFrom(IEnumerable<IVirtualDesktopConfiguration> configurations)
         {
             return new AppConfiguration(configurations, this);

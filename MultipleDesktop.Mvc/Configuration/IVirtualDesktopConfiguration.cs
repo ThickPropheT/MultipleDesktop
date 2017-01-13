@@ -6,7 +6,7 @@ namespace MultipleDesktop.Mvc.Configuration
 {
     public interface IVirtualDesktopConfiguration : INotifyPropertyChanged
     {
-        Guid Guid { get; set; }
+        Guid Guid { get; }
 
         string BackgroundPath { get; set; }
 

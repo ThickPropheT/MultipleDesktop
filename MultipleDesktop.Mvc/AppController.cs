@@ -74,7 +74,7 @@ namespace MultipleDesktop.Mvc
 
         private readonly IAppView _view;
         private readonly IFileSystem _fileSystem;
-        private readonly IVirtualDesktopState _desktopProvider;
+        private readonly IVirtualDesktopState _desktopState;
         private readonly IConfigurationController _configurationController;
         private readonly IConfigurationFactory _configurationFactory;
 
@@ -107,7 +107,7 @@ namespace MultipleDesktop.Mvc
             _view = view;
             _fileSystem = fileSystem;
 
-            _desktopProvider = desktopProvider;
+            _desktopState = desktopProvider;
             desktopProvider.PropertyChanging += DesktopProvider_PropertyChanging;
 
             _configurationController = configurationController;
@@ -118,8 +118,8 @@ namespace MultipleDesktop.Mvc
         {
             switch (e.PropertyName)
             {
-                case nameof(_desktopProvider.AllDesktops):
-                    WhenAllDesktopsChanges.For(_desktopProvider)
+                case nameof(_desktopState.AllDesktops):
+                    WhenAllDesktopsChanges.For(_desktopState)
                         .DoCallback(UpdateDesktopConfigurations);
                     break;
                 default:
@@ -181,13 +181,13 @@ namespace MultipleDesktop.Mvc
                     .ToList();
 
             MapConfigurationToVirtualDesktop(
-                _desktopProvider.AllDesktops,
+                _desktopState.AllDesktops,
                 desktopConfigurations,
                 _configurationFactory);
 
             DesktopConfigurations = desktopConfigurations;
 
-            _desktopProvider.Load();
+            _desktopState.Load();
         }
 
         private static void MapConfigurationToVirtualDesktop(
