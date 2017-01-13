@@ -30,7 +30,10 @@ namespace MultipleDesktop.Configuration
 
         public void Save(IAppConfiguration configuration)
         {
-            _configurationProvider.Save(configuration, Constants.Default.Config.FileName);
+            var result = _configurationProvider.Save(configuration, Constants.Default.Config.FileName);
+
+            if (result.DidFail)
+                throw result.Exception;
         }
     }
 }

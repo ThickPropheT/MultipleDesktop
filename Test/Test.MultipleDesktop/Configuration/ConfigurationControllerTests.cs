@@ -13,6 +13,9 @@ namespace Test.MultipleDesktop.Configuration
     [TestClass]
     public class ConfigurationControllerTests
     {
+        public static readonly IoResult SuccessResult = IoResult.ForSuccess();
+        public static readonly IoResult ErrorResult = IoResult.ForException(new ExceptionMock());
+
         private Mock<IConfigurationProvider> _configurationProviderMock;
 
         private ConfigurationController _configurationController;
@@ -36,7 +39,7 @@ namespace Test.MultipleDesktop.Configuration
                 private Mock<IAppConfiguration> _appConfigurationMock;
 
                 [TestInitialize]
-                public override void UsingThisConfiguration()
+                public sealed override void UsingThisConfiguration()
                 {
                     base.UsingThisConfiguration();
 
@@ -51,8 +54,6 @@ namespace Test.MultipleDesktop.Configuration
                 [TestClass]
                 public sealed class OnLoadSuccess : TryLoad
                 {
-                    public static IoResult SuccessResult = IoResult.ForSuccess();
-
                     public override IoResult LoadResult => SuccessResult;
 
                     [TestMethod]
@@ -67,14 +68,6 @@ namespace Test.MultipleDesktop.Configuration
                 [TestClass]
                 public abstract class OnLoadFailure : TryLoad
                 {
-                    public static readonly IoResult ErrorResult = IoResult.ForException(new ExceptionMock());
-
-                    [TestInitialize]
-                    public override void UsingThisConfiguration()
-                    {
-                        base.UsingThisConfiguration();
-                    }
-
                     [TestClass]
                     public sealed class FromMissingFile : OnLoadFailure
                     {
@@ -97,7 +90,7 @@ namespace Test.MultipleDesktop.Configuration
                         [TestMethod]
                         public void OnFailure()
                         {
-                            ShouldThrowAfterCreationFailure();
+                            ShouldThrow();
                         }
                     }
 
@@ -123,7 +116,7 @@ namespace Test.MultipleDesktop.Configuration
                         [TestMethod]
                         public void OnFailure()
                         {
-                            ShouldThrowAfterCreationFailure();
+                            ShouldThrow();
                         }
                     }
 
@@ -151,14 +144,14 @@ namespace Test.MultipleDesktop.Configuration
 
                     protected void ShouldReturnCreatedConfiguration()
                     {
-                        SetupProviderMockFor(IoResult.ForSuccess());
+                        SetupProviderMockFor(SuccessResult);
 
                         var result = _configurationController.Load();
 
                         result.Should().Be.SameAs(_appConfigurationMock.Object);
                     }
 
-                    protected void ShouldThrowAfterCreationFailure()
+                    protected void ShouldThrow()
                     {
                         SetupProviderMockFor(ErrorResult);
 
@@ -179,6 +172,49 @@ namespace Test.MultipleDesktop.Configuration
                 {
                     Expect.Exception(result.Exception, () => _configurationController.Load());
                 }
+            }
+        }
+
+        [TestClass]
+        public sealed class WhenSaving : ConfigurationControllerTests
+        {
+            private Mock<IAppConfiguration> _appConfigurationMock;
+
+            [TestInitialize]
+            public override void UsingThisConfiguration()
+            {
+                base.UsingThisConfiguration();
+
+                _appConfigurationMock = new Mock<IAppConfiguration>();
+            }
+
+            [TestMethod]
+            public void ShouldTrySave()
+            {
+                SetupProviderWithResult(SuccessResult);
+
+                _configurationController.Save(_appConfigurationMock.Object);
+
+                _configurationProviderMock.Verify(provider =>
+                    provider.Save(
+                        It.Is<IAppConfiguration>(configuration =>
+                            configuration == _appConfigurationMock.Object),
+                        It.IsAny<string>()));
+            }
+
+            [TestMethod]
+            public void OnFailure()
+            {
+                SetupProviderWithResult(ErrorResult);
+
+                Expect.Exception(ErrorResult.Exception, () => _configurationController.Save(_appConfigurationMock.Object));
+            }
+
+            private void SetupProviderWithResult(IoResult result)
+            {
+                _configurationProviderMock.Setup(provider =>
+                    provider.Save(It.IsAny<IAppConfiguration>(), It.IsAny<string>()))
+                    .Returns(result);
             }
         }
     }
