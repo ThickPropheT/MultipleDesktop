@@ -58,11 +58,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationControllerTests.cs" />
     <Compile Include="Mvc\AppControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MultipleDesktop.Configuration\MultipleDesktop.Configuration.csproj">
+      <Project>{D3E4551F-B9EF-406D-BD2E-520975BCB281}</Project>
+      <Name>MultipleDesktop.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MultipleDesktop.Mvc\MultipleDesktop.Mvc.csproj">
       <Project>{E33A908A-68B8-4C2C-8AE0-3F1D5CA8A8A2}</Project>
       <Name>MultipleDesktop.Mvc</Name>
@@ -77,6 +84,10 @@
     <ProjectReference Include="..\..\System\System.IO\System.IO.csproj">
       <Project>{7082b01b-c5df-4b34-9ec6-4df5dad5144a}</Project>
       <Name>System.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualStudio.TestTools.UnitTesting\VisualStudio.TestTools.UnitTesting.csproj">
+      <Project>{9A1BAFC8-B61A-47BC-8B1E-5A2A63354CA1}</Project>
+      <Name>VisualStudio.TestTools.UnitTesting</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
