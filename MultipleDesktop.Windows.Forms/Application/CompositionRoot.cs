@@ -3,7 +3,7 @@ using MultipleDesktop.Mvc;
 using MultipleDesktop.Windows.Forms.Application;
 using MultipleDesktop.Windows.Forms.View;
 using MultipleDesktop.Windows.Interop.Shell;
-using System.IO.Windows;
+using System.IO.Extended;
 using System.Windows.Forms;
 
 namespace MultipleDesktop.Windows.Forms

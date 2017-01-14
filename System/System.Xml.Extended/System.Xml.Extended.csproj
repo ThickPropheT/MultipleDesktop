@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DE2550AA-3005-48A4-8E41-2D80440837BD}</ProjectGuid>
+    <ProjectGuid>{5A9DAB6B-16E5-4391-A2A8-D301847466B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.IO.Windows</RootNamespace>
-    <AssemblyName>System.IO.Windows</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>System.Xml</RootNamespace>
+    <AssemblyName>System.Xml.Extended</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,16 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="File.cs" />
-    <Compile Include="FileSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System.Xml.Serialization\IXmlSerializer.cs" />
+    <Compile Include="System.Xml.Serialization\XmlSerializer.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\System.IO\System.IO.csproj">
-      <Project>{7082b01b-c5df-4b34-9ec6-4df5dad5144a}</Project>
-      <Name>System.IO</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

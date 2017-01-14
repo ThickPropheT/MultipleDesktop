@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MultipleDesktop.Windows.Forms</RootNamespace>
     <AssemblyName>MultipleDesktop.Windows.Forms</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -128,13 +128,9 @@
       <Project>{7DE85E68-69EC-4947-8B35-D1974CCDF5F1}</Project>
       <Name>MultipleDesktop.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\System\System.IO.Windows\System.IO.Windows.csproj">
-      <Project>{de2550aa-3005-48a4-8e41-2d80440837bd}</Project>
-      <Name>System.IO.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\System\System.IO\System.IO.csproj">
-      <Project>{7082b01b-c5df-4b34-9ec6-4df5dad5144a}</Project>
-      <Name>System.IO</Name>
+    <ProjectReference Include="..\System\mscorlib.Extended\mscorlib.Extended.csproj">
+      <Project>{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}</Project>
+      <Name>mscorlib.Extended</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

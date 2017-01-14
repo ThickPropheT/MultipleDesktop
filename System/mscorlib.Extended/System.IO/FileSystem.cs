@@ -1,4 +1,4 @@
-﻿namespace System.IO.Windows
+﻿namespace System.IO.Extended
 {
     public class FileSystem : IFileSystem
     {

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MultipleDesktop.Mvc</RootNamespace>
     <AssemblyName>MultipleDesktop.Mvc</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,13 +66,9 @@
     <Compile Include="Desktop\VirtualDesktop.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\System\System.IO.Windows\System.IO.Windows.csproj">
-      <Project>{DE2550AA-3005-48A4-8E41-2D80440837BD}</Project>
-      <Name>System.IO.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\System\System.IO\System.IO.csproj">
-      <Project>{7082b01b-c5df-4b34-9ec6-4df5dad5144a}</Project>
-      <Name>System.IO</Name>
+    <ProjectReference Include="..\System\mscorlib.Extended\mscorlib.Extended.csproj">
+      <Project>{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}</Project>
+      <Name>mscorlib.Extended</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
