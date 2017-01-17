@@ -69,6 +69,7 @@
     <Compile Include="Configuration\ConfigurationControllerTests.cs" />
     <Compile Include="Mvc\AppControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\WindowsShellAdapterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,6 +82,10 @@
     <ProjectReference Include="..\..\MultipleDesktop.Mvc\MultipleDesktop.Mvc.csproj">
       <Project>{E33A908A-68B8-4C2C-8AE0-3F1D5CA8A8A2}</Project>
       <Name>MultipleDesktop.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MultipleDesktop.Windows\MultipleDesktop.Windows.csproj">
+      <Project>{7DE85E68-69EC-4947-8B35-D1974CCDF5F1}</Project>
+      <Name>MultipleDesktop.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\System\mscorlib.Extended\mscorlib.Extended.csproj">
       <Project>{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}</Project>

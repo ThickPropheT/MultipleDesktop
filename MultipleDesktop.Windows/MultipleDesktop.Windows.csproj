@@ -47,6 +47,7 @@
     <Compile Include="Interop\Registry\WindowsRegistryAdapter.cs" />
     <Compile Include="Interop\Shell\FitConverter.cs" />
     <Compile Include="Interop\Shell\WindowsShellAdapter.cs" />
+    <Compile Include="Interop\Shell\WindowsShellFactory.cs" />
     <Compile Include="IWindowsDesktop.cs" />
     <Compile Include="WindowsDesktop.cs" />
     <Compile Include="VirtualDesktopStateProvider.cs" />

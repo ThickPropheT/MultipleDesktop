@@ -22,7 +22,7 @@ namespace MultipleDesktop.Windows.Forms
 
             var configurationFactory = new XmlConfigurationFactory();
 
-            var adapter = new WindowsShellAdapter(configurationFactory);
+            var adapter = WindowsShellFactory.CreateAdapter(configurationFactory);
 
             var controller = new AppController(
                 view,
