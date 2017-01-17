@@ -2,6 +2,8 @@
 using MultipleDesktop.Mvc.Desktop;
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization.Extended;
+using System.IO;
 
 namespace MultipleDesktop.Configuration
 {
@@ -31,6 +33,26 @@ namespace MultipleDesktop.Configuration
         public IVirtualDesktop DesktopFrom(Guid guid, uint index, ISystemDesktop systemDesktop)
         {
             return new VirtualDesktop(guid, index, systemDesktop);
+        }
+
+        public IXmlSerializer CreateSerializerFor<T>()
+        {
+            return new XmlSerializer(typeof(T));
+        }
+
+        public TextWriter CreateSerializationWriterFor(string path)
+        {
+            return new StreamWriter(path);
+        }
+
+        public TextReader CreateSerializationReaderFor(string path)
+        {
+            return new StreamReader(path);
+        }
+
+        public AppConfiguration CreateXmlConfiguration()
+        {
+            return new AppConfiguration();
         }
 
         /// <summary>

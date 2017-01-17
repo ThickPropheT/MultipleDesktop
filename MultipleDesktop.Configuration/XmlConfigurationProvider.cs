@@ -17,22 +17,64 @@ namespace MultipleDesktop.Configuration
 
         public IoResult Create(string atPath, out IAppConfiguration configuration)
         {
-            configuration = new AppConfiguration();
+            try
+            {
+                var xmlConfiguration = _configurationFactory.CreateXmlConfiguration();
+                configuration = xmlConfiguration;
 
-            return Save(configuration, atPath);
+                return Save(xmlConfiguration, atPath);
+            }
+            catch (Exception ex)
+            {
+                configuration = null;
+                return IoResult.ForException(ex);
+            }
+        }
+
+        public IoResult Save(IAppConfiguration configuration, string toPath)
+        {
+            try
+            {
+                return Save(_configurationFactory.ToXmlConfiguration(configuration), toPath);
+            }
+            catch (Exception ex)
+            {
+                return IoResult.ForException(ex);
+            }
+        }
+
+        private IoResult Save(AppConfiguration configuration, string toPath)
+        {
+            try
+            {
+                var serializer = _configurationFactory
+                    .CreateSerializerFor<AppConfiguration>();
+
+                using (var writer = _configurationFactory
+                    .CreateSerializationWriterFor(toPath))
+                {
+                    serializer.Serialize(writer, configuration);
+                    return IoResult.ForSuccess();
+                }
+            }
+            catch (Exception ex)
+            {
+                return IoResult.ForException(ex);
+            }
         }
 
         public IoResult Load(string fromPath, out IAppConfiguration configuration)
         {
             configuration = null;
 
-            var serializer = new XmlSerializer(typeof(AppConfiguration));
-
             try
             {
-                using (var stream = new StreamReader(fromPath))
+                var serializer = _configurationFactory.CreateSerializerFor<AppConfiguration>();
+
+                using (var reader = _configurationFactory
+                    .CreateSerializationReaderFor(fromPath))
                 {
-                    configuration = (IAppConfiguration)serializer.Deserialize(stream);
+                    configuration = (IAppConfiguration)serializer.Deserialize(reader);
                     return IoResult.ForSuccess();
                 }
             }
@@ -47,24 +89,6 @@ namespace MultipleDesktop.Configuration
             catch (DirectoryNotFoundException)
             {
                 return IoResult.ForNotFound();
-            }
-            catch (Exception ex)
-            {
-                return IoResult.ForException(ex);
-            }
-        }
-
-        public IoResult Save(IAppConfiguration configuration, string toPath)
-        {
-            var serializer = new XmlSerializer(typeof(AppConfiguration));
-
-            try
-            {
-                using (var stream = new StreamWriter(toPath))
-                {
-                    serializer.Serialize(stream, _configurationFactory.ToXmlConfiguration(configuration));
-                    return IoResult.ForSuccess();
-                }
             }
             catch (Exception ex)
             {
