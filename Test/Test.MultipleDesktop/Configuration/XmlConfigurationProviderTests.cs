@@ -345,36 +345,70 @@ namespace Test.MultipleDesktop.Configuration
         }
 
         [TestClass]
-        public abstract class WhenReading : XmlConfigurationProviderTests
+        public class WhenLoading : XmlConfigurationProviderTests
         {
+            protected override Func<IoResult> MethodUnderTest =>
+                () => _xmlConfigurationProvider.Load(FilePath, out _result);
+
+            private IAppConfiguration _result;
+
             [TestClass]
-            public class WhenLoading : XmlConfigurationProviderTests
+            public class TryCreateXmlSerializer : WhenLoading
             {
-                protected override Func<IoResult> MethodUnderTest =>
-                    () => _xmlConfigurationProvider.Load(FilePath, out _result);
-
-                private IAppConfiguration _result;
-
                 [TestClass]
-                public sealed class TryCreateXmlSerializer : WhenLoading
+                public sealed class WhenCreatingXmlSerializer : TryCreateXmlSerializer
                 {
                     [TestMethod]
                     public void ShouldRequestInstanceFromFactory()
                     {
                         ShouldRequestSerializerFromFactory();
                     }
+                }
 
+                [TestClass]
+                public sealed class OnFailure : TryDeserializeConfigurationUsingReader
+                {
                     [TestMethod]
-                    public void OnFailure()
+                    public void _OnFailure()
                     {
                         WhenSerializerCreationFails();
 
                         ShouldReturnError();
                     }
-                }
 
+                    [TestMethod]
+                    public void FromXmlException()
+                    {
+                        ShouldReturnErrorForXmlException();
+                    }
+
+                    [TestMethod]
+                    public void FromFileNotFoundException()
+                    {
+                        ShouldReturnErrorForFileNotFoundException();
+                    }
+
+                    [TestMethod]
+                    public void FromDirectoryNotFoundException()
+                    {
+                        ShouldReturnErrorForDirectoryNotFoundException();
+                    }
+
+                    [TestMethod]
+                    public void FromAnyOtherException()
+                    {
+                        ShouldReturnError();
+
+                        Assert.Fail("Not Implemented");
+                    }
+                }
+            }
+
+            [TestClass]
+            public class TryCreateReaderForFilePath : WhenLoading
+            {
                 [TestClass]
-                public sealed class TryCreateReaderForFilePath : WhenLoading
+                public sealed class WhenCreatingReader : TryCreateReaderForFilePath
                 {
                     [TestMethod]
                     public void ShouldRequestInstanceFromFactory()
@@ -390,9 +424,13 @@ namespace Test.MultipleDesktop.Configuration
                                 It.Is<string>(s => s == FilePath)),
                             Times.Once);
                     }
+                }
 
+                [TestClass]
+                public sealed class OnFailure : TryDeserializeConfigurationUsingReader
+                {
                     [TestMethod]
-                    public void OnFailure()
+                    public void _OnFailure()
                     {
                         _configurationFactoryMock.Setup(factory =>
                             factory.CreateSerializationReaderFor(
@@ -401,74 +439,135 @@ namespace Test.MultipleDesktop.Configuration
 
                         ShouldReturnError();
                     }
+
+                    [TestMethod]
+                    public void FromXmlException()
+                    {
+                        ShouldReturnErrorForXmlException();
+                    }
+
+                    [TestMethod]
+                    public void FromFileNotFoundException()
+                    {
+                        ShouldReturnErrorForFileNotFoundException();
+                    }
+
+                    [TestMethod]
+                    public void FromDirectoryNotFoundException()
+                    {
+                        ShouldReturnErrorForDirectoryNotFoundException();
+                    }
+
+                    [TestMethod]
+                    public void FromAnyOtherException()
+                    {
+                        ShouldReturnError();
+
+                        Assert.Fail("Not Implemented");
+                    }
+                }
+            }
+
+            [TestClass]
+            public class TryDeserializeConfigurationUsingReader : WhenLoading
+            {
+                private Mock<IXmlSerializer> _serializerMock;
+
+                [TestInitialize]
+                public override void UsingThisConfiguration()
+                {
+                    base.UsingThisConfiguration();
+
+                    _serializerMock = new Mock<IXmlSerializer>();
                 }
 
                 [TestClass]
-                public class TryDeserializeConfigurationUsingReader : WhenLoading
+                public sealed class OnSuccess : TryDeserializeConfigurationUsingReader
                 {
-                    private Mock<IXmlSerializer> _serializerMock;
-
-                    [TestInitialize]
-                    public override void UsingThisConfiguration()
+                    [TestMethod]
+                    public void ShouldPassReaderToDeserialize()
                     {
-                        base.UsingThisConfiguration();
+                        var reader = new Mock<TextReader>().Object;
 
-                        _serializerMock = new Mock<IXmlSerializer>();
+                        _configurationFactoryMock.Setup(factory =>
+                            factory.CreateSerializationReaderFor(
+                            It.IsAny<string>()))
+                            .Returns(reader);
+
+                        _serializerMock.Setup(serializer =>
+                            serializer.Deserialize(It.IsAny<TextReader>()));
+
+                        _configurationFactoryMock.Setup(factory =>
+                            factory.CreateSerializerFor<AppConfiguration>())
+                            .Returns(_serializerMock.Object);
+
+                        MethodUnderTest();
+
+                        _serializerMock.Verify(serializer =>
+                            serializer.Deserialize(
+                                It.Is<TextReader>(textReader =>
+                                    textReader == reader)),
+                            Times.Once);
                     }
 
-                    [TestClass]
-                    public sealed class OnSuccess : TryDeserializeConfigurationUsingReader
+                    [TestMethod]
+                    public void ShouldReturnSuccessResult()
                     {
-                        [TestMethod]
-                        public void ShouldPassReaderToDeserialize()
-                        {
-                            var reader = new Mock<TextReader>().Object;
+                        _serializerMock.Setup(serializer =>
+                            serializer.Deserialize(It.IsAny<TextReader>()));
 
-                            _configurationFactoryMock.Setup(factory =>
-                                factory.CreateSerializationReaderFor(
-                                It.IsAny<string>()))
-                                .Returns(reader);
+                        _configurationFactoryMock.Setup(factory =>
+                            factory.CreateSerializerFor<AppConfiguration>())
+                            .Returns(_serializerMock.Object);
 
-                            _serializerMock.Setup(serializer =>
-                                serializer.Deserialize(It.IsAny<TextReader>()));
-
-                            _configurationFactoryMock.Setup(factory =>
-                                factory.CreateSerializerFor<AppConfiguration>())
-                                .Returns(_serializerMock.Object);
-
-                            MethodUnderTest();
-
-                            _serializerMock.Verify(serializer =>
-                                serializer.Deserialize(
-                                    It.Is<TextReader>(textReader =>
-                                        textReader == reader)),
-                                Times.Once);
-                        }
-
-                        [TestMethod]
-                        public void ShouldReturnSuccessResult()
-                        {
-                            _serializerMock.Setup(serializer =>
-                                serializer.Deserialize(It.IsAny<TextReader>()));
-
-                            _configurationFactoryMock.Setup(factory =>
-                                factory.CreateSerializerFor<AppConfiguration>())
-                                .Returns(_serializerMock.Object);
-
-                            ShouldReturnSuccess();
-                        }
-                    }
-
-                    [TestClass]
-                    public sealed class OnFailure : TryDeserializeConfigurationUsingReader
-                    {
-                        [TestMethod]
-                        public void From()
-                        {
-
-                        }
+                        ShouldReturnSuccess();
                     }
                 }
+
+                [TestClass]
+                public sealed class OnFailure : TryDeserializeConfigurationUsingReader
+                {
+                    [TestMethod]
+                    public void FromXmlException()
+                    {
+                        ShouldReturnErrorForXmlException();
+                    }
+
+                    [TestMethod]
+                    public void FromFileNotFoundException()
+                    {
+                        ShouldReturnErrorForFileNotFoundException();
+                    }
+
+                    [TestMethod]
+                    public void FromDirectoryNotFoundException()
+                    {
+                        ShouldReturnErrorForDirectoryNotFoundException();
+                    }
+
+                    [TestMethod]
+                    public void FromAnyOtherException()
+                    {
+                        ShouldReturnError();
+
+                        Assert.Fail("Not Implemented");
+                    }
+                }
+            }
+
+            private void ShouldReturnErrorForXmlException()
+            {
+                Assert.Fail("Not Implemented");
+            }
+
+            private void ShouldReturnErrorForFileNotFoundException()
+            {
+                Assert.Fail("Not Implemented");
+            }
+
+            private void ShouldReturnErrorForDirectoryNotFoundException()
+            {
+                Assert.Fail("Not Implemented");
             }
         }
 
