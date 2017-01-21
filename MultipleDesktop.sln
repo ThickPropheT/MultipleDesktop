@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xml.Extended", "Syst
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mscorlib.Extended", "System\mscorlib.Extended\mscorlib.Extended.csproj", "{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleDesktop.Configuration.Xml", "MultipleDesktop.Configuration.Xml\MultipleDesktop.Configuration.Xml.csproj", "{53A38DBF-E7FE-4466-9169-B322075124D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53A38DBF-E7FE-4466-9169-B322075124D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53A38DBF-E7FE-4466-9169-B322075124D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53A38DBF-E7FE-4466-9169-B322075124D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53A38DBF-E7FE-4466-9169-B322075124D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

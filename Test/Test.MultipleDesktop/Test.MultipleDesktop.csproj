@@ -68,15 +68,29 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationControllerTest.cs" />
     <Compile Include="Configuration\IoResultTest.cs" />
+    <Compile Include="Configuration\Xml\AppConfigurationTest.cs" />
     <Compile Include="Configuration\XmlConfigurationProviderTest.cs" />
+    <Compile Include="Configuration\Xml\XmlSerializationTest.cs" />
     <Compile Include="Mvc\AppControllerTest.cs" />
     <Compile Include="Mvc\Configuration\DesktopConfigurationMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Configuration\schema0.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\schema1.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MultipleDesktop.Configuration.Xml\MultipleDesktop.Configuration.Xml.csproj">
+      <Project>{53A38DBF-E7FE-4466-9169-B322075124D0}</Project>
+      <Name>MultipleDesktop.Configuration.Xml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MultipleDesktop.Configuration\MultipleDesktop.Configuration.csproj">
       <Project>{D3E4551F-B9EF-406D-BD2E-520975BCB281}</Project>
       <Name>MultipleDesktop.Configuration</Name>

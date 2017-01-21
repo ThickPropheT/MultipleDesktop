@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace MultipleDesktop.Configuration
+namespace MultipleDesktop.Configuration.Xml
 {
     [XmlType("app")]
     public class AppConfiguration : IAppConfiguration
     {
-        private List<VirtualDesktopConfiguration> _desktopConfigurations = new List<VirtualDesktopConfiguration>();
+        private List<VirtualDesktopConfiguration> _desktopConfigurations;
 
         [XmlArrayItem("desktop")]
         [XmlArray("desktops")]
@@ -31,15 +31,12 @@ namespace MultipleDesktop.Configuration
 
         public AppConfiguration()
         {
-
+            _desktopConfigurations = new List<VirtualDesktopConfiguration>();
         }
 
-        public AppConfiguration(IEnumerable<IVirtualDesktopConfiguration> configurations, IXmlConfigurationFactory factory)
+        public AppConfiguration(IEnumerable<VirtualDesktopConfiguration> configurations)
         {
-            _desktopConfigurations.AddRange(
-                configurations
-                    .Select(configuration =>
-                        factory.ToXmlConfiguration(configuration)));
+            _desktopConfigurations = new List<VirtualDesktopConfiguration>(configurations);
         }
 
         public IEnumerable<IVirtualDesktopConfiguration> GetAll()

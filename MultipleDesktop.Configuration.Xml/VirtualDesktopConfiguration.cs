@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
-namespace MultipleDesktop.Configuration
+namespace MultipleDesktop.Configuration.Xml
 {
     [XmlType("desktop")]
     public class VirtualDesktopConfiguration : IVirtualDesktopConfiguration

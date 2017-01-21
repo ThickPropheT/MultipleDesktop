@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://microsoft.com/wsdl/types/" />
+  <xs:element name="app" nillable="true" type="app" />
+  <xs:complexType name="app">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="desktops" type="ArrayOfDesktop" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfDesktop">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="desktop" nillable="true" type="desktop" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="desktop">
+    <xs:attribute name="guid" xmlns:q1="http://microsoft.com/wsdl/types/" type="q1:guid" use="required" />
+    <xs:attribute name="background-path" type="xs:string" />
+    <xs:attribute name="background-fit" type="Fit" use="required" />
+  </xs:complexType>
+  <xs:simpleType name="Fit">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Center" />
+      <xs:enumeration value="Tile" />
+      <xs:enumeration value="Stretch" />
+      <xs:enumeration value="Fit" />
+      <xs:enumeration value="Fill" />
+      <xs:enumeration value="Span" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="desktop" nillable="true" type="desktop" />
+</xs:schema>

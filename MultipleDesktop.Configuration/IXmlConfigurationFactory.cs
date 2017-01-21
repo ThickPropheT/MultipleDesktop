@@ -1,4 +1,5 @@
-﻿using MultipleDesktop.Mvc.Configuration;
+﻿using MultipleDesktop.Configuration.Xml;
+using MultipleDesktop.Mvc.Configuration;
 using System.IO;
 using System.Xml.Serialization.Extended;
 

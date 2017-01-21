@@ -1,9 +1,11 @@
-﻿using MultipleDesktop.Mvc.Configuration;
+﻿using MultipleDesktop.Configuration.Xml;
+using MultipleDesktop.Mvc.Configuration;
 using MultipleDesktop.Mvc.Desktop;
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization.Extended;
 using System.IO;
+using System.Linq;
+using System.Xml.Serialization.Extended;
 
 namespace MultipleDesktop.Configuration
 {
@@ -22,7 +24,7 @@ namespace MultipleDesktop.Configuration
 
         public IAppConfiguration AppConfigurationFrom(IEnumerable<IVirtualDesktopConfiguration> configurations)
         {
-            return new AppConfiguration(configurations, this);
+            return new AppConfiguration(configurations.Select(ToXmlConfiguration));
         }
 
         public IBackground BackgroundFrom(string backgroundPath, Fit fit)
@@ -72,7 +74,8 @@ namespace MultipleDesktop.Configuration
         public AppConfiguration ToXmlConfiguration(IAppConfiguration configuration)
         {
             return configuration as AppConfiguration
-                ?? new AppConfiguration(configuration.GetAll(), this);
+                ?? new AppConfiguration(configuration.GetAll().Select(ToXmlConfiguration));
+
         }
     }
 }

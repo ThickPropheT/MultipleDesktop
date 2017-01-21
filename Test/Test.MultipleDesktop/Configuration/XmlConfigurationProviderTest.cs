@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MultipleDesktop.Configuration;
+using MultipleDesktop.Configuration.Xml;
 using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
 using System;
