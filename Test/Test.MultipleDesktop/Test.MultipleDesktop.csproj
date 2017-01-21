@@ -70,6 +70,7 @@
     <Compile Include="Configuration\IoResultTest.cs" />
     <Compile Include="Configuration\XmlConfigurationProviderTest.cs" />
     <Compile Include="Mvc\AppControllerTest.cs" />
+    <Compile Include="Mvc\Configuration\DesktopConfigurationMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
