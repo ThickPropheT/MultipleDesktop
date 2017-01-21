@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace MultipleDesktop.Mvc.Configuration
 {
@@ -21,23 +22,23 @@ namespace MultipleDesktop.Mvc.Configuration
             };
         }
 
-        public static IoResult ForReadError()
+        public static IoResult ForReadError(InvalidOperationException exception)
         {
             return new IoResult
             {
                 DidFail = true,
-                Exception = null,
+                Exception = exception,
                 DoesExist = null,
                 ReadError = true
             };
         }
 
-        public static IoResult ForNotFound()
+        public static IoResult ForNotFound(IOException exception)
         {
             return new IoResult
             {
                 DidFail = true,
-                Exception = null,
+                Exception = exception,
                 DoesExist = false,
                 ReadError = null
             };
