@@ -2,6 +2,7 @@
 using MultipleDesktop.Mvc.Desktop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static MultipleDesktop.Windows.Interop.Shell.NativeMethods;
 using uIServiceProvider = MultipleDesktop.Windows.Interop.Shell.NativeMethods.IServiceProvider;
 using uIVirtualDesktop = MultipleDesktop.Windows.Interop.Shell.NativeMethods.IVirtualDesktop;
@@ -22,41 +23,63 @@ namespace MultipleDesktop.Windows.Interop.Shell
         {
             _factory = factory;
 
-            _desktop = CreateInstance<IDesktopWallpaper>(CLSID.DesktopWallpaper);
+            try
+            {
+                _desktop = CreateInstance<IDesktopWallpaper>(CLSID.DesktopWallpaper);
 
-            _manager = CreateInstance<IVirtualDesktopManager>(CLSID.VirtualDesktopManager);
+                _manager = CreateInstance<IVirtualDesktopManager>(CLSID.VirtualDesktopManager);
 
-            var shell = CreateInstance<uIServiceProvider>(CLSID.ImmersiveShell);
+                var shell = CreateInstance<uIServiceProvider>(CLSID.ImmersiveShell);
 
-            object managerResult;
-            shell.QueryService(
-                GUID.VirtualDesktopAPIUnknown,
-                typeof(IVirtualDesktopManagerInternal).GUID,
-                out managerResult);
+                object managerResult;
+                shell.QueryService(
+                    GUID.VirtualDesktopAPIUnknown,
+                    typeof(IVirtualDesktopManagerInternal).GUID,
+                    out managerResult);
 
-            _managerInternal = (IVirtualDesktopManagerInternal)managerResult;
+                _managerInternal = (IVirtualDesktopManagerInternal)managerResult;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         public Guid LoadCurrentDesktopUuid()
         {
-            return _managerInternal.GetCurrentDesktop().GetId();
+            try
+            {
+                return _managerInternal.GetCurrentDesktop().GetId();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return Guid.Empty;
+            }
         }
 
         public IEnumerable<Guid> LoadDesktopUuidList()
         {
             var uuids = new List<Guid>();
 
-            var numberOfDesktops = _managerInternal.GetCount();
-
-            IObjectArray desktops;
-            _managerInternal.GetDesktops(out desktops);
-
-            for (int i = 0; i < numberOfDesktops; i++)
+            try
             {
-                object desktopResult;
-                desktops.GetAt(i, typeof(uIVirtualDesktop).GUID, out desktopResult);
+                var numberOfDesktops = _managerInternal.GetCount();
 
-                uuids.Add(((uIVirtualDesktop)desktopResult).GetId());
+                IObjectArray desktops;
+                _managerInternal.GetDesktops(out desktops);
+
+                for (int i = 0; i < numberOfDesktops; i++)
+                {
+                    object desktopResult;
+                    desktops.GetAt(i, typeof(uIVirtualDesktop).GUID, out desktopResult);
+
+                    uuids.Add(((uIVirtualDesktop)desktopResult).GetId());
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
 
             return uuids;
@@ -66,8 +89,15 @@ namespace MultipleDesktop.Windows.Interop.Shell
         {
             lock (_ioLock)
             {
-                var result = _desktop.SetWallpaper(null, background.Path);
-                result = _desktop.SetPosition(background.Fit.ToPosition());
+                try
+                {
+                    var result = _desktop.SetWallpaper(null, background.Path);
+                    result = _desktop.SetPosition(background.Fit.ToPosition());
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             }
         }
 
@@ -75,15 +105,23 @@ namespace MultipleDesktop.Windows.Interop.Shell
         {
             lock (_ioLock)
             {
-                var path = new string(default(char), Constants.MaxPath);
-                _desktop.GetWallpaper(null, ref path);
+                try
+                {
+                    var path = new string(default(char), Constants.MaxPath);
+                    _desktop.GetWallpaper(null, ref path);
 
-                DESKTOP_WALLPAPER_POSITION position;
-                _desktop.GetPosition(out position);
+                    DESKTOP_WALLPAPER_POSITION position;
+                    _desktop.GetPosition(out position);
 
-                return _factory.BackgroundFrom(
-                    path,
-                    position.ToFit());
+                    return _factory.BackgroundFrom(
+                        path,
+                        position.ToFit());
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return _factory.BackgroundFrom(string.Empty, Fit.Center);
+                }
             }
         }
     }
