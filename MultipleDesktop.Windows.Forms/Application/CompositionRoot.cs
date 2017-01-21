@@ -28,7 +28,7 @@ namespace MultipleDesktop.Windows.Forms
                 view,
                 FileSystem.GetFileSystem(),
 
-                new VirtualDesktopStateProvider(
+                new VirtualDesktopStateMonitor(
                     new WindowsDesktop(adapter),
                     adapter,
                     configurationFactory),

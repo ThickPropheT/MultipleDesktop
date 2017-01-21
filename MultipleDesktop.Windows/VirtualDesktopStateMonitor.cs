@@ -11,7 +11,7 @@ using uIVirtualDesktop = MultipleDesktop.Mvc.Desktop.IVirtualDesktop;
 
 namespace MultipleDesktop.Windows
 {
-    public class VirtualDesktopStateProvider : IVirtualDesktopState
+    public class VirtualDesktopStateMonitor : IVirtualDesktopState
     {
         private readonly IWindowsDesktop _windowsDesktop;
         private readonly IWindowsDesktopAdapter _adapter;
@@ -31,7 +31,7 @@ namespace MultipleDesktop.Windows
         public event PropertyChangingEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public VirtualDesktopStateProvider(IWindowsDesktop windowsDesktop, IWindowsDesktopAdapter adapter, IConfigurationFactory factory)
+        public VirtualDesktopStateMonitor(IWindowsDesktop windowsDesktop, IWindowsDesktopAdapter adapter, IConfigurationFactory factory)
         {
             _windowsDesktop = windowsDesktop;
             _adapter = adapter;
