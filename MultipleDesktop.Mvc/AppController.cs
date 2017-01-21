@@ -13,7 +13,7 @@ namespace MultipleDesktop.Mvc
     {
         #region AllDesktopsChanging
 
-        private class WhenAllDesktopsChanges
+        private class WhenAllDesktopsHasChanged
         {
             private readonly IVirtualDesktopState _provider;
 
@@ -21,7 +21,7 @@ namespace MultipleDesktop.Mvc
 
             private Action<IEnumerable<IVirtualDesktop>, IEnumerable<IVirtualDesktop>> _completionCallback;
 
-            private WhenAllDesktopsChanges(IVirtualDesktopState provider)
+            private WhenAllDesktopsHasChanged(IVirtualDesktopState provider)
             {
                 _provider = provider;
                 provider.PropertyChanging += Provider_PropertyChanging;
@@ -42,9 +42,9 @@ namespace MultipleDesktop.Mvc
                 }
             }
 
-            public static WhenAllDesktopsChanges For(IVirtualDesktopState provider)
+            public static WhenAllDesktopsHasChanged For(IVirtualDesktopState provider)
             {
-                return new WhenAllDesktopsChanges(provider);
+                return new WhenAllDesktopsHasChanged(provider);
             }
 
             public void DoCallback(Action<IEnumerable<IVirtualDesktop>, IEnumerable<IVirtualDesktop>> completionCallback)
@@ -119,7 +119,7 @@ namespace MultipleDesktop.Mvc
             switch (e.PropertyName)
             {
                 case nameof(_desktopState.AllDesktops):
-                    WhenAllDesktopsChanges.For(_desktopState)
+                    WhenAllDesktopsHasChanged.For(_desktopState)
                         .DoCallback(UpdateDesktopConfigurations);
                     break;
                 default:
