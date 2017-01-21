@@ -3,7 +3,7 @@ An Application that enables the user to configure individual background wallpape
 
 Compatibile With:
 -----------------
-- Windows 10 Professional 64 Bit
+- Windows 10 Professional 64 Bit OS Build 14328 and up
 
 Features:
 ---------
