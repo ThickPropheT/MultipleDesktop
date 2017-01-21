@@ -179,9 +179,7 @@ namespace Test.MultipleDesktop.Configuration
                     [TestMethod]
                     public void OnFailure()
                     {
-                        _configurationFactoryMock.Setup(factory =>
-                            factory.CreateSerializerFor<AppConfiguration>())
-                            .Throws(Error);
+                        WhenSerializerCreationFails();
 
                         ShouldReturnError();
                     }
@@ -349,18 +347,6 @@ namespace Test.MultipleDesktop.Configuration
         [TestClass]
         public class WhenLoading : XmlConfigurationProviderTests
         {
-            /// <summary>
-            /// Modify this interface to ensure all Exception handling
-            /// test classes are updated appropriately.
-            /// </summary>
-            public interface ILoadFailureTest
-            {
-                void FromXmlException();
-                void FromFileNotFoundException();
-                void FromDirectoryNotFoundException();
-                void FromAnyOtherException();
-            }
-
             protected override Func<IoResult> MethodUnderTest =>
                 () => _xmlConfigurationProvider.Load(FilePath, out _result);
 
@@ -380,9 +366,16 @@ namespace Test.MultipleDesktop.Configuration
                 }
 
                 [TestClass]
-                public sealed class OnFailure : TryDeserializeConfigurationUsingReader,
-                    ILoadFailureTest
+                public sealed class OnFailure : TryDeserializeConfigurationUsingReader
                 {
+                    [TestMethod]
+                    public void _OnFailure()
+                    {
+                        WhenSerializerCreationFails();
+
+                        ShouldReturnError();
+                    }
+
                     [TestMethod]
                     public void FromXmlException()
                     {
@@ -404,7 +397,9 @@ namespace Test.MultipleDesktop.Configuration
                     [TestMethod]
                     public void FromAnyOtherException()
                     {
-                        ShouldReturnErrorForAnyException();
+                        ShouldReturnError();
+
+                        Assert.Fail("Not Implemented");
                     }
                 }
             }
@@ -432,8 +427,7 @@ namespace Test.MultipleDesktop.Configuration
                 }
 
                 [TestClass]
-                public sealed class OnFailure : TryDeserializeConfigurationUsingReader,
-                    ILoadFailureTest
+                public sealed class OnFailure : TryDeserializeConfigurationUsingReader
                 {
                     [TestMethod]
                     public void _OnFailure()
@@ -488,7 +482,7 @@ namespace Test.MultipleDesktop.Configuration
                 }
 
                 [TestClass]
-                public sealed class WhenDeserializing : TryDeserializeConfigurationUsingReader
+                public sealed class OnSuccess : TryDeserializeConfigurationUsingReader
                 {
                     [TestMethod]
                     public void ShouldPassReaderToDeserialize()
@@ -517,7 +511,7 @@ namespace Test.MultipleDesktop.Configuration
                     }
 
                     [TestMethod]
-                    public void OnSuccess()
+                    public void ShouldReturnSuccessResult()
                     {
                         _serializerMock.Setup(serializer =>
                             serializer.Deserialize(It.IsAny<TextReader>()));
@@ -531,8 +525,7 @@ namespace Test.MultipleDesktop.Configuration
                 }
 
                 [TestClass]
-                public sealed class OnFailure : TryDeserializeConfigurationUsingReader,
-                    ILoadFailureTest
+                public sealed class OnFailure : TryDeserializeConfigurationUsingReader
                 {
                     [TestMethod]
                     public void FromXmlException()
@@ -576,13 +569,6 @@ namespace Test.MultipleDesktop.Configuration
             {
                 Assert.Fail("Not Implemented");
             }
-
-            private void ShouldReturnErrorForAnyException()
-            {
-                _configurationFactoryMock.Setup(factory =>
-    factory.CreateSerializerFor<AppConfiguration>())
-    .Throws(Error);
-            }
         }
 
         private void ShouldRequestSerializerFromFactory()
@@ -595,6 +581,13 @@ namespace Test.MultipleDesktop.Configuration
             _configurationFactoryMock.Verify(factory =>
                 factory.CreateSerializerFor<AppConfiguration>(),
                 Times.Once);
+        }
+
+        private void WhenSerializerCreationFails()
+        {
+            _configurationFactoryMock.Setup(factory =>
+                factory.CreateSerializerFor<AppConfiguration>())
+                .Throws(Error);
         }
 
         private void ShouldReturnSuccess()
