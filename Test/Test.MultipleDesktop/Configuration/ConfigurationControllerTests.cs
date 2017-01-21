@@ -5,7 +5,9 @@ using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Xml;
 using VisualStudio.TestTools.UnitTesting;
 
 namespace Test.MultipleDesktop.Configuration
@@ -69,9 +71,35 @@ namespace Test.MultipleDesktop.Configuration
                 public abstract class OnLoadFailure : TryLoad
                 {
                     [TestClass]
-                    public sealed class FromMissingFile : OnLoadFailure
+                    public sealed class FromFileNotFound : OnLoadFailure
                     {
-                        public static readonly IoResult NotFoundResult = IoResult.ForNotFound();
+                        public static readonly IoResult NotFoundResult = IoResult.ForNotFound(new FileNotFoundException());
+
+                        public override IoResult LoadResult => NotFoundResult;
+
+                        [TestMethod]
+                        public void ShouldTryCreate()
+                        {
+                            ShouldTryCreateImpl();
+                        }
+
+                        [TestMethod]
+                        public void OnSuccess()
+                        {
+                            ShouldReturnCreatedConfiguration();
+                        }
+
+                        [TestMethod]
+                        public void OnFailure()
+                        {
+                            ShouldThrow();
+                        }
+                    }
+
+                    [TestClass]
+                    public sealed class FromDirectoryNotFound : OnLoadFailure
+                    {
+                        public static readonly IoResult NotFoundResult = IoResult.ForNotFound(new DirectoryNotFoundException());
 
                         public override IoResult LoadResult => NotFoundResult;
 
@@ -97,7 +125,7 @@ namespace Test.MultipleDesktop.Configuration
                     [TestClass]
                     public sealed class FromEmptyFile : OnLoadFailure
                     {
-                        public static readonly IoResult EmptyFileResult = IoResult.ForReadError();
+                        public static readonly IoResult EmptyFileResult = IoResult.ForReadError(new InvalidOperationException(string.Empty, new XmlException()));
 
                         public override IoResult LoadResult => EmptyFileResult;
 

@@ -79,15 +79,15 @@ namespace MultipleDesktop.Configuration
             }
             catch (InvalidOperationException ex) when (ex.InnerException is XmlException)
             {
-                return IoResult.ForReadError();
+                return IoResult.ForReadError(ex);
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException ex)
             {
-                return IoResult.ForNotFound();
+                return IoResult.ForNotFound(ex);
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException ex)
             {
-                return IoResult.ForNotFound();
+                return IoResult.ForNotFound(ex);
             }
             catch (Exception ex)
             {
