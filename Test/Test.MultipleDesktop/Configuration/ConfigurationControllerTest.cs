@@ -13,7 +13,7 @@ using VisualStudio.TestTools.UnitTesting;
 namespace Test.MultipleDesktop.Configuration
 {
     [TestClass]
-    public class ConfigurationControllerTests
+    public class ConfigurationControllerTest
     {
         public static readonly IoResult SuccessResult = IoResult.ForSuccess();
         public static readonly IoResult ErrorResult = IoResult.ForException(new ExceptionMock());
@@ -31,7 +31,7 @@ namespace Test.MultipleDesktop.Configuration
         }
 
         [TestClass]
-        public class WhenLoading : ConfigurationControllerTests
+        public class WhenLoading : ConfigurationControllerTest
         {
             [TestClass]
             public abstract class TryLoad : WhenLoading
@@ -204,7 +204,7 @@ namespace Test.MultipleDesktop.Configuration
         }
 
         [TestClass]
-        public sealed class WhenSaving : ConfigurationControllerTests
+        public sealed class WhenSaving : ConfigurationControllerTest
         {
             private Mock<IAppConfiguration> _appConfigurationMock;
 

@@ -66,9 +66,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Configuration\ConfigurationControllerTests.cs" />
-    <Compile Include="Configuration\XmlConfigurationProviderTests.cs" />
-    <Compile Include="Mvc\AppControllerTests.cs" />
+    <Compile Include="Configuration\ConfigurationControllerTest.cs" />
+    <Compile Include="Configuration\XmlConfigurationProviderTest.cs" />
+    <Compile Include="Mvc\AppControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

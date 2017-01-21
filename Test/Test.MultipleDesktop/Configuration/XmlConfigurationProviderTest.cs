@@ -14,7 +14,7 @@ using VisualStudio.TestTools.UnitTesting;
 namespace Test.MultipleDesktop.Configuration
 {
     [TestClass]
-    public abstract class XmlConfigurationProviderTests
+    public abstract class XmlConfigurationProviderTest
     {
         public const string FilePath = @"C:\";
 
@@ -35,7 +35,7 @@ namespace Test.MultipleDesktop.Configuration
         }
 
         [TestClass]
-        public abstract class WhenWriting : XmlConfigurationProviderTests
+        public abstract class WhenWriting : XmlConfigurationProviderTest
         {
             [TestClass]
             public class WhenCreating : WhenWriting
@@ -347,7 +347,7 @@ namespace Test.MultipleDesktop.Configuration
         }
 
         [TestClass]
-        public class WhenLoading : XmlConfigurationProviderTests
+        public class WhenLoading : XmlConfigurationProviderTest
         {
             /// <summary>
             /// Add exception handling unit tests here as abstract

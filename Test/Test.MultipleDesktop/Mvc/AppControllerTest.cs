@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Test.MultipleDesktop.Mvc
 {
     [TestClass]
-    public class AppControllerTests
+    public class AppControllerTest
     {
         private static Mock<IVirtualDesktopState> _desktopStateMock;
 
@@ -22,7 +22,7 @@ namespace Test.MultipleDesktop.Mvc
         }
 
         [TestClass]
-        public class WhenLoading : AppControllerTests
+        public class WhenLoading : AppControllerTest
         {
             private Mock<IAppConfiguration> _appConfigurationMock;
             private Mock<IConfigurationController> _configurationControllerMock;
