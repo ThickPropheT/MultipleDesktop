@@ -8,7 +8,7 @@ namespace MultipleDesktop.Configuration.Xml
     [XmlType("app")]
     public class AppConfiguration : IAppConfiguration
     {
-        private List<VirtualDesktopConfiguration> _desktopConfigurations;
+        private IEnumerable<VirtualDesktopConfiguration> _desktopConfigurations;
 
         [XmlArrayItem("desktop")]
         [XmlArray("desktops")]
@@ -25,7 +25,7 @@ namespace MultipleDesktop.Configuration.Xml
                 if (value == null)
                     return;
 
-                _desktopConfigurations = new List<VirtualDesktopConfiguration>(value);
+                _desktopConfigurations = value;
             }
         }
 
@@ -34,7 +34,7 @@ namespace MultipleDesktop.Configuration.Xml
         /// </summary>
         public AppConfiguration()
         {
-            _desktopConfigurations = new List<VirtualDesktopConfiguration>();
+            _desktopConfigurations = Enumerable.Empty<VirtualDesktopConfiguration>();
         }
 
         public AppConfiguration(IEnumerable<VirtualDesktopConfiguration> configurations)
