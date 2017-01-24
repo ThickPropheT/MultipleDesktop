@@ -13,10 +13,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="desktop">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="background-path" type="FilePath" />
+      <xs:element minOccurs="1" maxOccurs="1" name="background-fit" type="Fit" />
+    </xs:sequence>
     <xs:attribute name="guid" xmlns:q1="http://microsoft.com/wsdl/types/" type="q1:guid" use="required" />
-    <xs:attribute name="background-path" type="xs:string" />
-    <xs:attribute name="background-fit" type="Fit" use="required" />
   </xs:complexType>
+  <xs:complexType name="FilePath" />
   <xs:simpleType name="Fit">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Center" />

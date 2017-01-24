@@ -12,21 +12,21 @@ namespace MultipleDesktop.Configuration.Xml
     {
         private IConfigurationFactory _configurationFactory;
 
-        private string _backgroundPath;
+        private FilePath _backgroundPath;
         private Fit _fit;
 
         [XmlAttribute("guid")]
         public Guid Guid { get; set; }
 
-        [XmlAttribute("background-path")]
-        public string BackgroundPathAttribute
+        [XmlElement("background-path")]
+        public FilePath BackgroundPathElement
         {
             get { return _backgroundPath; }
             set { _backgroundPath = value; }
         }
 
         [XmlIgnore]
-        public string BackgroundPath
+        public FilePath BackgroundPath
         {
             get { return _backgroundPath; }
             set
@@ -42,8 +42,8 @@ namespace MultipleDesktop.Configuration.Xml
             }
         }
 
-        [XmlAttribute("background-fit")]
-        public Fit FitAttribute
+        [XmlElement("background-fit")]
+        public Fit FitElement
         {
             get { return _fit; }
             set { _fit = value; }

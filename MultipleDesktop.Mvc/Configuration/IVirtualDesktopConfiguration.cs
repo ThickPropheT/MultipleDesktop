@@ -8,7 +8,7 @@ namespace MultipleDesktop.Mvc.Configuration
     {
         Guid Guid { get; }
 
-        string BackgroundPath { get; set; }
+        FilePath BackgroundPath { get; set; }
 
         Fit Fit { get; set; }
 

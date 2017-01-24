@@ -29,6 +29,9 @@ namespace MultipleDesktop.Configuration.Xml
             }
         }
 
+        /// <summary>
+        /// Xml serialization constructor.
+        /// </summary>
         public AppConfiguration()
         {
             _desktopConfigurations = new List<VirtualDesktopConfiguration>();
