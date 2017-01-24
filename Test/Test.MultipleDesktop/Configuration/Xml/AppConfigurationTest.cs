@@ -10,6 +10,7 @@ using System.IO;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using VisualStudio.TestTools.UnitTesting;
 
 namespace Test.MultipleDesktop.Configuration.Xml
 {
@@ -19,21 +20,98 @@ namespace Test.MultipleDesktop.Configuration.Xml
         private AppConfiguration _appConfiguration;
 
         [TestClass]
-        public sealed class WhenInitializing : AppConfigurationTest
+        public class WhenInitializing : AppConfigurationTest
         {
-            [TestMethod]
-            public void ShouldPopulateDesktopConfigurations()
+            [TestClass]
+            public sealed class ToDefault : WhenInitializing
             {
-                var configurations = new[]
+                [TestInitialize]
+                public void UsingThisConfiguration()
                 {
-                        new Mock<VirtualDesktopConfiguration>().Object,
-                        new Mock<VirtualDesktopConfiguration>().Object
-                    };
+                    _appConfiguration = new AppConfiguration();
+                }
 
-                _appConfiguration = new AppConfiguration(configurations);
+                [TestMethod]
+                public void DesktopConfigurationsShouldBeNull()
+                {
+                    _appConfiguration.DesktopConfigurations.Should().Be.Null();
+                }
 
-                _appConfiguration.DesktopConfigurations.Should().Contain.One(configurations[0]);
-                _appConfiguration.DesktopConfigurations.Should().Contain.One(configurations[1]);
+                [TestMethod]
+                public void GetAllShouldReturnEmpty()
+                {
+                    _appConfiguration.GetAll().Should().Be.Empty();
+                }
+            }
+
+            [TestClass]
+            public class ToConfigurations : WhenInitializing
+            {
+                [TestClass]
+                public sealed class WhenConfigurationsIsNull : ToConfigurations
+                {
+                    [TestMethod]
+                    public void ShouldThrow()
+                    {
+                        Expect.Exception<ArgumentNullException>(() => new AppConfiguration(null));
+                    }
+                }
+
+                [TestClass]
+                public sealed class WhenConfigurationsIsEmpty : ToConfigurations
+                {
+                    [TestInitialize]
+                    public void UsingThisConfiguration()
+                    {
+                        _appConfiguration = new AppConfiguration(Enumerable.Empty<VirtualDesktopConfiguration>());
+                    }
+
+                    [TestMethod]
+                    public void DesktopConfigurationsShouldBeNull()
+                    {
+                        _appConfiguration.DesktopConfigurations.Should().Be.Null();
+                    }
+
+                    [TestMethod]
+                    public void GetAllShouldReturnEmpty()
+                    {
+                        _appConfiguration.GetAll().Should().Be.Empty();
+                    }
+                }
+
+                [TestClass]
+                public sealed class WhenConfigurationsIsNotEmpty : ToConfigurations
+                {
+                    private VirtualDesktopConfiguration[] _configurations;
+
+                    [TestInitialize]
+                    public void UsingThisConfiguration()
+                    {
+                        _configurations = new[]
+                        {
+                            new Mock<VirtualDesktopConfiguration>().Object,
+                            new Mock<VirtualDesktopConfiguration>().Object
+                        };
+
+                        _appConfiguration = new AppConfiguration(_configurations);
+                    }
+
+                    [TestMethod]
+                    public void DesktopConfigurationsShouldBeConfigurations()
+                    {
+                        _appConfiguration.DesktopConfigurations.Should().Contain.One(_configurations[0]);
+                        _appConfiguration.DesktopConfigurations.Should().Contain.One(_configurations[1]);
+                    }
+
+                    [TestMethod]
+                    public void GetAllShouldReturnConfigurations()
+                    {
+                        var all = _appConfiguration.GetAll();
+
+                        all.Should().Contain.One(_configurations[0]);
+                        all.Should().Contain.One(_configurations[1]);
+                    }
+                }
             }
         }
 
@@ -92,7 +170,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 [TestInitialize]
                 public void UsingThisConfiguration()
                 {
-                    _configurations = new[] { new VirtualDesktopConfiguration() };
+                    _configurations = new[] { new Mock<VirtualDesktopConfiguration>().Object };
 
                     _appConfiguration = new AppConfiguration(_configurations);
                 }
