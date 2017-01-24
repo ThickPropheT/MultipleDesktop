@@ -19,25 +19,21 @@ namespace Test.MultipleDesktop.Configuration.Xml
         private AppConfiguration _appConfiguration;
 
         [TestClass]
-        public class WhenInitializing : AppConfigurationTest
+        public sealed class WhenInitializing : AppConfigurationTest
         {
-            [TestClass]
-            public sealed class FromConstructor : WhenInitializing
+            [TestMethod]
+            public void ShouldPopulateDesktopConfigurations()
             {
-                [TestMethod]
-                public void ShouldPopulateDesktopConfigurations()
+                var configurations = new[]
                 {
-                    var configurations = new[]
-                    {
                         new Mock<VirtualDesktopConfiguration>().Object,
                         new Mock<VirtualDesktopConfiguration>().Object
                     };
 
-                    _appConfiguration = new AppConfiguration(configurations);
+                _appConfiguration = new AppConfiguration(configurations);
 
-                    _appConfiguration.DesktopConfigurations.Should().Contain.One(configurations[0]);
-                    _appConfiguration.DesktopConfigurations.Should().Contain.One(configurations[1]);
-                }
+                _appConfiguration.DesktopConfigurations.Should().Contain.One(configurations[0]);
+                _appConfiguration.DesktopConfigurations.Should().Contain.One(configurations[1]);
             }
         }
 
