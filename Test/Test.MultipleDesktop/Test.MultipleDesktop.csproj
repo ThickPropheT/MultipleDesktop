@@ -73,6 +73,7 @@
     <Compile Include="Configuration\Xml\XmlSerializationTest.cs" />
     <Compile Include="Mvc\AppControllerTest.cs" />
     <Compile Include="Mvc\Configuration\DesktopConfigurationMapperTest.cs" />
+    <Compile Include="Mvc\Configuration\FilePathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
