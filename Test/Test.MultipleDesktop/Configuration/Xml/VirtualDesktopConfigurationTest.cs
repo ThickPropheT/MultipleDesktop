@@ -24,6 +24,42 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 {
                     _virtualDesktopConfiguration = new VirtualDesktopConfiguration();
                 }
+
+                [TestMethod]
+                public void GuidShouldBeDefault()
+                {
+                    _virtualDesktopConfiguration.Guid.Should().Equal(Guid.Empty);
+                }
+
+                [TestMethod]
+                public void BackgroundPathElementShouldBeDefault()
+                {
+                    _virtualDesktopConfiguration.BackgroundPathElement.Should().Equal((FilePath)string.Empty);
+                }
+
+                [TestMethod]
+                public void BackgroundPathShouldBeDefault()
+                {
+                    _virtualDesktopConfiguration.BackgroundPath.Should().Equal((FilePath)string.Empty);
+                }
+
+                [TestMethod]
+                public void FitElementShouldBeDefault()
+                {
+                    _virtualDesktopConfiguration.FitElement.Should().Equal(Fit.Center);
+                }
+
+                [TestMethod]
+                public void FitShouldBeDefault()
+                {
+                    _virtualDesktopConfiguration.Fit.Should().Equal(Fit.Center);
+                }
+
+                [TestMethod]
+                public void TargetDesktopShouldBeNull()
+                {
+                    _virtualDesktopConfiguration.TargetDesktop.Should().Be.Null();
+                }
             }
 
             [TestClass]
