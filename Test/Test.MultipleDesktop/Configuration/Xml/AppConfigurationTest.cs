@@ -135,11 +135,16 @@ namespace Test.MultipleDesktop.Configuration.Xml
             [TestMethod]
             public void ShouldAcceptNonNull()
             {
-                var array = new VirtualDesktopConfiguration[0];
+                var array = new[]
+                {
+                    new Mock<VirtualDesktopConfiguration>().Object,
+                    new Mock<VirtualDesktopConfiguration>().Object
+                };
 
                 _appConfiguration.DesktopConfigurations = array;
 
-                _appConfiguration.GetAll().Should().Equal(array);
+                _appConfiguration.GetAll().Should().Contain.One(array[0]);
+                _appConfiguration.GetAll().Should().Contain.One(array[1]);
             }
         }
 
@@ -170,7 +175,11 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 [TestInitialize]
                 public void UsingThisConfiguration()
                 {
-                    _configurations = new[] { new Mock<VirtualDesktopConfiguration>().Object };
+                    _configurations = new[]
+                    {
+                        new Mock<VirtualDesktopConfiguration>().Object,
+                        new Mock<VirtualDesktopConfiguration>().Object
+                    };
 
                     _appConfiguration = new AppConfiguration(_configurations);
                 }
@@ -178,7 +187,8 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 [TestMethod]
                 public void ShouldGetArray()
                 {
-                    _appConfiguration.DesktopConfigurations.Should().Equal(_configurations);
+                    _appConfiguration.DesktopConfigurations.Should().Contain.One(_configurations[0]);
+                    _appConfiguration.DesktopConfigurations.Should().Contain.One(_configurations[1]);
                 }
             }
         }
