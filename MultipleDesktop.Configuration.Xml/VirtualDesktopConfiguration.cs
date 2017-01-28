@@ -13,7 +13,10 @@ namespace MultipleDesktop.Configuration.Xml
         private IConfigurationFactory _configurationFactory;
 
         private FilePath _backgroundPath;
+        private Action<FilePath> _backgroundPathSetter;
+
         private Fit _fit;
+        private Action<Fit> _fitSetter;
 
         [XmlAttribute("guid")]
         public Guid Guid { get; set; }
@@ -29,18 +32,25 @@ namespace MultipleDesktop.Configuration.Xml
         public FilePath BackgroundPath
         {
             get { return _backgroundPath; }
-            set
-            {
-                if (Equals(_backgroundPath, value))
-                    return;
-
-                _backgroundPath = value;
-
-                TargetDesktop.Background =
-                    _configurationFactory
-                        .BackgroundFrom(value, _fit);
-            }
+            set { _backgroundPathSetter(value); }
         }
+
+        private void SetBackgroundPath(FilePath value)
+        {
+
+        }
+
+        //private void SetBackgroundPath(FilePath value)
+        //{
+        //    if (Equals(_backgroundPath, value))
+        //        return;
+
+        //    _backgroundPath = value;
+
+        //    TargetDesktop.Background =
+        //            _configurationFactory
+        //                .BackgroundFrom(value, _fit);
+        //}
 
         [XmlElement("background-fit")]
         public Fit FitElement
@@ -53,18 +63,26 @@ namespace MultipleDesktop.Configuration.Xml
         public Fit Fit
         {
             get { return _fit; }
-            set
-            {
-                if (Equals(_fit, value))
-                    return;
+            set { _fitSetter(value); }
 
-                _fit = value;
-
-                TargetDesktop.Background =
-                    _configurationFactory
-                        .BackgroundFrom(_backgroundPath, value);
-            }
         }
+
+        private void SetFit(Fit value)
+        {
+
+        }
+
+        //private void SetFit(Fit value)
+        //{
+        //    if (Equals(_fit, value))
+        //        return;
+
+        //    _fit = value;
+
+        //    TargetDesktop.Background =
+        //        _configurationFactory
+        //            .BackgroundFrom(_backgroundPath, value);
+        //}
 
         [XmlIgnore]
         public IVirtualDesktop TargetDesktop { get; private set; }
@@ -74,7 +92,16 @@ namespace MultipleDesktop.Configuration.Xml
         /// <summary>
         /// Xml serialization constructor.
         /// </summary>
-        public VirtualDesktopConfiguration() { }
+        public VirtualDesktopConfiguration()
+        {
+            _backgroundPathSetter = value => ThrowFor(nameof(BackgroundPath));
+            _fitSetter = value => ThrowFor(nameof(Fit));
+        }
+
+        private void ThrowFor(string propertyName)
+        {
+            throw new XmlIgnoreException(propertyName);
+        }
 
         public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
         {
@@ -83,6 +110,9 @@ namespace MultipleDesktop.Configuration.Xml
             var background = targetDesktop.Background;
 
             _backgroundPath = background.Path;
+            _fit = background.Fit;
+
+            TargetDesktop = targetDesktop;
         }
 
         //public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
@@ -92,23 +122,31 @@ namespace MultipleDesktop.Configuration.Xml
         //    UpdateFromTarget();
         //}
 
+        //public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
+        //{
+        //    _configurationFactory = factory;
+
+        //    if (TargetDesktop != null)
+        //    {
+        //        TargetDesktop.PropertyChanged -= Target_PropertyChanged;
+        //    }
+
+        //    TargetDesktop = value;
+
+        //    if (value != null)
+        //    {
+        //        value.PropertyChanged += Target_PropertyChanged;
+
+        //        value.Background = factory.BackgroundFrom(_backgroundPath, _fit);
+        //    }
+        //}
+
         public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
         {
-            _configurationFactory = factory;
-
-            if (TargetDesktop != null)
-            {
-                TargetDesktop.PropertyChanged -= Target_PropertyChanged;
-            }
+            _backgroundPathSetter = SetBackgroundPath;
+            _fitSetter = SetFit;
 
             TargetDesktop = value;
-
-            if (value != null)
-            {
-                value.PropertyChanged += Target_PropertyChanged;
-
-                value.Background = factory.BackgroundFrom(_backgroundPath, _fit);
-            }
         }
 
         private void Target_PropertyChanged(object sender, PropertyChangedEventArgs e)
