@@ -40,7 +40,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 [TestMethod]
                 public void BackgroundPathShouldBeDefault()
                 {
-                    _virtualDesktopConfiguration.BackgroundPath.Should().Equal((FilePath)string.Empty);
+                    _virtualDesktopConfiguration.BackgroundPath.Equals(string.Empty).Should().Be.True();
                 }
 
                 [TestMethod]
@@ -65,16 +65,66 @@ namespace Test.MultipleDesktop.Configuration.Xml
             [TestClass]
             public sealed class ToTargetDesktopAndFactory : WhenInitializing
             {
-                private Mock<IVirtualDesktop> _virtualDesktopMock;
-                private Mock<IConfigurationFactory> _configurationFactoryMock;
+                public const string AnyString = "MOCK_VALUE";
 
+                [TestMethod]
+                public void GuidShouldBeTargetGuid()
+                {
+                    var guid = new Guid("00000000-0000-0000-0000-000000000001");
+
+                    var virtualDesktopMock = new Mock<IVirtualDesktop>();
+                    virtualDesktopMock.SetupGet(desktop => desktop.Guid)
+                        .Returns(guid);
+
+                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(virtualDesktopMock.Object, null);
+
+                    _virtualDesktopConfiguration.Guid.Should().Equal(guid);
+                }
+
+                [TestMethod]
+                public void BackroundPathElementShouldBeTargetBackgroundPath()
+                {
+                    const string path = AnyString;
+
+                    var backgroundMock = new Mock<IBackground>();
+                    backgroundMock.SetupGet(background => background.Path)
+                        .Returns(path);
+
+                    var virtualDesktopMock = new Mock<IVirtualDesktop>();
+                    virtualDesktopMock.SetupGet(desktop => desktop.Background)
+                        .Returns(backgroundMock.Object);
+
+                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(virtualDesktopMock.Object, null);
+
+                    _virtualDesktopConfiguration.BackgroundPathElement.Equals(path).Should().Be.True();
+                }
+
+                [TestMethod]
+                public void BackgroundPathShouldBeTargetBackgroundPath()
+                {
+                    const string path = AnyString;
+
+                    var backgroundMock = new Mock<IBackground>();
+                    backgroundMock.SetupGet(background => background.Path)
+                        .Returns(path);
+
+                    var virtualDesktopMock = new Mock<IVirtualDesktop>();
+                    virtualDesktopMock.SetupGet(desktop => desktop.Background)
+                        .Returns(backgroundMock.Object);
+
+                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(virtualDesktopMock.Object, null);
+
+                    _virtualDesktopConfiguration.BackgroundPath.Equals(path).Should().Be.True();
+                }
+            }
+
+            [TestClass]
+            public sealed class UsingProperties : WhenInitializing
+            {
                 [TestInitialize]
                 public void UsingThisConfiguration()
                 {
-                    _virtualDesktopMock = new Mock<IVirtualDesktop>();
-                    _configurationFactoryMock = new Mock<IConfigurationFactory>();
-
-                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _configurationFactoryMock.Object);
+                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration();
                 }
             }
         }
