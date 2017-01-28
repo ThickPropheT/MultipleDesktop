@@ -8,3 +8,14 @@ Switch to TDD & back-test existing code
 
 Investigate use of IVirtualDesktopNotificationService
 	to receive state updates rather than poll for state updates
+
+Add test & logic for sanitizing and validating background file path loaded from config
+	consider @ calls to BindToTarget method
+
+Add license
+	determine how...
+	and how to include dependency licenses
+		should fluent assertion library
+		moq mock library
+
+Investigate lookup of application name for use in name of configuration file
