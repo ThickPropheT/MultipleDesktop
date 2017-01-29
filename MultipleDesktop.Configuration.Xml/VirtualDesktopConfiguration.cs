@@ -92,7 +92,7 @@ namespace MultipleDesktop.Configuration.Xml
         /// <summary>
         /// Xml serialization constructor.
         /// </summary>
-        public VirtualDesktopConfiguration()
+        internal VirtualDesktopConfiguration()
         {
             _backgroundPathSetter = value => ThrowFor(nameof(BackgroundPath));
             _fitSetter = value => ThrowFor(nameof(Fit));
