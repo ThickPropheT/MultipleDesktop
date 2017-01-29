@@ -20,4 +20,4 @@ Add license
 
 Investigate lookup of application name for use in name of configuration file
 
-Add tests for PropertyChangedBinding
+Finish tests for VirtualDesktopConfiguration

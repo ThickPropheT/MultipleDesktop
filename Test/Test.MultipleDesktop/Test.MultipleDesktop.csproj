@@ -76,6 +76,7 @@
     <Compile Include="Mvc\Configuration\DesktopConfigurationMapperTest.cs" />
     <Compile Include="Mvc\Configuration\FilePathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyChangedBindingTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Configuration\Xml\schema0.xsd">
