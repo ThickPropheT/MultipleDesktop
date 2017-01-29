@@ -100,7 +100,7 @@ namespace MultipleDesktop.Configuration.Xml
 
         private void ThrowFor(string propertyName)
         {
-            throw new XmlIgnoreException(propertyName);
+            throw new XmlIgnoreException(propertyName, $"After Xml deserialization is complete, call '{nameof(BindToTarget)}' to enable setter for '{propertyName}'.");
         }
 
         public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
