@@ -19,3 +19,5 @@ Add license
 		moq mock library
 
 Investigate lookup of application name for use in name of configuration file
+
+Add tests for PropertyChangedBinding

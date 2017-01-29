@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using MultipleDesktop.Mvc;
 
 namespace MultipleDesktop.Configuration.Xml
 {
@@ -11,6 +12,8 @@ namespace MultipleDesktop.Configuration.Xml
     public class VirtualDesktopConfiguration : IVirtualDesktopConfiguration
     {
         private IConfigurationFactory _configurationFactory;
+
+        private IPropertyChangedBinding _propertyChangedBinding;
 
         private FilePath _backgroundPath;
         private Action<FilePath> _backgroundPathSetter;
@@ -113,6 +116,8 @@ namespace MultipleDesktop.Configuration.Xml
             _fit = background.Fit;
 
             TargetDesktop = targetDesktop;
+
+            _propertyChangedBinding = factory.Bind(UpdateFromTarget, targetDesktop);
         }
 
         //public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
@@ -121,6 +126,21 @@ namespace MultipleDesktop.Configuration.Xml
         //    // should take values from desktop
         //    UpdateFromTarget();
         //}
+
+        public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
+        {
+            _backgroundPathSetter = SetBackgroundPath;
+            _fitSetter = SetFit;
+
+            TargetDesktop = value;
+
+            if (_propertyChangedBinding != null)
+            {
+                _propertyChangedBinding.Unbind();
+            }
+
+            _propertyChangedBinding = factory.Bind(UpdateFromTarget, value);
+        }
 
         //public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
         //{
@@ -141,20 +161,7 @@ namespace MultipleDesktop.Configuration.Xml
         //    }
         //}
 
-        public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
-        {
-            _backgroundPathSetter = SetBackgroundPath;
-            _fitSetter = SetFit;
-
-            TargetDesktop = value;
-        }
-
-        private void Target_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            UpdateFromTarget();
-        }
-
-        private void UpdateFromTarget()
+        public void UpdateFromTarget()
         {
             Guid = TargetDesktop.Guid;
 

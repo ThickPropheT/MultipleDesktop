@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization.Extended;
+using System.ComponentModel;
+using MultipleDesktop.Mvc;
 
 namespace MultipleDesktop.Configuration
 {
@@ -76,6 +78,11 @@ namespace MultipleDesktop.Configuration
             return configuration as AppConfiguration
                 ?? new AppConfiguration(configuration.GetAll().Select(ToXmlConfiguration));
 
+        }
+
+        public IPropertyChangedBinding Bind(Action target, INotifyPropertyChanged toSource)
+        {
+            return new PropertyChangedBinding(toSource, target);
         }
     }
 }

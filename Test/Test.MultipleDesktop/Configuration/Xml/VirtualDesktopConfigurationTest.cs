@@ -1,10 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MultipleDesktop.Configuration.Xml;
-using Should.Fluent;
-using MultipleDesktop.Mvc.Desktop;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using MultipleDesktop.Configuration.Xml;
+using MultipleDesktop.Mvc;
 using MultipleDesktop.Mvc.Configuration;
+using MultipleDesktop.Mvc.Desktop;
+using Should.Fluent;
+using System;
+using System.ComponentModel;
 using VisualStudio.TestTools.UnitTesting;
 
 namespace Test.MultipleDesktop.Configuration.Xml
@@ -12,13 +14,13 @@ namespace Test.MultipleDesktop.Configuration.Xml
     [TestClass]
     public class VirtualDesktopConfigurationTest
     {
+        private VirtualDesktopConfiguration _virtualDesktopConfiguration;
+
         [TestClass]
         public class WhenInitializing : VirtualDesktopConfigurationTest
         {
             public const string AnyString = "MOCK_VALUE";
             public const Fit AnyFit = Fit.Tile;
-
-            private VirtualDesktopConfiguration _virtualDesktopConfiguration;
 
             [TestClass]
             public sealed class ToDefault : WhenInitializing
@@ -67,88 +69,145 @@ namespace Test.MultipleDesktop.Configuration.Xml
             }
 
             [TestClass]
-            public sealed class ToTargetDesktopAndFactory : WhenInitializing
+            public class ToTargetDesktopAndFactory : WhenInitializing
             {
                 private Mock<IBackground> _backgroundMock;
                 private Mock<IVirtualDesktop> _virtualDesktopMock;
+                private Mock<IConfigurationFactory> _factoryMock;
 
                 [TestInitialize]
-                public void UsingThisConfiguration()
+                public virtual void UsingThisConfiguration()
                 {
                     _backgroundMock = new Mock<IBackground>();
 
                     _virtualDesktopMock = new Mock<IVirtualDesktop>();
                     _virtualDesktopMock.SetupGet(desktop => desktop.Background)
                         .Returns(_backgroundMock.Object);
+
+                    _factoryMock = new Mock<IConfigurationFactory>();
                 }
 
-                [TestMethod]
-                public void GuidShouldBeTargetGuid()
+                [TestClass]
+                public sealed class DoInitialize : ToTargetDesktopAndFactory
                 {
-                    var guid = new Guid("00000000-0000-0000-0000-000000000001");
+                    [TestMethod]
+                    public void GuidShouldBeTargetGuid()
+                    {
+                        var guid = new Guid("00000000-0000-0000-0000-000000000001");
 
-                    _virtualDesktopMock.SetupGet(desktop => desktop.Guid)
-                        .Returns(guid);
+                        _virtualDesktopMock.SetupGet(desktop => desktop.Guid)
+                            .Returns(guid);
 
-                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, null);
+                        _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
 
-                    _virtualDesktopConfiguration.Guid.Should().Equal(guid);
+                        _virtualDesktopConfiguration.Guid.Should().Equal(guid);
+                    }
+
+                    [TestMethod]
+                    public void BackroundPathElementShouldBeTargetBackgroundPath()
+                    {
+                        ShouldBeTargetBackgroundPath(() => _virtualDesktopConfiguration.BackgroundPathElement);
+                    }
+
+                    [TestMethod]
+                    public void BackgroundPathShouldBeTargetBackgroundPath()
+                    {
+                        ShouldBeTargetBackgroundPath(() => _virtualDesktopConfiguration.BackgroundPath);
+                    }
+
+                    [TestMethod]
+                    public void FitElementShouldBeTargetBackgroundFit()
+                    {
+                        ShouldBeTargetBackgroundFit(() => _virtualDesktopConfiguration.FitElement);
+                    }
+
+                    [TestMethod]
+                    public void FitShouldBeTargetBackgroundFit()
+                    {
+                        ShouldBeTargetBackgroundFit(() => _virtualDesktopConfiguration.Fit);
+                    }
+
+                    [TestMethod]
+                    public void TargetDesktopShouldBeTarget()
+                    {
+                        _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
+
+                        _virtualDesktopConfiguration.TargetDesktop.Should().Be.SameAs(_virtualDesktopMock.Object);
+                    }
+
+                    [TestMethod]
+                    public void ShouldBindToTargetPropertyChanged()
+                    {
+                        _factoryMock.Setup(factory =>
+                            factory.Bind(
+                                It.IsAny<Action>(),
+                                It.IsAny<INotifyPropertyChanged>()));
+
+                        _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
+
+                        _factoryMock.Verify(factory =>
+                            factory.Bind(
+                                It.Is<Action>(a =>
+                                    a == _virtualDesktopConfiguration.UpdateFromTarget),
+                                It.Is<IVirtualDesktop>(d =>
+                                    d == _virtualDesktopMock.Object)),
+                            Times.Once);
+                    }
+
+                    private void ShouldBeTargetBackgroundPath(Func<string> getPath)
+                    {
+                        const string path = AnyString;
+
+                        _backgroundMock.SetupGet(background => background.Path)
+                            .Returns(path);
+
+                        _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
+
+                        getPath().Equals(path).Should().Be.True();
+                    }
+
+                    private void ShouldBeTargetBackgroundFit(Func<Fit> getFit)
+                    {
+                        const Fit fit = AnyFit;
+
+                        _backgroundMock.SetupGet(background => background.Fit)
+                            .Returns(fit);
+
+                        _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
+
+                        getFit().Should().Equal(fit);
+                    }
                 }
 
-                [TestMethod]
-                public void BackroundPathElementShouldBeTargetBackgroundPath()
+                [TestClass]
+                public sealed class WhenRebinding : ToTargetDesktopAndFactory
                 {
-                    ShouldBeTargetBackgroundPath(() => _virtualDesktopConfiguration.BackgroundPathElement);
-                }
+                    private Mock<IPropertyChangedBinding> _bindingMock;
 
-                [TestMethod]
-                public void BackgroundPathShouldBeTargetBackgroundPath()
-                {
-                    ShouldBeTargetBackgroundPath(() => _virtualDesktopConfiguration.BackgroundPath);
-                }
+                    [TestInitialize]
+                    public override void UsingThisConfiguration()
+                    {
+                        base.UsingThisConfiguration();
 
-                [TestMethod]
-                public void FitElementShouldBeTargetBackgroundFit()
-                {
-                    ShouldBeTargetBackgroundFit(() => _virtualDesktopConfiguration.FitElement);
-                }
+                        _bindingMock = new Mock<IPropertyChangedBinding>();
+                        _bindingMock.Setup(binding => binding.Unbind());
 
-                [TestMethod]
-                public void FitShouldBeTargetBackgroundFit()
-                {
-                    ShouldBeTargetBackgroundFit(() => _virtualDesktopConfiguration.Fit);
-                }
+                        _factoryMock.Setup(factory =>
+                            factory.Bind(
+                                It.IsAny<Action>(),
+                                It.IsAny<INotifyPropertyChanged>()))
+                            .Returns(_bindingMock.Object);
 
-                [TestMethod]
-                public void TargetDesktopShouldBeTarget()
-                {
-                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, null);
+                        _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
+                    }
 
-                    _virtualDesktopConfiguration.TargetDesktop.Should().Be.SameAs(_virtualDesktopMock.Object);
-                }
+                    [TestMethod]
+                    public void ShouldUnbindExistingBinding()
+                    {
+                        _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
 
-                private void ShouldBeTargetBackgroundPath(Func<string> getPath)
-                {
-                    const string path = AnyString;
-
-                    _backgroundMock.SetupGet(background => background.Path)
-                        .Returns(path);
-
-                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, null);
-
-                    getPath().Equals(path).Should().Be.True();
-                }
-
-                private void ShouldBeTargetBackgroundFit(Func<Fit> getFit)
-                {
-                    const Fit fit = AnyFit;
-
-                    _backgroundMock.SetupGet(background => background.Fit)
-                        .Returns(fit);
-
-                    _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, null);
-
-                    getFit().Should().Equal(fit);
+                        _bindingMock.Verify(binding => binding.Unbind(), Times.Once);
+                    }
                 }
             }
 
@@ -278,6 +337,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     public sealed class WhenBoundToTarget : WhenInitialized
                     {
                         private Mock<IVirtualDesktop> _virtualDesktopMock;
+                        private Mock<IConfigurationFactory> _factoryMock;
 
                         [TestInitialize]
                         public override void UsingThisConfiguration()
@@ -285,14 +345,15 @@ namespace Test.MultipleDesktop.Configuration.Xml
                             base.UsingThisConfiguration();
 
                             _virtualDesktopMock = new Mock<IVirtualDesktop>();
-
-                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, null);
+                            _factoryMock = new Mock<IConfigurationFactory>();
                         }
 
                         [TestMethod]
                         public void SettingBackgroundPathShouldNotThrow()
                         {
                             const string path = AnyString;
+
+                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
 
                             _virtualDesktopConfiguration.BackgroundPath = path;
                         }
@@ -302,16 +363,87 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         {
                             const Fit fit = AnyFit;
 
+                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
+
                             _virtualDesktopConfiguration.Fit = fit;
                         }
 
                         [TestMethod]
-                        public void TargetDesktopShouldBeValue()
+                        public void TargetDesktopShouldBeTarget()
                         {
+                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
+
                             _virtualDesktopConfiguration.TargetDesktop.Should().Be.SameAs(_virtualDesktopMock.Object);
+                        }
+
+                        [TestMethod]
+                        public void ShouldBindToTargetPropertyChanged()
+                        {
+                            _factoryMock.Setup(factory =>
+                                factory.Bind(
+                                    It.IsAny<Action>(),
+                                    It.IsAny<INotifyPropertyChanged>()));
+
+                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
+
+                            _factoryMock.Verify(factory =>
+                                factory.Bind(
+                                    It.Is<Action>(a =>
+                                        a == _virtualDesktopConfiguration.UpdateFromTarget),
+                                    It.Is<IVirtualDesktop>(d =>
+                                        d == _virtualDesktopMock.Object)),
+                                Times.Once);
+                        }
+                    }
+
+                    [TestClass]
+                    public sealed class WhenRebinding : WhenInitialized
+                    {
+                        private Mock<IVirtualDesktop> _virtualDesktopMock;
+                        private Mock<IPropertyChangedBinding> _bindingMock;
+                        private Mock<IConfigurationFactory> _factoryMock;
+
+                        [TestInitialize]
+                        public override void UsingThisConfiguration()
+                        {
+                            base.UsingThisConfiguration();
+
+                            _virtualDesktopMock = new Mock<IVirtualDesktop>();
+                            _factoryMock = new Mock<IConfigurationFactory>();
+
+                            _virtualDesktopConfiguration = new VirtualDesktopConfiguration();
+
+                            _bindingMock = new Mock<IPropertyChangedBinding>();
+                            _bindingMock.Setup(binding => binding.Unbind());
+
+                            _factoryMock.Setup(factory =>
+                                factory.Bind(
+                                    It.IsAny<Action>(),
+                                    It.IsAny<INotifyPropertyChanged>()))
+                                .Returns(_bindingMock.Object);
+
+                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
+                        }
+
+                        [TestMethod]
+                        public void ShouldUnbindExistingBinding()
+                        {
+                            _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
+
+                            _bindingMock.Verify(binding => binding.Unbind(), Times.Once);
                         }
                     }
                 }
+            }
+        }
+
+        [TestClass]
+        public class WhenBindingToTarget : VirtualDesktopConfigurationTest
+        {
+            [TestClass]
+            public sealed class WhenAlreadyBound : WhenBindingToTarget
+            {
+
             }
         }
 
@@ -359,12 +491,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
 
         [TestClass]
         public sealed class WhenGettingTargetDesktop : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
-        public sealed class WhenBindingToTarget : VirtualDesktopConfigurationTest
         {
 
         }
