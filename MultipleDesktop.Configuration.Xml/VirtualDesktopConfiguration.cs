@@ -140,6 +140,8 @@ namespace MultipleDesktop.Configuration.Xml
             }
 
             _propertyChangedBinding = factory.Bind(UpdateFromTarget, value);
+
+            value.Background = factory.BackgroundFrom(_backgroundPath, _fit);
         }
 
         //public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
