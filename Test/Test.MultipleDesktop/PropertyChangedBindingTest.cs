@@ -35,6 +35,17 @@ namespace Test.MultipleDesktop
         public sealed class WhenUnbound : PropertyChangedBindingTest
         {
             [TestMethod]
+            public void SourceShouldBeNull()
+            {
+                var sourceMock = new Mock<INotifyPropertyChanged>();
+
+                var binding = new PropertyChangedBinding(sourceMock.Object, null);
+                binding.Unbind();
+
+                binding.Source.Should().Be.Null();
+            }
+
+            [TestMethod]
             public void ShouldNotExecuteCallback()
             {
                 var sourceMock = new Mock<INotifyPropertyChanged>();
