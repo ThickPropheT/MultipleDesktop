@@ -17,6 +17,7 @@ Add license
 	and how to include dependency licenses
 		should fluent assertion library
 		moq mock library
+		^ these may not need to be included unless their code is modified (i.e. forked)
 
 Investigate lookup of application name for use in name of configuration file
 
