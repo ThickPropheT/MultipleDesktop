@@ -5,7 +5,7 @@ using Moq;
 using MultipleDesktop.Mvc;
 using Should.Fluent;
 
-namespace Test.MultipleDesktop
+namespace Test.MultipleDesktop.Mvc
 {
     [TestClass]
     public class PropertyChangedBindingTest
