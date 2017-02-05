@@ -110,6 +110,10 @@
       <Project>{5a9dab6b-16e5-4391-a2a8-d301847466b1}</Project>
       <Name>System.Xml.Extended</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Should.Fluent.Invocation\Should.Fluent.Invocation.csproj">
+      <Project>{3235823B-0070-4CCA-9315-18E70C40DEF9}</Project>
+      <Name>Should.Fluent.Invocation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualStudio.TestTools.UnitTesting\VisualStudio.TestTools.UnitTesting.csproj">
       <Project>{9A1BAFC8-B61A-47BC-8B1E-5A2A63354CA1}</Project>
       <Name>VisualStudio.TestTools.UnitTesting</Name>

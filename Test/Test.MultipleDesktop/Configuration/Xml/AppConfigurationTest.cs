@@ -1,15 +1,16 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MultipleDesktop.Configuration;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Linq;
-using Should.Fluent;
+using MultipleDesktop.Configuration;
 using MultipleDesktop.Configuration.Xml;
-using System.Xml;
+using Should.Fluent;
+using Should.Fluent.Invocation;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using System.Collections.Generic;
 using VisualStudio.TestTools.UnitTesting;
 
 namespace Test.MultipleDesktop.Configuration.Xml
@@ -53,7 +54,9 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void ShouldThrow()
                     {
-                        Expect.Exception<ArgumentNullException>(() => new AppConfiguration(null));
+                        Invoke.Delegate(() => new AppConfiguration(null))
+                            .Should()
+                            .Throw<ArgumentNullException>();
                     }
                 }
 

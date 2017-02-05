@@ -3,6 +3,7 @@ using Moq;
 using MultipleDesktop.Configuration;
 using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
+using Should.Fluent.Invocation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -198,7 +199,10 @@ namespace Test.MultipleDesktop.Configuration
 
                 protected void ShouldThrowImpl(IoResult result)
                 {
-                    Expect.Exception(result.Exception, () => _configurationController.Load());
+                    Invoke.Delegate(() =>
+                        _configurationController.Load())
+                        .Should()
+                        .Throw(result.Exception);
                 }
             }
         }
@@ -235,7 +239,10 @@ namespace Test.MultipleDesktop.Configuration
             {
                 SetupProviderWithResult(ErrorResult);
 
-                Expect.Exception(ErrorResult.Exception, () => _configurationController.Save(_appConfigurationMock.Object));
+                Invoke.Delegate(() =>
+                    _configurationController.Save(_appConfigurationMock.Object))
+                    .Should()
+                    .Throw(ErrorResult.Exception);
             }
 
             private void SetupProviderWithResult(IoResult result)
