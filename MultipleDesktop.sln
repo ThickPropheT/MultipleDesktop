@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mscorlib.Extended", "System
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleDesktop.Configuration.Xml", "MultipleDesktop.Configuration.Xml\MultipleDesktop.Configuration.Xml.csproj", "{53A38DBF-E7FE-4466-9169-B322075124D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Should.Fluent.Invocation", "Test\Should.Fluent.Invocation\Should.Fluent.Invocation.csproj", "{3235823B-0070-4CCA-9315-18E70C40DEF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,9 @@ Global
 		{53A38DBF-E7FE-4466-9169-B322075124D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A38DBF-E7FE-4466-9169-B322075124D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53A38DBF-E7FE-4466-9169-B322075124D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3235823B-0070-4CCA-9315-18E70C40DEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3235823B-0070-4CCA-9315-18E70C40DEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3235823B-0070-4CCA-9315-18E70C40DEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +79,6 @@ Global
 		{9A1BAFC8-B61A-47BC-8B1E-5A2A63354CA1} = {6C86B913-B4AA-42BD-B00B-38255BED06EB}
 		{5A9DAB6B-16E5-4391-A2A8-D301847466B1} = {C79EF58D-1140-48E1-A962-1F7819335646}
 		{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2} = {C79EF58D-1140-48E1-A962-1F7819335646}
+		{3235823B-0070-4CCA-9315-18E70C40DEF9} = {6C86B913-B4AA-42BD-B00B-38255BED06EB}
 	EndGlobalSection
 EndGlobal
