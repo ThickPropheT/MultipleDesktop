@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MultipleDesktop.Configuration.Xml;
 using System.Xml;
 using System.IO;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 using MultipleDesktop.Mvc.Desktop;
 using System.Collections.Generic;
@@ -153,7 +152,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 using (var xmlReader = XmlReader.Create(stream, _settings))
                 {
                     // throws when xml does not match xsd
-                    while (xmlReader.Read()) ;
+                    while (xmlReader.Read()) { }
                 }
             }
         }

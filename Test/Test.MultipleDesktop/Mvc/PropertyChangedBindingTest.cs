@@ -23,6 +23,7 @@ namespace Test.MultipleDesktop.Mvc
                 bool invoked = false;
                 Action action = () => invoked = true;
 
+                // ReSharper disable once UnusedVariable
                 var binding = new PropertyChangedBinding(sourceMock.Object, action);
 
                 sourceMock.Raise(source => source.PropertyChanged += null, sourceMock.Object, new PropertyChangedEventArgs(AnyString));

@@ -132,7 +132,7 @@ namespace Test.MultipleDesktop.Mvc
                 {
                     private Mock<IConfigurationFactory> _configurationFactoryMock;
 
-                    protected sealed override void InitializeAppController()
+                    protected override void InitializeAppController()
                     {
                         _configurationFactoryMock = new Mock<IConfigurationFactory>();
 
@@ -165,7 +165,7 @@ namespace Test.MultipleDesktop.Mvc
 
                     private Mock<IConfigurationFactory> _configurationFactoryMock;
 
-                    protected sealed override void InitializeAppController()
+                    protected override void InitializeAppController()
                     {
                         _configurationFactoryMock = new Mock<IConfigurationFactory>();
 

@@ -5,11 +5,10 @@ using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
 using Should.Fluent.Invocation;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 using VisualStudio.TestTools.UnitTesting;
+// ReSharper disable RedundantAssignment
 
 namespace Test.MultipleDesktop.Configuration
 {

@@ -4,7 +4,6 @@ using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
 using System.Xml;
 using System.IO;
-using Moq;
 using VisualStudio.TestTools.UnitTesting;
 
 namespace Test.MultipleDesktop.Configuration

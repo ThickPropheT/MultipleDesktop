@@ -1,17 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using MultipleDesktop.Configuration;
 using MultipleDesktop.Configuration.Xml;
 using Should.Fluent;
 using Should.Fluent.Invocation;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using VisualStudio.TestTools.UnitTesting;
 
 namespace Test.MultipleDesktop.Configuration.Xml
 {
@@ -109,7 +102,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void GetAllShouldReturnConfigurations()
                     {
-                        var all = _appConfiguration.GetAll();
+                        var all = _appConfiguration.GetAll().ToArray();
 
                         all.Should().Contain.One(_configurations[0]);
                         all.Should().Contain.One(_configurations[1]);

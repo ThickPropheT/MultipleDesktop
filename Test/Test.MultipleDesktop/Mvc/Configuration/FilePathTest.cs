@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
+// ReSharper disable SuspiciousTypeConversion.Global
 
 namespace Test.MultipleDesktop.Mvc.Configuration
 {
@@ -118,6 +118,7 @@ namespace Test.MultipleDesktop.Mvc.Configuration
                     [TestInitialize]
                     public void UsingThisConfiguration()
                     {
+                        // ReSharper disable once RedundantCast
                         _filePath = (FilePath)null;
                     }
 
@@ -140,6 +141,7 @@ namespace Test.MultipleDesktop.Mvc.Configuration
                     [TestInitialize]
                     public void UsingThisConfiguration()
                     {
+                        // ReSharper disable once RedundantCast
                         _filePath = (FilePath)string.Empty;
                     }
 

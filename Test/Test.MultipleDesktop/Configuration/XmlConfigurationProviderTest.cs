@@ -6,9 +6,7 @@ using MultipleDesktop.Mvc.Configuration;
 using Should.Fluent;
 using System;
 using System.IO;
-using System.IO.Extended;
 using System.Xml;
-using System.Xml.Serialization;
 using System.Xml.Serialization.Extended;
 using VisualStudio.TestTools.UnitTesting;
 
@@ -210,7 +208,7 @@ namespace Test.MultipleDesktop.Configuration
                 public sealed class TryConvertConfigurationToXml : WhenSaving
                 {
                     [TestInitialize]
-                    public sealed override void UsingThisConfiguration()
+                    public override void UsingThisConfiguration()
                     {
                         base.UsingThisConfiguration();
 
