@@ -27,7 +27,8 @@ namespace Should.Fluent.Invocation
                     if (result.Error is TException)
                         a.Fail(AssertionMessages.DerivedExceptionMessage(exceptionType));
 
-                    throw new UnexpectedExceptionException(AssertionMessages.UnexpectedExceptionMessage, result.Error);
+                    if (result.Error != null)
+                        throw new UnexpectedExceptionException(AssertionMessages.UnexpectedExceptionMessage, result.Error);
                 });
         }
 
@@ -51,7 +52,8 @@ namespace Should.Fluent.Invocation
                     if (exceptionType == result.Error.GetType())
                         a.Fail(AssertionMessages.ExactExceptionMessage(exceptionType));
 
-                    throw new UnexpectedExceptionException(AssertionMessages.UnexpectedExceptionMessage, result.Error);
+                    if (result.Error != null)
+                        throw new UnexpectedExceptionException(AssertionMessages.UnexpectedExceptionMessage, result.Error);
                 });
         }
 
@@ -75,7 +77,8 @@ namespace Should.Fluent.Invocation
                     if (error.Equals(result.Error))
                         a.Fail(AssertionMessages.ExceptionInstanceMessage(error));
 
-                    throw new UnexpectedExceptionException(AssertionMessages.UnexpectedExceptionMessage, result.Error);
+                    if (result.Error != null)
+                        throw new UnexpectedExceptionException(AssertionMessages.UnexpectedExceptionMessage, result.Error);
                 });
         }
     }
