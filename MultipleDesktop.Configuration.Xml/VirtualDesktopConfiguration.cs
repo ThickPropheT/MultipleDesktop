@@ -2,6 +2,7 @@
 using MultipleDesktop.Mvc.Desktop;
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using MultipleDesktop.Mvc;
@@ -40,7 +41,7 @@ namespace MultipleDesktop.Configuration.Xml
 
         private void SetBackgroundPath(FilePath value)
         {
-
+            // TODO
         }
 
         //private void SetBackgroundPath(FilePath value)
@@ -72,7 +73,7 @@ namespace MultipleDesktop.Configuration.Xml
 
         private void SetFit(Fit value)
         {
-
+            // TODO
         }
 
         //private void SetFit(Fit value)
@@ -97,13 +98,8 @@ namespace MultipleDesktop.Configuration.Xml
         /// </summary>
         internal VirtualDesktopConfiguration()
         {
-            _backgroundPathSetter = value => ThrowFor(nameof(BackgroundPath));
-            _fitSetter = value => ThrowFor(nameof(Fit));
-        }
-
-        private void ThrowFor(string propertyName)
-        {
-            throw new XmlIgnoreException(propertyName, $"After Xml deserialization is complete, call '{nameof(BindToTarget)}' to enable setter for '{propertyName}'.");
+            _backgroundPathSetter = value => ThrowWhenDeserializing(nameof(BackgroundPath));
+            _fitSetter = value => ThrowWhenDeserializing(nameof(Fit));
         }
 
         public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
@@ -117,9 +113,13 @@ namespace MultipleDesktop.Configuration.Xml
 
             TargetDesktop = targetDesktop;
 
+            _backgroundPathSetter = SetBackgroundPath;
+            _fitSetter = SetFit;
+
             _propertyChangedBinding = factory.Bind(UpdateFromTarget, targetDesktop);
         }
 
+        // TODO
         //public VirtualDesktopConfiguration(IVirtualDesktop targetDesktop, IConfigurationFactory factory)
         //{
         //    BindToTarget(targetDesktop, factory);
@@ -129,40 +129,27 @@ namespace MultipleDesktop.Configuration.Xml
 
         public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
         {
-            _backgroundPathSetter = SetBackgroundPath;
-            _fitSetter = SetFit;
+            _propertyChangedBinding?.Unbind();
 
             TargetDesktop = value;
 
-            if (_propertyChangedBinding != null)
+            if (value == null)
             {
-                _propertyChangedBinding.Unbind();
+                _backgroundPathSetter = path => ThrowWhenUnbound(nameof(BackgroundPath));
+                _fitSetter = fit => ThrowWhenUnbound(nameof(Fit));
+
+                return;
             }
+
+            _backgroundPathSetter = SetBackgroundPath;
+            _fitSetter = SetFit;
 
             _propertyChangedBinding = factory.Bind(UpdateFromTarget, value);
 
             value.Background = factory.BackgroundFrom(_backgroundPath, _fit);
         }
 
-        //public void BindToTarget(IVirtualDesktop value, IConfigurationFactory factory)
-        //{
-        //    _configurationFactory = factory;
-
-        //    if (TargetDesktop != null)
-        //    {
-        //        TargetDesktop.PropertyChanged -= Target_PropertyChanged;
-        //    }
-
-        //    TargetDesktop = value;
-
-        //    if (value != null)
-        //    {
-        //        value.PropertyChanged += Target_PropertyChanged;
-
-        //        value.Background = factory.BackgroundFrom(_backgroundPath, _fit);
-        //    }
-        //}
-
+        [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
         public void UpdateFromTarget()
         {
             Guid = TargetDesktop.Guid;
@@ -188,6 +175,20 @@ namespace MultipleDesktop.Configuration.Xml
             }
         }
 
+        private void ThrowWhenDeserializing(string propertyName)
+        {
+            throw NoTargetBoundException.InvocationRequiresTarget(
+                propertyName,
+                $"After Xml deserialization is complete, call '{nameof(BindToTarget)}' to enable setter for '{propertyName}'.");
+        }
+
+        private void ThrowWhenUnbound(string propertyName)
+        {
+            throw NoTargetBoundException.InvocationRequiresTarget(
+                propertyName,
+                $"{nameof(VirtualDesktopConfiguration)} has been unbound. Bind it to an {nameof(IVirtualDesktop)} using the {nameof(BindToTarget)} method.");
+        }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -195,7 +196,7 @@ namespace MultipleDesktop.Configuration.Xml
 
         public override string ToString()
         {
-            return $"{Guid.ToString()}, {BackgroundPath}, {Fit}";
+            return $"{Guid}, {BackgroundPath}, {Fit}";
         }
     }
 }

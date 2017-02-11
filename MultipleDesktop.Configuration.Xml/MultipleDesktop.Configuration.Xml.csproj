@@ -43,7 +43,7 @@
     <Compile Include="AppConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VirtualDesktopConfiguration.cs" />
-    <Compile Include="XmlIgnoreException.cs" />
+    <Compile Include="NoTargetBoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultipleDesktop.Mvc\MultipleDesktop.Mvc.csproj">
