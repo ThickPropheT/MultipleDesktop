@@ -88,8 +88,8 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         {
                             OfDefault,
                             () => WithBackgroundPath(AnyString),
-                            () => WithBackgroundPathThat(MockPath, exists : true),
-                            () => WithBackgroundPathThat(MockPath, exists : false)
+                            () => WithBackgroundPath(MockPath, thatExists : true),
+                            () => WithBackgroundPath(MockPath, thatExists : false)
                         };
 
                     foreach (Fit fit in Enum.GetValues(typeof(Fit)))
@@ -110,18 +110,19 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     return new VirtualDesktopConfiguration { BackgroundPathElement = filePath };
                 }
 
-                private static VirtualDesktopConfiguration WithBackgroundPathThat(FilePath filePath, bool exists)
+                private static VirtualDesktopConfiguration WithBackgroundPath(FilePath filePath, bool thatExists)
                 {
                     var alreadyExists = Directory.Exists(filePath);
 
-                    if (alreadyExists && !exists)
+                    if (alreadyExists && !thatExists)
                     {
                         Directory.Delete(filePath);
 
                         if (Directory.Exists(filePath))
                             Assert.Inconclusive($"Could not remove directory '{filePath}'.");
                     }
-                    if (!alreadyExists && exists)
+
+                    if (!alreadyExists && thatExists)
                     {
                         Directory.CreateDirectory(filePath);
 
