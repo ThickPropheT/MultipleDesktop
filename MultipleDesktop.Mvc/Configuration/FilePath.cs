@@ -2,7 +2,7 @@
 {
     public struct FilePath
     {
-        private string _value;
+        private readonly string _value;
 
         public bool HasValue => !string.IsNullOrEmpty(_value);
         public string Value => _value ?? string.Empty;
