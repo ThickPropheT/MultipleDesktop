@@ -52,6 +52,8 @@ namespace MultipleDesktop.Mvc.Desktop
             Guid = guid;
             Index = index;
 
+            _background = systemDesktop.Background;
+
             _systemDesktop = systemDesktop;
             systemDesktop.PropertyChanged += SystemDesktop_PropertyChanged;
 
