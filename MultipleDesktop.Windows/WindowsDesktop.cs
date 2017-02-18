@@ -29,10 +29,15 @@ namespace MultipleDesktop.Windows
         {
             _adapter = adapter;
 
-            Update();
+            UpdateFromAdapter();
         }
 
         public void Update()
+        {
+            UpdateFromAdapter();
+        }
+
+        private void UpdateFromAdapter()
         {
             var latestGuid = _adapter.LoadCurrentDesktopUuid();
 
