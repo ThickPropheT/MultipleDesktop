@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
+using XmlTag = MultipleDesktop.Configuration.Xml.Tag.AppConfiguration;
 
 namespace MultipleDesktop.Configuration.Xml
 {
-    [XmlType("app")]
+    [XmlType(XmlTag.Name)]
     public class AppConfiguration : IAppConfiguration
     {
         private IEnumerable<VirtualDesktopConfiguration> _desktopConfigurations;
 
-        [XmlArrayItem("desktop")]
-        [XmlArray("desktops")]
+        [XmlArrayItem(XmlTag.DesktopConfigurations.ArrayItemName)]
+        [XmlArray(XmlTag.DesktopConfigurations.ArrayName)]
         public VirtualDesktopConfiguration[] DesktopConfigurations
         {
             get

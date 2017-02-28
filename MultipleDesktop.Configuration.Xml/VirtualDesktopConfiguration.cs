@@ -6,10 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using MultipleDesktop.Mvc;
+using XmlTag = MultipleDesktop.Configuration.Xml.Tag.VirtualDesktopConfiguration;
 
 namespace MultipleDesktop.Configuration.Xml
 {
-    [XmlType("desktop")]
+    [XmlType(XmlTag.Name)]
     public class VirtualDesktopConfiguration : IVirtualDesktopConfiguration
     {
         private IConfigurationFactory _configurationFactory;
@@ -22,11 +23,11 @@ namespace MultipleDesktop.Configuration.Xml
         private Fit _fit;
         private Action<Fit> _fitSetter;
 
-        [XmlAttribute("guid")]
+        [XmlAttribute(XmlTag.Guid)]
         public Guid Guid { get; set; }
 
-        [XmlElement("background-path")]
-        public FilePath BackgroundPathElement
+        [XmlElement(XmlTag.BackgroundPath)]
+        public string BackgroundPathElement
         {
             get { return _backgroundPath; }
             set { _backgroundPath = value; }
@@ -56,7 +57,7 @@ namespace MultipleDesktop.Configuration.Xml
         //                .BackgroundFrom(value, _fit);
         //}
 
-        [XmlElement("background-fit")]
+        [XmlElement(XmlTag.Fit)]
         public Fit FitElement
         {
             get { return _fit; }
