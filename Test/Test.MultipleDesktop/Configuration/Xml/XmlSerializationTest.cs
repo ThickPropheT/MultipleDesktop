@@ -207,7 +207,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
             }
 
             [TestClass]
-            [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
             [SuppressMessage("ReSharper", "InconsistentNaming")]
             public abstract class WhenConfigurationHasDesktops : WhenDeserialized
             {
@@ -248,6 +247,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void BackgroundPathShouldBeEmpty()
                     {
+                        // ReSharper disable once SuspiciousTypeConversion.Global
                         _deserializedDesktop.BackgroundPath.Equals(string.Empty).Should().Be.True();
                     }
 
@@ -302,6 +302,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void BackgroundPathShouldBeEmpty()
                     {
+                        // ReSharper disable once SuspiciousTypeConversion.Global
                         _deserializedDesktop.BackgroundPath.Equals(string.Empty).Should().Be.True();
                     }
                 }
@@ -318,6 +319,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void BackgroundPathShouldBeEmpty()
                     {
+                        // ReSharper disable once SuspiciousTypeConversion.Global
                         _deserializedDesktop.BackgroundPath.Equals(string.Empty).Should().Be.True();
                     }
                 }
@@ -363,6 +365,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void BackgroundPathShouldMatch()
                     {
+                        // ReSharper disable once SuspiciousTypeConversion.Global
                         _deserializedDesktop.BackgroundPath.Equals(AnyString).Should().Be.True();
                     }
                 }
