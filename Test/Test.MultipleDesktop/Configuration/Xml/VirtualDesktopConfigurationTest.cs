@@ -267,7 +267,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 }
 
                 [TestClass]
-                // TODO hides class @ bottom
                 public sealed class WhenSettingBackgroundPathElement : UsingProperties
                 {
                     public const string Path = AnyString;
@@ -304,7 +303,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 }
 
                 [TestClass]
-                // TODO hides class @ bottom
                 public sealed class WhenSettingFitElement : UsingProperties
                 {
                     [TestMethod]
@@ -353,8 +351,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     }
                 }
 
-                // TODO re-evaluate this being in WhenInitializing
-                // TODO determine if any test methods here need to move
                 [TestClass]
                 public sealed class BindToTargetToCompleteInitialization : UsingProperties, IWhenTargetIsValid
                 {
@@ -383,7 +379,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         _virtualDesktopConfiguration.BackgroundPath = path;
                     }
 
-                    // TODO move these to OnceInitialized.UsingProperties.WhenBinding
                     [TestMethod]
                     public void SettingFitShouldNotThrow()
                     {
@@ -393,55 +388,8 @@ namespace Test.MultipleDesktop.Configuration.Xml
 
                         _virtualDesktopConfiguration.Fit = fit;
                     }
-
-                    [TestMethod]
-                    public void TargetDesktopShouldBeTarget()
-                    {
-                        _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
-
-                        _virtualDesktopConfiguration.TargetDesktop.Should().Be.SameAs(_virtualDesktopMock.Object);
-                    }
-
-                    [TestMethod]
-                    public void ShouldBindToTargetPropertyChanged()
-                    {
-                        _factoryMock.Setup(factory =>
-                            factory.Bind(
-                                It.IsAny<Action>(),
-                                It.IsAny<INotifyPropertyChanged>()));
-
-                        _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
-
-                        _factoryMock.Verify(factory =>
-                            factory.Bind(
-                                It.Is<Action>(a =>
-                                    a == _virtualDesktopConfiguration.UpdateFromTarget),
-                                It.Is<IVirtualDesktop>(d =>
-                                    d == _virtualDesktopMock.Object)),
-                            Times.Once);
-                    }
-
-                    [TestMethod]
-                    public void ShouldRequestBackgroundFromFactory()
-                    {
-                        _virtualDesktopConfiguration.BackgroundPathElement = AnyString;
-                        _virtualDesktopConfiguration.FitElement = AnyFit;
-
-                        _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object, _factoryMock.Object);
-
-                        _factoryMock.Verify(factory =>
-                            factory.BackgroundFrom(
-                                It.Is<string>(s => s == AnyString),
-                                It.Is<Fit>(f => f == AnyFit)),
-                            Times.Once);
-
-                    }
-
-                    // TODO move these
                 }
 
-                // TODO re-evaluate this being in WhenInitializing
-                // TODO determine if any test methods here need to move
                 [TestClass]
                 public sealed class BindingToNullDoesNotCompleteInitialization : UsingProperties, IWhenBindingToNull
                 {
