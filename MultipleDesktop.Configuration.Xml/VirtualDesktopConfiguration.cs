@@ -42,22 +42,17 @@ namespace MultipleDesktop.Configuration.Xml
 
         private void SetBackgroundPath(FilePath value)
         {
-            // TODO
+            if (Equals(_backgroundPath, value))
+                return;
+
+            _backgroundPath = value;
+
+            TargetDesktop.Background =
+                    _configurationFactory
+                        .BackgroundFrom(value, _fit);
         }
 
-        //private void SetBackgroundPath(FilePath value)
-        //{
-        //    if (Equals(_backgroundPath, value))
-        //        return;
-
-        //    _backgroundPath = value;
-
-        //    TargetDesktop.Background =
-        //            _configurationFactory
-        //                .BackgroundFrom(value, _fit);
-        //}
-
-        [XmlElement(XmlTag.Fit)]
+        [XmlElement("background-fit")]
         public Fit FitElement
         {
             get { return _fit; }
@@ -74,20 +69,15 @@ namespace MultipleDesktop.Configuration.Xml
 
         private void SetFit(Fit value)
         {
-            // TODO
+            if (Equals(_fit, value))
+                return;
+
+            _fit = value;
+
+            TargetDesktop.Background =
+                _configurationFactory
+                    .BackgroundFrom(_backgroundPath, value);
         }
-
-        //private void SetFit(Fit value)
-        //{
-        //    if (Equals(_fit, value))
-        //        return;
-
-        //    _fit = value;
-
-        //    TargetDesktop.Background =
-        //        _configurationFactory
-        //            .BackgroundFrom(_backgroundPath, value);
-        //}
 
         [XmlIgnore]
         public IVirtualDesktop TargetDesktop { get; private set; }
@@ -97,7 +87,7 @@ namespace MultipleDesktop.Configuration.Xml
         /// <summary>
         /// Xml serialization constructor.
         /// </summary>
-        internal VirtualDesktopConfiguration()
+        public VirtualDesktopConfiguration()
         {
             _backgroundPathSetter = value => ThrowWhenDeserializing(nameof(BackgroundPath));
             _fitSetter = value => ThrowWhenDeserializing(nameof(Fit));
@@ -118,6 +108,8 @@ namespace MultipleDesktop.Configuration.Xml
             _fitSetter = SetFit;
 
             _propertyChangedBinding = factory.Bind(UpdateFromTarget, targetDesktop);
+
+            _configurationFactory = factory;
         }
 
         // TODO
@@ -133,6 +125,7 @@ namespace MultipleDesktop.Configuration.Xml
             _propertyChangedBinding?.Unbind();
 
             TargetDesktop = value;
+            _configurationFactory = factory;
 
             if (value == null)
             {
@@ -146,6 +139,25 @@ namespace MultipleDesktop.Configuration.Xml
             _fitSetter = SetFit;
 
             _propertyChangedBinding = factory.Bind(UpdateFromTarget, value);
+
+            var updateTargetBackground = true;
+
+            // TODO this should have tests for it causing a return
+            if (!_backgroundPath.HasValue)
+            {
+                _backgroundPath = value.Background.Path;
+                updateTargetBackground = false;
+            }
+
+            // TODO be sure to fully test that this returns
+            if (_fit.Equals(default(Fit)))
+            {
+                _fit = value.Background.Fit;
+                updateTargetBackground = false;
+            }
+
+            if (!updateTargetBackground)
+                return;
 
             value.Background = factory.BackgroundFrom(_backgroundPath, _fit);
         }
