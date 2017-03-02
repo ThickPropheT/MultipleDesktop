@@ -1423,42 +1423,6 @@ namespace Test.MultipleDesktop.Configuration.Xml
         }
 
         [TestClass]
-        public sealed class WhenSettingBackgroundPathElement : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
-        public sealed class WhenGettingBackgroundPathElement : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
-        public sealed class WhenSettingFitElement : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
-        public sealed class WhenGettingFitElement : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
-        public sealed class WhenGettingFit : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
-        public sealed class WhenGettingTargetDesktop : VirtualDesktopConfigurationTest
-        {
-
-        }
-
-        [TestClass]
         public class OnTargetPropertyChanged : VirtualDesktopConfigurationTest
         {
             [TestClass]
