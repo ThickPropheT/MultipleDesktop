@@ -4,14 +4,14 @@ namespace Should.Fluent.Invocation
 {
     public static class Invocation
     {
-        public static DelayedInvoker Of(Action code)
+        public static Invoker Of(Action code)
         {
-            return new DelayedInvoker(code);
+            return new Invoker(code);
         }
 
-        public static DelayedInvoker Of(Func<object> code)
+        public static Invoker Of(Func<object> code)
         {
-            return new DelayedInvoker(code);
+            return new Invoker(code);
         }
 
         public struct Result

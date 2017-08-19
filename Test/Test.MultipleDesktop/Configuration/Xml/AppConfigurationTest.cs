@@ -47,7 +47,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void ShouldThrow()
                     {
-                        Invoke.Delegate(() => new AppConfiguration(null))
+                        Invocation.Of(() => new AppConfiguration(null))
                             .Should()
                             .Throw<ArgumentNullException>();
                     }

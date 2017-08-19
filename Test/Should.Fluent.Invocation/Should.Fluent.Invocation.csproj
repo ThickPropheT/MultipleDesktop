@@ -48,14 +48,11 @@
     <Compile Include="Invocation.cs" />
     <Compile Include="InvocationOccurred.cs" />
     <Compile Include="Invoker.cs" />
-    <Compile Include="Invoke.cs" />
     <Compile Include="InvokerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="ShouldExtensions.cs" />
     <Compile Include="UnexpectedExceptionException.cs" />
-    <Compile Include="DelayedInvoker.cs" />
-    <Compile Include="DelayedInvokerExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

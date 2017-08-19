@@ -10,10 +10,5 @@ namespace Should.Fluent.Invocation
         {
             return new Should<Invoker, BeBase<Invoker>>(i, AssertProvider);
         }
-
-        public static Should<DelayedInvoker, BeBase<DelayedInvoker>> Should(this DelayedInvoker i)
-        {
-            return new Should<DelayedInvoker, BeBase<DelayedInvoker>>(i, AssertProvider);
-        }
     }
 }

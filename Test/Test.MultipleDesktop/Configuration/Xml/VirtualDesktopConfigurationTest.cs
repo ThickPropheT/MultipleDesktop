@@ -198,7 +198,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 {
                     _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
 
-                    Invoke.Delegate(() =>
+                    Invocation.Of(() =>
                             _virtualDesktopConfiguration.BackgroundPath = AnyString)
                         .Should()
                         .Not
@@ -210,7 +210,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                 {
                     _virtualDesktopConfiguration = new VirtualDesktopConfiguration(_virtualDesktopMock.Object, _factoryMock.Object);
 
-                    Invoke.Delegate(() =>
+                    Invocation.Of(() =>
                             _virtualDesktopConfiguration.Fit = AnyFit)
                         .Should()
                         .Not
@@ -294,7 +294,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void ShouldThrow()
                     {
-                        Invoke.Delegate(() =>
+                        Invocation.Of(() =>
                             _virtualDesktopConfiguration.BackgroundPath = AnyString)
                             .Should()
                             .Throw<NoTargetBoundException>();
@@ -333,7 +333,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     {
                         const Fit fit = AnyFit;
 
-                        Invoke.Delegate(() =>
+                        Invocation.Of(() =>
                             _virtualDesktopConfiguration.Fit = fit)
                             .Should()
                             .Throw<NoTargetBoundException>();
@@ -407,7 +407,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void SettingBackgroundPathShouldThrow()
                     {
-                        Invoke.Delegate(() =>
+                        Invocation.Of(() =>
                                 _virtualDesktopConfiguration.BackgroundPath = AnyString)
                             .Should()
                             .Throw<NoTargetBoundException>();
@@ -416,7 +416,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                     [TestMethod]
                     public void SettingFitShouldThrow()
                     {
-                        Invoke.Delegate(() =>
+                        Invocation.Of(() =>
                                 _virtualDesktopConfiguration.Fit = AnyFit)
                             .Should()
                             .Throw<NoTargetBoundException>();
@@ -497,7 +497,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                             _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object,
                                 _factoryMock.Object);
 
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.BackgroundPath = AnyString)
                                 .Should()
                                 .Not
@@ -513,7 +513,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                             _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object,
                                 _factoryMock.Object);
 
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.Fit = AnyFit)
                                 .Should()
                                 .Not
@@ -660,7 +660,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         {
                             _virtualDesktopConfiguration.BindToTarget(null, _factoryMock.Object);
 
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                 _virtualDesktopConfiguration.BackgroundPath = AnyString)
                                 .Should()
                                 .Throw<NoTargetBoundException>();
@@ -671,7 +671,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         {
                             _virtualDesktopConfiguration.BindToTarget(null, _factoryMock.Object);
 
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                 _virtualDesktopConfiguration.Fit = AnyFit)
                                 .Should()
                                 .Throw<NoTargetBoundException>();
@@ -876,7 +876,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void SettingBackgroundPathShouldNotThrow()
                         {
-                            Invoke.Delegate(() => _virtualDesktopConfiguration.BackgroundPath = AnyString)
+                            Invocation.Of(() => _virtualDesktopConfiguration.BackgroundPath = AnyString)
                                 .Should()
                                 .Not
                                 .Throw<NoTargetBoundException>();
@@ -885,7 +885,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void SettingFitShouldNotThrow()
                         {
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.Fit = AnyFit)
                                 .Should()
                                 .Not
@@ -931,14 +931,14 @@ namespace Test.MultipleDesktop.Configuration.Xml
                             [TestMethod]
                             public void ShouldNotRequestBackgroundFromFactory()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
                             [TestMethod]
                             public void ShouldNotSetTargetBackground()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
                         }
@@ -965,7 +965,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                             [TestMethod]
                             public void ShouldRequestBackgroundFromFactory()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
@@ -1000,7 +1000,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void SettingBackgroundPathShouldThrow()
                         {
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.BackgroundPath = AnyString)
                                 .Should()
                                 .Throw<NoTargetBoundException>();
@@ -1009,7 +1009,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void SettingFitShouldThrow()
                         {
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.Fit = AnyFit)
                                 .Should().Throw<NoTargetBoundException>();
                         }
@@ -1075,7 +1075,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                                 _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object,
                                     _factoryMock.Object);
 
-                                Invoke.Delegate(() =>
+                                Invocation.Of(() =>
                                         _virtualDesktopConfiguration.BackgroundPath = AnyString)
                                     .Should()
                                     .Not
@@ -1088,7 +1088,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                                 _virtualDesktopConfiguration.BindToTarget(_virtualDesktopMock.Object,
                                     _factoryMock.Object);
 
-                                Invoke.Delegate(() =>
+                                Invocation.Of(() =>
                                         _virtualDesktopConfiguration.Fit = AnyFit)
                                     .Should()
                                     .Not
@@ -1102,42 +1102,42 @@ namespace Test.MultipleDesktop.Configuration.Xml
                             [TestMethod]
                             public void ShouldUpdateBackgroundPath()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
                             [TestMethod]
                             public void ShouldUpdateFit()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
                             [TestMethod]
                             public void ShouldNotRequestBackgroundFromFactory()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
                             [TestMethod]
                             public void ShouldNotSetTargetBackground()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
                             [TestMethod]
                             public void ShouldUpdateBackgroundPathElement()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
 
                             [TestMethod]
                             public void ShouldUpdateFitElement()
                             {
-                                Assert.Inconclusive("Not Implemented");
+                                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                                 throw new NotImplementedException();
                             }
                         }
@@ -1190,7 +1190,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         {
                             _virtualDesktopConfiguration.BindToTarget(null, _factoryMock.Object);
 
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.BackgroundPath = AnyString)
                                 .Should()
                                 .Throw<NoTargetBoundException>();
@@ -1201,7 +1201,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         {
                             _virtualDesktopConfiguration.BindToTarget(null, _factoryMock.Object);
 
-                            Invoke.Delegate(() =>
+                            Invocation.Of(() =>
                                     _virtualDesktopConfiguration.Fit = AnyFit)
                                 .Should()
                                 .Throw<NoTargetBoundException>();
@@ -1218,7 +1218,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void MyTestMethod()
                         {
-                            Assert.Inconclusive("Not Implemented");
+                            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                             throw new NotImplementedException();
                         }
                     }
@@ -1229,7 +1229,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void MyTestMethod()
                         {
-                            Assert.Inconclusive("Not Implemented");
+                            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                             throw new NotImplementedException();
                         }
                     }
@@ -1244,7 +1244,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void MyTestMethod()
                         {
-                            Assert.Inconclusive("Not Implemented");
+                            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                             throw new NotImplementedException();
                         }
                     }
@@ -1255,7 +1255,7 @@ namespace Test.MultipleDesktop.Configuration.Xml
                         [TestMethod]
                         public void MyTestMethod()
                         {
-                            Assert.Inconclusive("Not Implemented");
+                            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive("Not Implemented");
                             throw new NotImplementedException();
                         }
                     }

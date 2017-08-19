@@ -198,7 +198,7 @@ namespace Test.MultipleDesktop.Configuration
 
                 protected void ShouldThrowImpl(IoResult result)
                 {
-                    Invoke.Delegate(() =>
+                    Invocation.Of(() =>
                         _configurationController.Load())
                         .Should()
                         .Throw(result.Exception);
@@ -238,7 +238,7 @@ namespace Test.MultipleDesktop.Configuration
             {
                 SetupProviderWithResult(ErrorResult);
 
-                Invoke.Delegate(() =>
+                Invocation.Of(() =>
                     _configurationController.Save(_appConfigurationMock.Object))
                     .Should()
                     .Throw(ErrorResult.Exception);
