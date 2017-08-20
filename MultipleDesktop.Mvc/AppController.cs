@@ -43,9 +43,7 @@ namespace MultipleDesktop.Mvc
             }
 
             public static WhenAllDesktopsHasChanged For(IVirtualDesktopState provider)
-            {
-                return new WhenAllDesktopsHasChanged(provider);
-            }
+                => new WhenAllDesktopsHasChanged(provider);
 
             public void DoCallback(Action<IEnumerable<IVirtualDesktop>, IEnumerable<IVirtualDesktop>> completionCallback)
             {
