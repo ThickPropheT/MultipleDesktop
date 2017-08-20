@@ -20,44 +20,24 @@ namespace MultipleDesktop.Configuration
         /// <param name="desktop">The <see cref="IVirtualDesktop"/> for which to create configuration.</param>
         /// <returns>The <see cref="IVirtualDesktopConfiguration"/> for <paramref name="desktop"/>.</returns>
         public IVirtualDesktopConfiguration ConfigurationFor(IVirtualDesktop desktop)
-        {
-            return new VirtualDesktopConfiguration(desktop, this);
-        }
+            => new VirtualDesktopConfiguration(desktop, this);
 
         public IAppConfiguration AppConfigurationFrom(IEnumerable<IVirtualDesktopConfiguration> configurations)
-        {
-            return new AppConfiguration(configurations.Select(ToXmlConfiguration));
-        }
+            => new AppConfiguration(configurations.Select(ToXmlConfiguration));
 
         public IBackground BackgroundFrom(string backgroundPath, Fit fit)
-        {
-            return new Background(backgroundPath, fit);
-        }
+            => new Background(backgroundPath, fit);
 
         public IVirtualDesktop DesktopFrom(Guid guid, uint index, ISystemDesktop systemDesktop)
-        {
-            return new VirtualDesktop(guid, index, systemDesktop);
-        }
+            => new VirtualDesktop(guid, index, systemDesktop);
 
-        public IXmlSerializer CreateSerializerFor<T>()
-        {
-            return new XmlSerializer(typeof(T));
-        }
+        public IXmlSerializer CreateSerializerFor<T>() => new XmlSerializer(typeof(T));
 
-        public TextWriter CreateSerializationWriterFor(string path)
-        {
-            return new StreamWriter(path);
-        }
+        public TextWriter CreateSerializationWriterFor(string path) => new StreamWriter(path);
 
-        public TextReader CreateSerializationReaderFor(string path)
-        {
-            return new StreamReader(path);
-        }
+        public TextReader CreateSerializationReaderFor(string path) => new StreamReader(path);
 
-        public AppConfiguration CreateXmlConfiguration()
-        {
-            return new AppConfiguration();
-        }
+        public AppConfiguration CreateXmlConfiguration() => new AppConfiguration();
 
         /// <summary>
         /// If <paramref name="configuration"/> is in Xml format, casts it to the
@@ -68,21 +48,14 @@ namespace MultipleDesktop.Configuration
         /// <param name="configuration">The <see cref="IVirtualDesktopConfiguration"/> to convert to Xml format.</param>
         /// <returns>An Xml serializable representation of <paramref name="configuration"/>.</returns>
         public VirtualDesktopConfiguration ToXmlConfiguration(IVirtualDesktopConfiguration configuration)
-        {
-            return configuration as VirtualDesktopConfiguration
+            => configuration as VirtualDesktopConfiguration
                 ?? new VirtualDesktopConfiguration(configuration.TargetDesktop, this);
-        }
 
         public AppConfiguration ToXmlConfiguration(IAppConfiguration configuration)
-        {
-            return configuration as AppConfiguration
+            => configuration as AppConfiguration
                 ?? new AppConfiguration(configuration.GetAll().Select(ToXmlConfiguration));
 
-        }
-
         public IPropertyChangedBinding Bind(Action target, INotifyPropertyChanged toSource)
-        {
-            return new PropertyChangedBinding(toSource, target);
-        }
+            => new PropertyChangedBinding(toSource, target);
     }
 }
