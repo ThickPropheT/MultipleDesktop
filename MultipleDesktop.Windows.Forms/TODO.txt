@@ -1,6 +1,7 @@
 ﻿WindowsDesktop.LoadCurrentDesktopUuid
 	// TODO CurrentVirtualDesktop value is null from Start until
 	// TODO a desktop is switched
+		
 
 Investigate registry/shell compatibility for 32 & 64 bit OSes
 
@@ -22,3 +23,9 @@ Add license
 Investigate lookup of application name for use in name of configuration file
 
 Finish tests for VirtualDesktopConfiguration
+
+Add tests for Should.Fluent.Invocation
+
+Retry moving to the IDesktopAssociation pattern
+	Manage association between VirtualDesktop and VirtualDesktopConfiguration
+	May also help with future addition of pinning apps to desktops
