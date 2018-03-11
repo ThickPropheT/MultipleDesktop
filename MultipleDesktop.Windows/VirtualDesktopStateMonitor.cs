@@ -79,24 +79,10 @@ namespace MultipleDesktop.Windows
             {
                 OnPropertyChanging(nameof(AllDesktops));
 
-                bool success;
-                try
-                {
-                    LoadBackgroundList(latestDesktops, uuids);
+                LoadBackgroundList(latestDesktops, uuids);
+                SetAllDesktopsAtomic(latestDesktops);
 
-                    SetAllDesktopsAtomic(latestDesktops);
-
-                    success = true;
-                }
-                catch (Exception ex)
-                {
-                    OnPropertyChanging(new PropertyRollBackChangesEventArgs(nameof(AllDesktops), ex));
-
-                    success = false;
-                }
-
-                if (success)
-                    OnPropertyChanged(nameof(AllDesktops));
+                OnPropertyChanged(nameof(AllDesktops));
             }
 
             var latestCurrent = latestDesktops.FirstOrDefault(desktop => desktop.IsCurrent);
@@ -129,11 +115,6 @@ namespace MultipleDesktop.Windows
                 allDesktops.AddRange(_allDesktops);
                 return allDesktops;
             }
-        }
-
-        private void OnPropertyChanging(System.ComponentModel.PropertyChangingEventArgs args)
-        {
-            PropertyChanging?.Invoke(this, args);
         }
 
         private void OnPropertyChanging(string propertyName)

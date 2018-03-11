@@ -24,22 +24,8 @@ namespace MultipleDesktop.Mvc
             private WhenAllDesktopsHasChanged(IVirtualDesktopState provider)
             {
                 _provider = provider;
-                provider.PropertyChanging += Provider_PropertyChanging;
 
                 _changing = _provider.AllDesktops;
-            }
-
-            private void Provider_PropertyChanging(object sender, PropertyChangingEventArgs e)
-            {
-                switch (e.PropertyName)
-                {
-                    case nameof(_provider.AllDesktops):
-                        if (e.ShouldRollback())
-                            _provider.PropertyChanging -= Provider_PropertyChanging;
-                        break;
-                    default:
-                        break;
-                }
             }
 
             public static WhenAllDesktopsHasChanged For(IVirtualDesktopState provider)
@@ -58,11 +44,8 @@ namespace MultipleDesktop.Mvc
                 {
                     case nameof(_provider.AllDesktops):
                         _provider.PropertyChanged -= Provider_PropertyChanged;
-                        _provider.PropertyChanging -= Provider_PropertyChanging;
 
                         _completionCallback(_changing, _provider.AllDesktops);
-                        break;
-                    default:
                         break;
                 }
             }
