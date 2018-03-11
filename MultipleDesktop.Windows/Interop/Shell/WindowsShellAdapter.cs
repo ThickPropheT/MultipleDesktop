@@ -33,7 +33,7 @@ namespace MultipleDesktop.Windows.Interop.Shell
 
                 object managerResult;
                 shell.QueryService(
-                    GUID.VirtualDesktopAPIUnknown,
+                    IID.VirtualDesktopAPIUnknown,
                     typeof(IVirtualDesktopManagerInternal).GUID,
                     out managerResult);
 

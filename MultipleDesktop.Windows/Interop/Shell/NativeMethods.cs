@@ -25,12 +25,14 @@ namespace MultipleDesktop.Windows.Interop.Shell
 
             internal static readonly Guid VirtualDesktopManager = new Guid("AA509086-5CA9-4C25-8F95-589D3C07B48A");
             internal static readonly Guid ImmersiveShell = new Guid("C2F03A33-21F5-47FA-B4BB-156362A2F239");
+
+            internal static readonly Guid VirtualNotificationService = new Guid("A501FDEC-4A09-464C-AE4E-1B9C21B84918");
         }
 
-        internal static class GUID
+        internal static class IID
         {
             /// <summary>
-            /// Not sure what service this GUID represents.
+            /// Not sure what service this IID represents.
             /// Source : https://github.com/Grabacr07/VirtualDesktop
             /// </summary>
             internal static Guid VirtualDesktopAPIUnknown = new Guid("C5E0CDCA-7B6E-41B2-9FC4-D93975CC467B");
@@ -40,6 +42,16 @@ namespace MultipleDesktop.Windows.Interop.Shell
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("a5cd92ff-29be-454c-8d04-d82879fb3f1b")]
         internal interface IVirtualDesktopManager
+        {
+            int IsWindowOnCurrentVirtualDesktop(IntPtr topLevelWindow);
+            Guid GetWindowDesktopId(IntPtr topLevelWindow);
+            void MoveWindowToDesktop(IntPtr topLevelWindow, ref Guid desktopId);
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid("C179334C-4295-40D3-BEA1-C654D965605A")]
+        internal interface IVirtualDesktopNotification
         {
             int IsWindowOnCurrentVirtualDesktop(IntPtr topLevelWindow);
             Guid GetWindowDesktopId(IntPtr topLevelWindow);
