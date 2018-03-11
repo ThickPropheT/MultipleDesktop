@@ -14,7 +14,7 @@ namespace MultipleDesktop.Configuration
 
         public IAppConfiguration Load()
         {
-            var configFileName = Constants.Default.Config.FileName;
+            const string configFileName = Default.Config.FileName;
 
             IAppConfiguration appConfiguration;
             var result = _configurationProvider.Load(configFileName, out appConfiguration);
@@ -30,7 +30,7 @@ namespace MultipleDesktop.Configuration
 
         public void Save(IAppConfiguration configuration)
         {
-            var result = _configurationProvider.Save(configuration, Constants.Default.Config.FileName);
+            var result = _configurationProvider.Save(configuration, Default.Config.FileName);
 
             if (result.DidFail)
                 throw result.Exception;

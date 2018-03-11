@@ -1,4 +1,5 @@
-﻿using MultipleDesktop.Mvc.Configuration;
+﻿using MultipleDesktop.Mvc;
+using MultipleDesktop.Mvc.Configuration;
 using MultipleDesktop.Mvc.Desktop;
 using MultipleDesktop.Windows.Interop;
 using System;
@@ -37,7 +38,7 @@ namespace MultipleDesktop.Windows
             _adapter = adapter;
             _desktopFactory = factory;
 
-            _updateTimer = new Timer(Mvc.Constants.Default.Ui.UpdateRate.TotalMilliseconds)
+            _updateTimer = new Timer(Default.Ui.UpdateRate.TotalMilliseconds)
             {
                 AutoReset = false
             };
