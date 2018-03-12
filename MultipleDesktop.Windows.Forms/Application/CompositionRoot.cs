@@ -25,7 +25,7 @@ namespace MultipleDesktop.Windows.Forms
             var adapter = new WindowsShellAdapter(configurationFactory);
 
             var controller = new AppController(
-                view,
+
                 FileSystem.GetFileSystem(),
 
                 new VirtualDesktopStateMonitor(

@@ -50,7 +50,6 @@ namespace Test.MultipleDesktop.Mvc
                 _appController =
                     new AppController(
                         null,
-                        null,
                         _desktopStateMock.Object,
                         _configurationControllerMock.Object,
                         null);
@@ -139,7 +138,6 @@ namespace Test.MultipleDesktop.Mvc
                         _appController =
                             new AppController(
                                 null,
-                                null,
                                 _desktopStateMock.Object,
                                 _configurationControllerMock.Object,
                                 _configurationFactoryMock.Object);
@@ -171,7 +169,6 @@ namespace Test.MultipleDesktop.Mvc
 
                         _appController =
                             new AppController(
-                                null,
                                 null,
                                 _desktopStateMock.Object,
                                 _configurationControllerMock.Object,

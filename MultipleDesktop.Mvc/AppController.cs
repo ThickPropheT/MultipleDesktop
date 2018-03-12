@@ -53,7 +53,6 @@ namespace MultipleDesktop.Mvc
 
         #endregion AllDesktopsChanging
 
-        private readonly IAppView _view;
         private readonly IFileSystem _fileSystem;
         private readonly IVirtualDesktopState _desktopState;
         private readonly IConfigurationController _configurationController;
@@ -79,13 +78,11 @@ namespace MultipleDesktop.Mvc
         public event PropertyChangedEventHandler PropertyChanged;
 
         public AppController(
-            IAppView view,
             IFileSystem fileSystem,
             IVirtualDesktopState desktopProvider,
             IConfigurationController configurationController,
             IConfigurationFactory configurationFactory)
         {
-            _view = view;
             _fileSystem = fileSystem;
 
             _desktopState = desktopProvider;
