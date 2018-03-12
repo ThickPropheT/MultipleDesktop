@@ -1,12 +1,15 @@
-﻿<Window x:Class="MultipleDesktop.Windows.PresentationFoundation.MainWindow"
+﻿<!-- TODO switch out the d:DataContext for the real ViewModel when it has been established. -->
+<Window x:Class="MultipleDesktop.Windows.PresentationFoundation.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultipleDesktop.Windows.PresentationFoundation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:application="clr-namespace:MultipleDesktop.Windows.PresentationFoundation.Application"
+        d:DataContext="{d:DesignInstance {x:Type application:MainViewModel}}"
+        Title="{Binding Title}" Height="350" Width="525">
     <Grid>
-        
+
     </Grid>
 </Window>
