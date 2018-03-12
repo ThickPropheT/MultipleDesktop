@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleDesktop.Configurati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Should.Fluent.Invocation", "Test\Should.Fluent.Invocation\Should.Fluent.Invocation.csproj", "{3235823B-0070-4CCA-9315-18E70C40DEF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleDesktop.Windows.PresentationFoundation", "MultipleDesktop.Windows.PresentationFoundation\MultipleDesktop.Windows.PresentationFoundation.csproj", "{8CF3D255-BD9E-4EE5-903D-A4AEDF4B747E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{3235823B-0070-4CCA-9315-18E70C40DEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3235823B-0070-4CCA-9315-18E70C40DEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3235823B-0070-4CCA-9315-18E70C40DEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CF3D255-BD9E-4EE5-903D-A4AEDF4B747E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CF3D255-BD9E-4EE5-903D-A4AEDF4B747E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CF3D255-BD9E-4EE5-903D-A4AEDF4B747E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CF3D255-BD9E-4EE5-903D-A4AEDF4B747E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
