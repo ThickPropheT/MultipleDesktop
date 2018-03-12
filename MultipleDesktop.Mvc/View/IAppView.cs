@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MultipleDesktop.Mvc
+namespace MultipleDesktop.Mvc.View
 {
     public interface IAppView
     {

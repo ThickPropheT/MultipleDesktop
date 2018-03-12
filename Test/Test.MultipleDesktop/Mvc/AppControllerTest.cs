@@ -7,6 +7,7 @@ using MultipleDesktop.Mvc.Desktop;
 using System.Linq;
 using Should.Fluent;
 using System.Collections.Generic;
+using MultipleDesktop.Mvc.Controller;
 
 namespace Test.MultipleDesktop.Mvc
 {

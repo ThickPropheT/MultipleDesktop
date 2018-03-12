@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppController.cs" />
+    <Compile Include="Controller\AppController.cs" />
     <Compile Include="AppViewMediator.cs" />
     <Compile Include="Configuration\FilePath.cs" />
     <Compile Include="Configuration\IConfigurationController.cs" />
@@ -52,8 +52,8 @@
     <Compile Include="Configuration\DesktopConfigurationMapper.cs" />
     <Compile Include="Desktop\Fit.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
-    <Compile Include="IAppView.cs" />
-    <Compile Include="IAppController.cs" />
+    <Compile Include="View\IAppView.cs" />
+    <Compile Include="Controller\IAppController.cs" />
     <Compile Include="Desktop\IBackground.cs" />
     <Compile Include="Configuration\IConfigurationFactory.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />

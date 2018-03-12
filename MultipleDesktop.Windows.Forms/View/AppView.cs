@@ -1,4 +1,5 @@
-﻿using MultipleDesktop.Mvc;
+﻿using MultipleDesktop.Mvc.Controller;
+using MultipleDesktop.Mvc.View;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;

@@ -1,4 +1,6 @@
 ﻿using System;
+using MultipleDesktop.Mvc.Controller;
+using MultipleDesktop.Mvc.View;
 
 namespace MultipleDesktop.Mvc
 {

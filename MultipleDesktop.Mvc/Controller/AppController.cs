@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace MultipleDesktop.Mvc
+namespace MultipleDesktop.Mvc.Controller
 {
     public class AppController : IAppController
     {

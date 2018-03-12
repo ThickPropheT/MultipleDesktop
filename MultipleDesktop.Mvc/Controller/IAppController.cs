@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace MultipleDesktop.Mvc
+namespace MultipleDesktop.Mvc.Controller
 {
     public interface IAppController : INotifyPropertyChanged
     {
