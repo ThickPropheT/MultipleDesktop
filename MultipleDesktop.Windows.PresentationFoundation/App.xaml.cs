@@ -1,4 +1,4 @@
-﻿using MultipleDesktop.Windows.PresentationFoundation.Application;
+﻿using MultipleDesktop.Application;
 using System;
 using uApplication = System.Windows.Application;
 
@@ -28,7 +28,7 @@ namespace MultipleDesktop.Windows.PresentationFoundation
         public static void Main()
         {
             var app = new App();
-            app.Run(CompositionRoot.Compose());
+            app.Run(CompositionRoot.Compose<MainWindow>());
         }
 
         public App()

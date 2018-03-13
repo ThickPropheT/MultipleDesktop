@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultipleDesktop.Windows.PresentationFoundation"
         mc:Ignorable="d"
-        xmlns:application="clr-namespace:MultipleDesktop.Windows.PresentationFoundation.Application"
-        d:DataContext="{d:DesignInstance {x:Type application:MainViewModel}}"
+        xmlns:vm="clr-namespace:MultipleDesktop.Windows.PresentationFoundation.ViewModel"
+        d:DataContext="{d:DesignInstance {x:Type vm:MainViewModel}}"
         Title="{Binding Title}" Height="350" Width="525">
     <Grid>
 
