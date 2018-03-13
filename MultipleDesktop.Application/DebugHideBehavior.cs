@@ -8,9 +8,7 @@ namespace MultipleDesktop.Application
         private readonly IAppView _view;
 
         public static void Mediate(IAppView view)
-        {
-            new DebugHideBehavior(view);
-        }
+            => new DebugHideBehavior(view);
 
         public DebugHideBehavior(IAppView view)
         {

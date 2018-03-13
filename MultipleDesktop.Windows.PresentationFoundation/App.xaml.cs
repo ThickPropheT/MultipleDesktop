@@ -1,11 +1,5 @@
 ﻿using MultipleDesktop.Windows.PresentationFoundation.Application;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
 using uApplication = System.Windows.Application;
 
 namespace MultipleDesktop.Windows.PresentationFoundation

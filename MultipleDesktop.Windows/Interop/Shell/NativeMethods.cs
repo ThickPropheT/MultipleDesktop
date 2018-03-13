@@ -10,14 +10,10 @@ namespace MultipleDesktop.Windows.Interop.Shell
         private NativeMethods() { }
 
         internal static TResult CreateInstance<TCoClass, TResult>()
-        {
-            return (TResult)Activator.CreateInstance(Type.GetTypeFromCLSID(typeof(TCoClass).GUID));
-        }
+            => (TResult)Activator.CreateInstance(Type.GetTypeFromCLSID(typeof(TCoClass).GUID));
 
         internal static TResult CreateInstance<TResult>(Guid clsid)
-        {
-            return (TResult)Activator.CreateInstance(Type.GetTypeFromCLSID(clsid));
-        }
+            => (TResult)Activator.CreateInstance(Type.GetTypeFromCLSID(clsid));
 
         internal static class CLSID
         {
@@ -125,7 +121,6 @@ namespace MultipleDesktop.Windows.Interop.Shell
             URL = 0x80068000
         }
 
-
         [Flags]
         internal enum DESKTOP_SLIDESHOW_DIRECTION : int
         {
@@ -149,7 +144,6 @@ namespace MultipleDesktop.Windows.Interop.Shell
         {
             DSO_SHUFFLEIMAGES = 0x1
         }
-
 
         [Flags]
         internal enum DESKTOP_SLIDESHOW_STATE : int

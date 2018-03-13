@@ -76,8 +76,6 @@ namespace MultipleDesktop.Mvc.Desktop
                     UpdateIsCurrent();
 
                     break;
-                default:
-                    break;
             }
         }
 
@@ -89,9 +87,7 @@ namespace MultipleDesktop.Mvc.Desktop
         }
 
         private void UpdateIsCurrent()
-        {
-            IsCurrent = Equals(Guid, _systemDesktop.Guid);
-        }
+            => IsCurrent = Equals(Guid, _systemDesktop.Guid);
 
         public override bool Equals(object obj)
         {
@@ -104,13 +100,9 @@ namespace MultipleDesktop.Mvc.Desktop
         }
 
         public override int GetHashCode()
-        {
-            return Guid.GetHashCode();
-        }
+            => Guid.GetHashCode();
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

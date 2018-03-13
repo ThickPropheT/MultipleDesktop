@@ -49,9 +49,7 @@ namespace MultipleDesktop.Windows
         }
 
         public void Load()
-        {
-            _updateTimer.Start();
-        }
+            => _updateTimer.Start();
 
         private void _updateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -119,14 +117,10 @@ namespace MultipleDesktop.Windows
         }
 
         private void OnPropertyChanging(string propertyName)
-        {
-            PropertyChanging?.Invoke(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
-        }
+            => PropertyChanging?.Invoke(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
 
         private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         #region Load
 

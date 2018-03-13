@@ -24,9 +24,7 @@ namespace MultipleDesktop.Windows.Interop.Registry
             internal static class CurrentVirtualDesktop
             {
                 internal static string SubKeyFor(int sessionId)
-                {
-                    return $@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\{sessionId}\VirtualDesktops";
-                }
+                    => $@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\{sessionId}\VirtualDesktops";
 
                 internal const string Value = nameof(CurrentVirtualDesktop);
             }
@@ -42,11 +40,9 @@ namespace MultipleDesktop.Windows.Interop.Registry
                 }
 
                 internal static byte DataFromFit(uFit fit)
-                {
-                    return fit == uFit.Tile
+                    => fit == uFit.Tile
                         ? Data.Tiled
                         : Data.NotTiled;
-                }
             }
 
             internal static class WallpaperStyle

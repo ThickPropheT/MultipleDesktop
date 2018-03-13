@@ -9,9 +9,7 @@ namespace MultipleDesktop.Application
         private readonly IAppView _view;
 
         public static void Mediate(IAppView view)
-        {
-            new ReleaseHideBehavior(view);
-        }
+            => new ReleaseHideBehavior(view);
 
         public ReleaseHideBehavior(IAppView view)
         {
@@ -24,9 +22,7 @@ namespace MultipleDesktop.Application
         }
 
         private void View_Load(object sender, EventArgs e)
-        {
-            _view.HideView();
-        }
+            => _view.HideView();
 
         private void View_SizeChanged(object sender, EventArgs e)
         {

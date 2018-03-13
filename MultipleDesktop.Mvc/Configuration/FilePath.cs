@@ -13,14 +13,10 @@
         }
 
         public static implicit operator FilePath(string s)
-        {
-            return new FilePath(s);
-        }
+            => new FilePath(s);
 
         public static implicit operator string(FilePath p)
-        {
-            return p.Value;
-        }
+            => p.Value;
 
         public override bool Equals(object obj)
         {
@@ -38,13 +34,9 @@
         }
 
         public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
+            => Value.GetHashCode();
 
         public override string ToString()
-        {
-            return Value;
-        }
+            => Value;
     }
 }

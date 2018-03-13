@@ -33,9 +33,7 @@ namespace MultipleDesktop.Windows
         }
 
         public void Update()
-        {
-            UpdateFromAdapter();
-        }
+            => UpdateFromAdapter();
 
         private void UpdateFromAdapter()
         {
@@ -59,8 +57,6 @@ namespace MultipleDesktop.Windows
         }
 
         private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

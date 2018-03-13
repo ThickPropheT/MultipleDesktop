@@ -25,22 +25,13 @@ namespace MultipleDesktop.Windows.Forms.View
         }
 
         private void Configuration_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            UpdateFromConfiguration();
-        }
+            => UpdateFromConfiguration();
 
         private void UpdateFromConfiguration()
-        {
-            this.InvokeIfRequired(view =>
-            {
-                txtPic1.Text = _configuration.BackgroundPath;
-            });
-        }
+            => this.InvokeIfRequired(view => txtPic1.Text = _configuration.BackgroundPath);
 
         private void btn1_Click(object sender, EventArgs e)
-        {
-            ChooseFile(txtPic1);
-        }
+            => ChooseFile(txtPic1);
 
         private void ChooseFile(TextBox box)
         {
@@ -62,8 +53,6 @@ namespace MultipleDesktop.Windows.Forms.View
         }
 
         private void txtPic1_Leave(object sender, EventArgs e)
-        {
-            _configuration.BackgroundPath = txtPic1.Text;
-        }
+            => _configuration.BackgroundPath = txtPic1.Text;
     }
 }

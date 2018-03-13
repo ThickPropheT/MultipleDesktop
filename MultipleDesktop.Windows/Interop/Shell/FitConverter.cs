@@ -6,13 +6,9 @@ namespace MultipleDesktop.Windows.Interop.Shell
     internal static class FitConverter
     {
         internal static DESKTOP_WALLPAPER_POSITION ToPosition(this Fit fit)
-        {
-            return (DESKTOP_WALLPAPER_POSITION)fit;
-        }
+            => (DESKTOP_WALLPAPER_POSITION)fit;
 
         internal static Fit ToFit(this DESKTOP_WALLPAPER_POSITION position)
-        {
-            return (Fit)position;
-        }
+            => (Fit)position;
     }
 }

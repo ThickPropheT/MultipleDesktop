@@ -58,7 +58,7 @@ namespace MultipleDesktop.Windows.Forms.View
         public AppView()
         {
             InitializeComponent();
-            
+
             FormClosing += AppView_FormClosing;
         }
 
@@ -83,8 +83,7 @@ namespace MultipleDesktop.Windows.Forms.View
         }
 
         private void UpdateConfigurations()
-        {
-            this.InvokeIfRequired(view =>
+            => this.InvokeIfRequired(view =>
             {
                 backgroundConfigurationFlowLayoutPanel.Controls.Clear();
 
@@ -93,7 +92,6 @@ namespace MultipleDesktop.Windows.Forms.View
                     backgroundConfigurationFlowLayoutPanel.Controls.Add(new BackgroundConfigurationView(configuration));
                 }
             });
-        }
 
         private void AppView_Load(object sender, EventArgs e)
         {
@@ -126,9 +124,7 @@ namespace MultipleDesktop.Windows.Forms.View
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ShowForm();
-        }
+            => ShowForm();
 
         protected override void OnClosing(CancelEventArgs e)
         {

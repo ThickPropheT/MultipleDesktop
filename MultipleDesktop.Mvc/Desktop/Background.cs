@@ -23,8 +23,6 @@
         }
 
         public override int GetHashCode()
-        {
-            return Path.GetHashCode() + Fit.GetHashCode();
-        }
+            => Path.GetHashCode() + Fit.GetHashCode();
     }
 }

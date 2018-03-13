@@ -1,6 +1,6 @@
-﻿using System;
-using MultipleDesktop.Mvc.Controller;
+﻿using MultipleDesktop.Mvc.Controller;
 using MultipleDesktop.Mvc.View;
+using System;
 
 namespace MultipleDesktop.Mvc
 {
@@ -18,9 +18,7 @@ namespace MultipleDesktop.Mvc
         }
 
         public static void Mediate(IAppView view, IAppController controller)
-        {
-            new AppViewMediator(view, controller);
-        }
+            => new AppViewMediator(view, controller);
 
         private void View_Load(object sender, EventArgs e)
         {

@@ -24,8 +24,6 @@ namespace MultipleDesktop.Mvc
         }
 
         private void Source_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            _target();
-        }
+            => _target();
     }
 }

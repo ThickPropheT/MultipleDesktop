@@ -94,15 +94,11 @@ namespace MultipleDesktop.Mvc.Controller
 
         private void DesktopProvider_PropertyChanging(object sender, PropertyChangingEventArgs e)
         {
-            switch (e.PropertyName)
-            {
-                case nameof(_desktopState.AllDesktops):
-                    WhenAllDesktopsHasChanged.For(_desktopState)
-                        .DoCallback(UpdateDesktopConfigurations);
-                    break;
-                default:
-                    break;
-            }
+            if (!e.PropertyName.Equals(_desktopState.AllDesktops))
+                return;
+
+            WhenAllDesktopsHasChanged.For(_desktopState)
+                .DoCallback(UpdateDesktopConfigurations);
         }
 
         /// <summary>
@@ -190,14 +186,10 @@ namespace MultipleDesktop.Mvc.Controller
         }
 
         public void Save()
-        {
-            _configurationController.Save(
+            => _configurationController.Save(
                 _configurationFactory.AppConfigurationFrom(_desktopConfigurations));
-        }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
