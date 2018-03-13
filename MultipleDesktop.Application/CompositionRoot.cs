@@ -1,25 +1,24 @@
 ﻿using MultipleDesktop.Configuration;
 using MultipleDesktop.Mvc;
 using MultipleDesktop.Mvc.Controller;
-using MultipleDesktop.Windows.Forms.Application;
-using MultipleDesktop.Windows.Forms.View;
+using MultipleDesktop.Mvc.View;
+using MultipleDesktop.Windows;
 using MultipleDesktop.Windows.Interop.Shell;
 using System.IO.Extended;
-using System.Windows.Forms;
 
-namespace MultipleDesktop.Windows.Forms
+namespace MultipleDesktop.Application
 {
     public static class CompositionRoot
     {
-        public static Form Compose()
+        public static TAppView Compose<TAppView>() where TAppView : IAppView, new()
         {
-            var view = new AppView();
+            var view = new TAppView();
 
-#if DEBUG
-            DebugHideBehavior.Mediate(view);
-#else
-            ReleaseHideBehavior.Mediate(view);
-#endif
+            //#if DEBUG
+            //            DebugHideBehavior.Mediate(view);
+            //#else
+            //            ReleaseHideBehavior.Mediate(view);
+            //#endif
 
             var configurationFactory = new XmlConfigurationFactory();
 

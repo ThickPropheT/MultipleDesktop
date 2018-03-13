@@ -35,7 +35,26 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositionRoot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MultipleDesktop.Configuration\MultipleDesktop.Configuration.csproj">
+      <Project>{D3E4551F-B9EF-406D-BD2E-520975BCB281}</Project>
+      <Name>MultipleDesktop.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultipleDesktop.Mvc\MultipleDesktop.Mvc.csproj">
+      <Project>{E33A908A-68B8-4C2C-8AE0-3F1D5CA8A8A2}</Project>
+      <Name>MultipleDesktop.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultipleDesktop.Windows\MultipleDesktop.Windows.csproj">
+      <Project>{7DE85E68-69EC-4947-8B35-D1974CCDF5F1}</Project>
+      <Name>MultipleDesktop.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System\mscorlib.Extended\mscorlib.Extended.csproj">
+      <Project>{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}</Project>
+      <Name>mscorlib.Extended</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

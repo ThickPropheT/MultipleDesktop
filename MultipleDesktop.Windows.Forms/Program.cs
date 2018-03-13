@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MultipleDesktop.Application;
+using MultipleDesktop.Windows.Forms.View;
+using System;
 using uApplication = System.Windows.Forms.Application;
 
 namespace MultipleDesktop.Windows.Forms
@@ -13,7 +15,7 @@ namespace MultipleDesktop.Windows.Forms
         {
             uApplication.EnableVisualStyles();
             uApplication.SetCompatibleTextRenderingDefault(false);
-            uApplication.Run(CompositionRoot.Compose());
+            uApplication.Run(CompositionRoot.Compose<AppView>());
         }
     }
 }

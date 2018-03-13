@@ -72,7 +72,6 @@
     <Compile Include="View\AppView.Designer.cs">
       <DependentUpon>AppView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Application\CompositionRoot.cs" />
     <Compile Include="View\ControlExtensions.cs" />
     <Compile Include="View\BackgroundConfigurationView.cs">
       <SubType>UserControl</SubType>
@@ -116,6 +115,10 @@
     <Content Include="virtual.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MultipleDesktop.Application\MultipleDesktop.Application.csproj">
+      <Project>{AEAFCD2D-5AF6-4950-A315-08995600476F}</Project>
+      <Name>MultipleDesktop.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MultipleDesktop.Configuration\MultipleDesktop.Configuration.csproj">
       <Project>{D3E4551F-B9EF-406D-BD2E-520975BCB281}</Project>
       <Name>MultipleDesktop.Configuration</Name>

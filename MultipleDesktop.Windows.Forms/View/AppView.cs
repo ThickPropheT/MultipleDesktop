@@ -14,7 +14,7 @@ namespace MultipleDesktop.Windows.Forms.View
         public IAppController Controller
         {
             get { return _controller; }
-            internal set
+            set
             {
                 if (Equals(_controller, value))
                     return;
