@@ -1,4 +1,4 @@
-﻿using MultipleDesktop.Windows.Forms.View;
+﻿using MultipleDesktop.Mvc.View;
 using System;
 using System.Windows.Forms;
 
@@ -6,27 +6,27 @@ namespace MultipleDesktop.Windows.Forms.Application
 {
     public class DebugHideBehavior
     {
-        private readonly AppView _form;
+        private readonly IAppView _view;
 
-        public static void Mediate(AppView form)
+        public static void Mediate(IAppView view)
         {
-            new DebugHideBehavior(form);
+            new DebugHideBehavior(view);
         }
 
-        public DebugHideBehavior(AppView form)
+        public DebugHideBehavior(IAppView view)
         {
-            _form = form;
-            form.MinimizeBox = true;
+            _view = view;
+            view.CanMinimize = true;
 
-            form.Resize += Form_Resize;
+            view.SizeChanged += Form_Resize;
         }
 
         private void Form_Resize(object sender, EventArgs e)
         {
-            if (_form.WindowState != FormWindowState.Minimized)
+            if (_view.WindowState != WindowState.Minimized)
                 return;
 
-            _form.HideForm();
+            _view.HideView();
         }
     }
 }

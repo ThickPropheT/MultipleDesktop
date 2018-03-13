@@ -11,7 +11,7 @@ namespace MultipleDesktop.Windows.Forms.View
     {
         private IAppController _controller;
 
-        public IAppController Controller
+        IAppController IAppView.Controller
         {
             get { return _controller; }
             set
@@ -33,9 +33,41 @@ namespace MultipleDesktop.Windows.Forms.View
             }
         }
 
+        WindowState IAppView.WindowState
+            => (WindowState)WindowState;
+
+        bool IAppView.CanMinimize
+        {
+            get { return MinimizeBox; }
+            set { MinimizeBox = value; }
+        }
+
+        event EventHandler IAppView.Loaded
+        {
+            add { Load += value; }
+            remove { Load -= value; }
+        }
+
+        private CancelEventHandler _closing;
+        event CancelEventHandler IAppView.Closing
+        {
+            add { _closing += value; }
+            remove { _closing -= value; }
+        }
+
         public AppView()
         {
             InitializeComponent();
+            
+            FormClosing += AppView_FormClosing;
+        }
+
+        private void AppView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.UserClosing)
+                return;
+
+            _closing?.Invoke(sender, e);
         }
 
         private void Controller_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -80,7 +112,7 @@ namespace MultipleDesktop.Windows.Forms.View
             notifyIcon1.ContextMenu = contextMenu;
         }
 
-        public void HideForm()
+        void IAppView.HideView()
         {
             ShowInTaskbar = false;
             Hide();

@@ -14,7 +14,7 @@ namespace MultipleDesktop.Mvc
             _view = view;
             _controller = controller;
 
-            view.Load += View_Load;
+            view.Loaded += View_Load;
         }
 
         public static void Mediate(IAppView view, IAppController controller)
@@ -24,7 +24,7 @@ namespace MultipleDesktop.Mvc
 
         private void View_Load(object sender, EventArgs e)
         {
-            _view.Load -= View_Load;
+            _view.Loaded -= View_Load;
 
             _controller.Load();
         }

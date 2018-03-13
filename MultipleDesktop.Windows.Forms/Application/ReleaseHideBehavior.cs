@@ -1,49 +1,46 @@
-﻿using MultipleDesktop.Windows.Forms.View;
+﻿using MultipleDesktop.Mvc.View;
 using System;
-using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace MultipleDesktop.Windows.Forms.Application
 {
     public class ReleaseHideBehavior
     {
-        private readonly AppView _form;
+        private readonly IAppView _view;
 
-        public static void Mediate(AppView form)
+        public static void Mediate(IAppView view)
         {
-            new ReleaseHideBehavior(form);
+            new ReleaseHideBehavior(view);
         }
 
-        public ReleaseHideBehavior(AppView form)
+        public ReleaseHideBehavior(IAppView view)
         {
-            _form = form;
-            form.MinimizeBox = false;
+            _view = view;
+            view.CanMinimize = false;
 
-            form.Load += Form_Load;
-            form.FormClosing += Form_FormClosing;
-            form.Resize += Form_Resize;
+            view.Loaded += View_Load;
+            view.SizeChanged += View_SizeChanged;
+            view.Closing += View_Closing;
         }
 
-        private void Form_Resize(object sender, EventArgs e)
+        private void View_Load(object sender, EventArgs e)
         {
-            if (_form.WindowState != FormWindowState.Minimized)
+            _view.HideView();
+        }
+
+        private void View_SizeChanged(object sender, EventArgs e)
+        {
+            if (_view.WindowState != WindowState.Minimized)
                 return;
 
-            _form.HideForm();
+            _view.HideView();
         }
 
-        private void Form_Load(object sender, EventArgs e)
+        private void View_Closing(object sender, CancelEventArgs e)
         {
-            _form.HideForm();
-        }
-
-        private void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason != CloseReason.UserClosing)
-                return;
-
             e.Cancel = true;
 
-            _form.HideForm();
+            _view.HideView();
         }
     }
 }

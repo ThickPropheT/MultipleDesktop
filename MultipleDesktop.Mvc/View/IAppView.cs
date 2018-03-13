@@ -1,5 +1,6 @@
 ﻿using MultipleDesktop.Mvc.Controller;
 using System;
+using System.ComponentModel;
 
 namespace MultipleDesktop.Mvc.View
 {
@@ -7,6 +8,13 @@ namespace MultipleDesktop.Mvc.View
     {
         IAppController Controller { get; set; }
 
-        event EventHandler Load;
+        WindowState WindowState { get; }
+        bool CanMinimize { get; set; }
+
+        event EventHandler Loaded;
+        event EventHandler SizeChanged;
+        event CancelEventHandler Closing;
+
+        void HideView();
     }
 }
