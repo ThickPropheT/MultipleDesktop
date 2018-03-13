@@ -36,7 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="DebugHideBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReleaseHideBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultipleDesktop.Configuration\MultipleDesktop.Configuration.csproj">

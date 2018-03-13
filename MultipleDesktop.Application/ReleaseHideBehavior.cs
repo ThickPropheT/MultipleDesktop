@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace MultipleDesktop.Windows.Forms.Application
+namespace MultipleDesktop.Application
 {
     public class ReleaseHideBehavior
     {

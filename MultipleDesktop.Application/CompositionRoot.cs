@@ -14,11 +14,11 @@ namespace MultipleDesktop.Application
         {
             var view = new TAppView();
 
-            //#if DEBUG
-            //            DebugHideBehavior.Mediate(view);
-            //#else
-            //            ReleaseHideBehavior.Mediate(view);
-            //#endif
+#if DEBUG
+            DebugHideBehavior.Mediate(view);
+#else
+            ReleaseHideBehavior.Mediate(view);
+#endif
 
             var configurationFactory = new XmlConfigurationFactory();
 

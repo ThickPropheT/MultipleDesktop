@@ -1,8 +1,7 @@
 ﻿using MultipleDesktop.Mvc.View;
 using System;
-using System.Windows.Forms;
 
-namespace MultipleDesktop.Windows.Forms.Application
+namespace MultipleDesktop.Application
 {
     public class DebugHideBehavior
     {
