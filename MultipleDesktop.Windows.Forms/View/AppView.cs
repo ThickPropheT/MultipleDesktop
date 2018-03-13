@@ -42,6 +42,12 @@ namespace MultipleDesktop.Windows.Forms.View
             set { MinimizeBox = value; }
         }
 
+        bool IAppView.CanMaximize
+        {
+            get { return MaximizeBox; }
+            set { MaximizeBox = value; }
+        }
+
         event EventHandler IAppView.Loaded
         {
             add { Load += value; }

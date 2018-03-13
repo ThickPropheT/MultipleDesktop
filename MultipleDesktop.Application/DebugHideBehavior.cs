@@ -14,6 +14,7 @@ namespace MultipleDesktop.Application
         {
             _view = view;
             view.CanMinimize = true;
+            view.CanMaximize = false;
 
             view.SizeChanged += Form_Resize;
         }

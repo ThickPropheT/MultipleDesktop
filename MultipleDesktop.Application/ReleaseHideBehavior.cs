@@ -15,6 +15,7 @@ namespace MultipleDesktop.Application
         {
             _view = view;
             view.CanMinimize = false;
+            view.CanMaximize = false;
 
             view.Loaded += View_Load;
             view.SizeChanged += View_SizeChanged;

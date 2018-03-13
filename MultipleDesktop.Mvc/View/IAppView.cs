@@ -9,7 +9,9 @@ namespace MultipleDesktop.Mvc.View
         IAppController Controller { get; set; }
 
         WindowState WindowState { get; }
+
         bool CanMinimize { get; set; }
+        bool CanMaximize { get; set; }
 
         event EventHandler Loaded;
         event EventHandler SizeChanged;
