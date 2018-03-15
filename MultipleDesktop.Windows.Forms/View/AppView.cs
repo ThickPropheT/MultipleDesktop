@@ -9,6 +9,8 @@ namespace MultipleDesktop.Windows.Forms.View
 {
     public partial class AppView : Form, IAppView
     {
+        private bool _didLoad;
+
         private IAppController _controller;
 
         IAppController IAppView.Controller
@@ -65,15 +67,26 @@ namespace MultipleDesktop.Windows.Forms.View
         {
             InitializeComponent();
 
+            BuildNotifyIcon();
+
             FormClosing += AppView_FormClosing;
         }
 
-        private void AppView_FormClosing(object sender, FormClosingEventArgs e)
+        private void BuildNotifyIcon()
         {
-            if (e.CloseReason != CloseReason.UserClosing)
-                return;
+            lblCopy.Text = "\u00A9 Blondy";
 
-            _closing?.Invoke(sender, e);
+            notifyIcon1.Visible = true;
+            notifyIcon1.Text = "Virtual Desktop";
+            notifyIcon1.Icon = Properties.Resources._virtual;
+
+            var contextMenu = new ContextMenu();
+
+            contextMenu.MenuItems.Add("Show", (s, args) => ShowView());
+
+            contextMenu.MenuItems.Add("Exit", (s, args) => uApplication.Exit());
+
+            notifyIcon1.ContextMenu = contextMenu;
         }
 
         private void Controller_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -82,8 +95,6 @@ namespace MultipleDesktop.Windows.Forms.View
             {
                 case nameof(IAppController.DesktopConfigurations):
                     UpdateConfigurations();
-                    break;
-                default:
                     break;
             }
         }
@@ -99,44 +110,43 @@ namespace MultipleDesktop.Windows.Forms.View
                 }
             });
 
-        private void AppView_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-            lblCopy.Text = "\u00A9 Blondy";
+            base.OnLoad(e);
 
-            notifyIcon1.Visible = true;
-            notifyIcon1.Text = "Virtual Desktop";
-            notifyIcon1.Icon = Properties.Resources._virtual;
-
-            var contextMenu = new ContextMenu();
-
-            contextMenu.MenuItems.Add("Show", (s, args) => ShowForm());
-
-            contextMenu.MenuItems.Add("Exit", (s, args) => uApplication.Exit());
-
-            notifyIcon1.ContextMenu = contextMenu;
+            _didLoad = true;
         }
 
-        void IAppView.HideView()
+        public void ShowView()
         {
-            ShowInTaskbar = false;
-            Hide();
-        }
-
-        private void ShowForm()
-        {
-            Show();
+            if (_didLoad) Show();
             ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
         }
 
+        void IAppView.HideView()
+        {
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
+            if (_didLoad) Hide();
+        }
+
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-            => ShowForm();
+            => ShowView();
 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
 
             _controller.Save();
+        }
+
+        private void AppView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.UserClosing)
+                return;
+
+            _closing?.Invoke(sender, e);
         }
     }
 }

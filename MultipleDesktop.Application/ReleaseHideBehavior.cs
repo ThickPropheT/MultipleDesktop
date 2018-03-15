@@ -17,20 +17,9 @@ namespace MultipleDesktop.Application
             view.CanMinimize = false;
             view.CanMaximize = false;
 
-            view.Loaded += View_Load;
-            view.SizeChanged += View_SizeChanged;
             view.Closing += View_Closing;
-        }
 
-        private void View_Load(object sender, EventArgs e)
-            => _view.HideView();
-
-        private void View_SizeChanged(object sender, EventArgs e)
-        {
-            if (_view.WindowState != WindowState.Minimized)
-                return;
-
-            _view.HideView();
+            view.HideView();
         }
 
         private void View_Closing(object sender, CancelEventArgs e)

@@ -90,5 +90,10 @@ namespace MultipleDesktop.Windows.PresentationFoundation
             // TODO ?? ShowInTaskbar = false; ?? >> See AppView
             Hide();
         }
+
+        void IAppView.ShowView()
+        {
+            Show();
+        }
     }
 }

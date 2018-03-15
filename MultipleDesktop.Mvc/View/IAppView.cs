@@ -17,6 +17,7 @@ namespace MultipleDesktop.Mvc.View
         event EventHandler SizeChanged;
         event CancelEventHandler Closing;
 
+        void ShowView();
         void HideView();
     }
 }

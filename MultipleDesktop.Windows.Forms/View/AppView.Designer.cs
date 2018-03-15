@@ -77,7 +77,6 @@ namespace MultipleDesktop.Windows.Forms.View
             this.MaximizeBox = false;
             this.Name = "AppView";
             this.Text = "Virtual Desktop";
-            this.Load += new System.EventHandler(this.AppView_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
