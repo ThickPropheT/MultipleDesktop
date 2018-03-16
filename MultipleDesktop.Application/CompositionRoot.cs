@@ -4,6 +4,7 @@ using MultipleDesktop.Mvc.Controller;
 using MultipleDesktop.Mvc.View;
 using MultipleDesktop.Windows;
 using MultipleDesktop.Windows.Interop.Shell;
+using System.Extended;
 using System.IO.Extended;
 
 namespace MultipleDesktop.Application
@@ -40,7 +41,10 @@ namespace MultipleDesktop.Application
 
             view.Controller = controller;
 
-            AppViewMediator.Mediate(view, controller);
+            Event.HandleOnce(
+                e => view.Loaded += e,
+                e => view.Loaded -= e,
+                (o, e) => controller.Load());
 
             return view;
         }
