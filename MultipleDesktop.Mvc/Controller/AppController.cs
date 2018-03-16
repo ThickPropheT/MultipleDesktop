@@ -1,8 +1,9 @@
 ﻿using MultipleDesktop.Mvc.Configuration;
 using MultipleDesktop.Mvc.Desktop;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Extended;
+using System.Extended;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,48 +12,6 @@ namespace MultipleDesktop.Mvc.Controller
 {
     public class AppController : IAppController
     {
-        #region AllDesktopsChanging
-
-        private class WhenAllDesktopsHasChanged
-        {
-            private readonly IVirtualDesktopState _provider;
-
-            private readonly IEnumerable<IVirtualDesktop> _changing;
-
-            private Action<IEnumerable<IVirtualDesktop>, IEnumerable<IVirtualDesktop>> _completionCallback;
-
-            private WhenAllDesktopsHasChanged(IVirtualDesktopState provider)
-            {
-                _provider = provider;
-
-                _changing = _provider.AllDesktops;
-            }
-
-            public static WhenAllDesktopsHasChanged For(IVirtualDesktopState provider)
-                => new WhenAllDesktopsHasChanged(provider);
-
-            public void DoCallback(Action<IEnumerable<IVirtualDesktop>, IEnumerable<IVirtualDesktop>> completionCallback)
-            {
-                _completionCallback = completionCallback;
-
-                _provider.PropertyChanged += Provider_PropertyChanged;
-            }
-
-            private void Provider_PropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                switch (e.PropertyName)
-                {
-                    case nameof(_provider.AllDesktops):
-                        _provider.PropertyChanged -= Provider_PropertyChanged;
-
-                        _completionCallback(_changing, _provider.AllDesktops);
-                        break;
-                }
-            }
-        }
-
-        #endregion AllDesktopsChanging
-
         private readonly IFileSystem _fileSystem;
         private readonly IVirtualDesktopState _desktopState;
         private readonly IConfigurationController _configurationController;
@@ -92,13 +51,26 @@ namespace MultipleDesktop.Mvc.Controller
             _configurationFactory = configurationFactory;
         }
 
-        private void DesktopProvider_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        private bool WillAllDesktopsChange(PropertyChangingEventArgs e)
+            => e.PropertyName == nameof(IVirtualDesktopState.AllDesktops);
+
+        private bool DidAllDesktopsChange(PropertyChangedEventArgs e)
+            => e.PropertyName == nameof(IVirtualDesktopState.AllDesktops);
+
+        private void DesktopProvider_PropertyChanging(object sender, PropertyChangingEventArgs changing)
         {
-            if (changingArgs.PropertyName != nameof(_desktopState.AllDesktops))
+            if (!WillAllDesktopsChange(changing))
                 return;
 
-            WhenAllDesktopsHasChanged.For(_desktopState)
-                .DoCallback(UpdateDesktopConfigurations);
+            var before = _desktopState.AllDesktops;
+
+            _desktopState.HandleOnce(
+                (s, h) => s.PropertyChanged += h,
+                (s, h) => s.PropertyChanged -= h,
+                (s, changed) =>
+                    Invoke.Delegate(
+                        () => UpdateDesktopConfigurations(before, _desktopState.AllDesktops),
+                        @if: DidAllDesktopsChange(changed)));
         }
 
         /// <summary>
