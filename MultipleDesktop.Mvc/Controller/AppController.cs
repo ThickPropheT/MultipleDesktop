@@ -94,7 +94,7 @@ namespace MultipleDesktop.Mvc.Controller
 
         private void DesktopProvider_PropertyChanging(object sender, PropertyChangingEventArgs e)
         {
-            if (!e.PropertyName.Equals(_desktopState.AllDesktops))
+            if (changingArgs.PropertyName != nameof(_desktopState.AllDesktops))
                 return;
 
             WhenAllDesktopsHasChanged.For(_desktopState)
