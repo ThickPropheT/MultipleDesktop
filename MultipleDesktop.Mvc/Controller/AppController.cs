@@ -51,7 +51,7 @@ namespace MultipleDesktop.Mvc.Controller
             _configurationFactory = configurationFactory;
         }
 
-        private bool WillAllDesktopsChange(PropertyChangingEventArgs e)
+        private bool IsAllDesktopsChanging(PropertyChangingEventArgs e)
             => e.PropertyName == nameof(IVirtualDesktopState.AllDesktops);
 
         private bool DidAllDesktopsChange(PropertyChangedEventArgs e)
@@ -59,7 +59,7 @@ namespace MultipleDesktop.Mvc.Controller
 
         private void DesktopProvider_PropertyChanging(object sender, PropertyChangingEventArgs changing)
         {
-            if (!WillAllDesktopsChange(changing))
+            if (!IsAllDesktopsChanging(changing))
                 return;
 
             var before = _desktopState.AllDesktops;
