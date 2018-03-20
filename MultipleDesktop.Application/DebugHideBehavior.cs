@@ -16,12 +16,12 @@ namespace MultipleDesktop.Application
             view.CanMinimize = true;
             view.CanMaximize = false;
 
-            view.SizeChanged += Form_Resize;
+            view.WindowStateChanged += View_WindowStateChanged;
 
             view.ShowView();
         }
 
-        private void Form_Resize(object sender, EventArgs e)
+        private void View_WindowStateChanged(object sender, EventArgs e)
         {
             if (_view.WindowState != WindowState.Minimized)
                 return;

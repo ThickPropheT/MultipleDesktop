@@ -35,8 +35,20 @@ namespace MultipleDesktop.Windows.Forms.View
             }
         }
 
-        WindowState IAppView.WindowState
-            => (WindowState)WindowState;
+        private WindowState _windowState;
+        public new WindowState WindowState
+        {
+            get { return _windowState; }
+            set
+            {
+                if (_windowState == value)
+                    return;
+
+                _windowState = value;
+
+                WindowStateChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         bool IAppView.CanMinimize
         {
@@ -56,6 +68,8 @@ namespace MultipleDesktop.Windows.Forms.View
             remove { Load -= value; }
         }
 
+        public event EventHandler WindowStateChanged;
+
         private CancelEventHandler _closing;
         event CancelEventHandler IAppView.Closing
         {
@@ -70,7 +84,11 @@ namespace MultipleDesktop.Windows.Forms.View
             BuildNotifyIcon();
 
             FormClosing += AppView_FormClosing;
+            SizeChanged += AppView_SizeChanged;
         }
+
+        private void AppView_SizeChanged(object sender, EventArgs e)
+            => WindowState = (WindowState)base.WindowState;
 
         private void BuildNotifyIcon()
         {
@@ -121,12 +139,12 @@ namespace MultipleDesktop.Windows.Forms.View
         {
             if (_didLoad) Show();
             ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
+            base.WindowState = FormWindowState.Normal;
         }
 
         void IAppView.HideView()
         {
-            WindowState = FormWindowState.Minimized;
+            base.WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
             if (_didLoad) Hide();
         }

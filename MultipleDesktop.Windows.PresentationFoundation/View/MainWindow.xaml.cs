@@ -4,6 +4,7 @@ using MultipleDesktop.Windows.PresentationFoundation.View;
 using System;
 using System.Windows;
 using uWindowState = MultipleDesktop.Mvc.View.WindowState;
+using WpfWindowState = System.Windows.WindowState;
 
 namespace MultipleDesktop.Windows.PresentationFoundation
 {
@@ -56,11 +57,10 @@ namespace MultipleDesktop.Windows.PresentationFoundation
             remove { _loaded -= value; }
         }
 
-        private EventHandler _sizeChanged;
-        event EventHandler IAppView.SizeChanged
+        event EventHandler IAppView.WindowStateChanged
         {
-            add { _sizeChanged += value; }
-            remove { _sizeChanged -= value; }
+            add { StateChanged += value; }
+            remove { StateChanged -= value; }
         }
 
         public MainWindow()
@@ -68,32 +68,27 @@ namespace MultipleDesktop.Windows.PresentationFoundation
             InitializeComponent();
 
             Loaded += MainWindow_Loaded;
-
-            // TODO fix problems below.
-            // SizeChanged += MainWindow_SizeChanged;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
             => _loaded?.Invoke(sender, e);
 
-        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            throw new NotImplementedException("Only the Forms implementation does something meaningful here. Find a way to reconcile this with Wpf implementation.");
-
-            _sizeChanged?.Invoke(sender, e);
-        }
-
         void IAppView.HideView()
         {
+            WindowState = WpfWindowState.Minimized;
+
+            return;
             throw new NotImplementedException("Doing this makes the window permanently minimized.");
 
-            // TODO ?? ShowInTaskbar = false; ?? >> See AppView
+            ShowInTaskbar = false;
             Hide();
         }
 
         void IAppView.ShowView()
         {
             Show();
+            ShowInTaskbar = true;
+            WindowState = WpfWindowState.Normal;
         }
     }
 }
