@@ -36,12 +36,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.ComponentModel\Event.cs" />
+    <Compile Include="System.ComponentModel\ProxyPropertyChangedEventHandler.cs" />
     <Compile Include="System.IO\File.cs" />
     <Compile Include="System.IO\FileSystem.cs" />
     <Compile Include="System.IO\IFile.cs" />
     <Compile Include="System.IO\IFileSystem.cs" />
     <Compile Include="System\Event.cs" />
     <Compile Include="System\Invoke.cs" />
+    <Compile Include="System\ProxyEventHandler.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

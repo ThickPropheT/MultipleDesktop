@@ -41,8 +41,7 @@ namespace MultipleDesktop.Application
 
             view.Controller = controller;
 
-            Event.HandleOnce(
-                e => view.Loaded += e,
+            view.Loaded += Event.HandleOnce(
                 e => view.Loaded -= e,
                 (o, e) => controller.Load());
 

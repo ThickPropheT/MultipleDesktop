@@ -7,6 +7,7 @@ using System.Extended;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Event = System.ComponentModel.Extended.Event;
 
 namespace MultipleDesktop.Mvc.Controller
 {
@@ -64,9 +65,8 @@ namespace MultipleDesktop.Mvc.Controller
 
             var before = _desktopState.AllDesktops;
 
-            _desktopState.HandleOnce(
-                (s, h) => s.PropertyChanged += h,
-                (s, h) => s.PropertyChanged -= h,
+            _desktopState.PropertyChanged += Event.HandleFirstChange(
+                e => _desktopState.PropertyChanged -= e,
                 (s, changed) =>
                     Invoke.Delegate(
                         () => UpdateDesktopConfigurations(before, _desktopState.AllDesktops),
