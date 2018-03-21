@@ -73,6 +73,12 @@ namespace MultipleDesktop.Mvc.Controller
                         @if: DidAllDesktopsChange(changed)));
         }
 
+        // TODO update this to not keep miss-matched Configurations.
+        // TODO keeping old configs in hopes that the removed desktop
+        // TODO can be re-added and have the old config settings apply
+        // TODO is wrong. deleting and re-adding desktop i will result
+        // TODO in a new desktop with new GUID.
+
         /// <summary>
         /// 
         /// Updates <see cref="_desktopConfigurations"/> with <see cref="IVirtualDesktopConfiguration"/>s

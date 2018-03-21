@@ -29,3 +29,10 @@ Add tests for Should.Fluent.Invocation
 Retry moving to the IDesktopAssociation pattern
 	Manage association between VirtualDesktop and VirtualDesktopConfiguration
 	May also help with future addition of pinning apps to desktops
+
+update AppController.UpdateDesktopConfigurations to not
+	miss-matched Configurations. keeping old configs in
+	hopes that the removed desktop can be re-added and
+	have the old config settings apply is wrong. deleting
+	and re-adding desktop i will result in a new desktop
+	with new GUID.
