@@ -7,7 +7,7 @@
     <ProjectGuid>{18CDEE24-71B4-4D5A-A7BE-B558BEE58FB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>mscorlib.Extended</RootNamespace>
+    <RootNamespace>System.Extended</RootNamespace>
     <AssemblyName>mscorlib.Extended</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
