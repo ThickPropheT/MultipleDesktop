@@ -10,9 +10,6 @@ using WpfWindowState = System.Windows.WindowState;
 
 namespace MultipleDesktop.Windows.PresentationFoundation
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, IAppView, IMainView
     {
         // NOTE: it is assumed that _canMinimize and _canMaximize
