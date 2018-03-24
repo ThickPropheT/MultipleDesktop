@@ -1,4 +1,5 @@
-﻿using MultipleDesktop.Mvc.View;
+﻿using MultipleDesktop.Application.ViewModel;
+using MultipleDesktop.Mvc.View;
 using System;
 
 namespace MultipleDesktop.Application
@@ -7,14 +8,14 @@ namespace MultipleDesktop.Application
     {
         private readonly IAppView _view;
 
-        public static void Mediate(IAppView view)
-            => new DebugHideBehavior(view);
+        public static void Mediate(IAppView view, IWindowViewModel viewModel)
+            => new DebugHideBehavior(view, viewModel);
 
-        public DebugHideBehavior(IAppView view)
+        public DebugHideBehavior(IAppView view, IWindowViewModel viewModel)
         {
             _view = view;
-            view.CanMinimize = true;
-            view.CanMaximize = false;
+            viewModel.CanMinimize = true;
+            viewModel.CanMaximize = false;
 
             view.WindowStateChanged += View_WindowStateChanged;
 

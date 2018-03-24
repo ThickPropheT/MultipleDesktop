@@ -10,9 +10,6 @@ namespace MultipleDesktop.Mvc.View
 
         WindowState WindowState { get; }
 
-        bool CanMinimize { get; set; }
-        bool CanMaximize { get; set; }
-
         event EventHandler Loaded;
         event EventHandler WindowStateChanged;
         event CancelEventHandler Closing;

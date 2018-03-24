@@ -52,6 +52,9 @@ namespace MultipleDesktop.Windows.Forms.View
                     return;
 
                 Text = value.Title;
+
+                MinimizeBox = value.CanMinimize;
+                MaximizeBox = value.CanMaximize;
             }
         }
 
@@ -68,18 +71,6 @@ namespace MultipleDesktop.Windows.Forms.View
 
                 WindowStateChanged?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        bool IAppView.CanMinimize
-        {
-            get { return MinimizeBox; }
-            set { MinimizeBox = value; }
-        }
-
-        bool IAppView.CanMaximize
-        {
-            get { return MaximizeBox; }
-            set { MaximizeBox = value; }
         }
 
         event EventHandler IAppView.Loaded

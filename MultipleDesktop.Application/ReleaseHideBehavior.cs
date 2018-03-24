@@ -1,4 +1,5 @@
-﻿using MultipleDesktop.Mvc.View;
+﻿using MultipleDesktop.Application.ViewModel;
+using MultipleDesktop.Mvc.View;
 using System;
 using System.ComponentModel;
 
@@ -8,14 +9,14 @@ namespace MultipleDesktop.Application
     {
         private readonly IAppView _view;
 
-        public static void Mediate(IAppView view)
-            => new ReleaseHideBehavior(view);
+        public static void Mediate(IAppView view, IWindowViewModel viewModel)
+            => new ReleaseHideBehavior(view, viewModel);
 
-        public ReleaseHideBehavior(IAppView view)
+        public ReleaseHideBehavior(IAppView view, IWindowViewModel viewModel)
         {
             _view = view;
-            view.CanMinimize = false;
-            view.CanMaximize = false;
+            viewModel.CanMinimize = false;
+            viewModel.CanMaximize = false;
 
             view.Closing += View_Closing;
 

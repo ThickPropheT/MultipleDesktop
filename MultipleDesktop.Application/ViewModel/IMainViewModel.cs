@@ -3,5 +3,8 @@
     public interface IMainViewModel
     {
         string Title { get; }
+
+        bool CanMinimize { get; }
+        bool CanMaximize { get; }
     }
 }

@@ -16,12 +16,6 @@ namespace MultipleDesktop.Application
         {
             var view = new TAppView();
 
-#if DEBUG
-            DebugHideBehavior.Mediate(view);
-#else
-            ReleaseHideBehavior.Mediate(view);
-#endif
-
             var configurationFactory = new XmlConfigurationFactory();
 
             var adapter = new WindowsShellAdapter(configurationFactory);
@@ -43,6 +37,13 @@ namespace MultipleDesktop.Application
             var viewModel = new MainViewModel();
 
             view.Controller = controller;
+
+#if DEBUG
+            DebugHideBehavior.Mediate(view, viewModel);
+#else
+            ReleaseHideBehavior.Mediate(view, viewModel);
+#endif
+
             view.ViewModel = viewModel;
 
             view.Loaded += Event.HandleOnce(

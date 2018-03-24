@@ -15,6 +15,14 @@ namespace MultipleDesktop.Windows.PresentationFoundation
     /// </summary>
     public partial class MainWindow : Window, IAppView, IMainView
     {
+        // NOTE: it is assumed that _canMinimize and _canMaximize
+        // will be true by default. to determine whether or not
+        // thare actually ARE true by default is much too complicated
+        // and this their respective properties are mainly used
+        // for their setters.
+        private bool _canMinimize = true;
+        private bool _canMaximize = true;
+
         IAppController IAppView.Controller
         {
             get { return null; }
@@ -24,35 +32,42 @@ namespace MultipleDesktop.Windows.PresentationFoundation
         public IMainViewModel ViewModel
         {
             get { return DataContext as IMainViewModel; }
-            set { DataContext = value; }
+            set
+            {
+                DataContext = value;
+
+                if (value == null)
+                    return;
+
+                CanMinimize = value.CanMinimize;
+                CanMaximize = value.CanMaximize;
+            }
         }
 
         uWindowState IAppView.WindowState
             => (uWindowState)WindowState;
 
-        // NOTE: this assumes _canMinimize to be true.
-        // to determine whether or not it is true by default is much
-        // too complicated and this property is mainly used for its setter.
-        private bool _canMinimize = true;
-        bool IAppView.CanMinimize
+        public bool CanMinimize
         {
             get { return _canMinimize; }
             set
             {
+                if (_canMinimize == value)
+                    return;
+
                 this.SetCanMinimize(value);
                 _canMinimize = value;
             }
         }
 
-        // NOTE: this assumes _canMaximize to be true.
-        // to determine whether or not it is true by default is much
-        // too complicated and this property is mainly used for its setter.
-        private bool _canMaximize = true;
-        bool IAppView.CanMaximize
+        public bool CanMaximize
         {
             get { return _canMaximize; }
             set
             {
+                if (_canMaximize == value)
+                    return;
+
                 this.SetCanMaximize(value);
                 _canMaximize = value;
             }
