@@ -1,4 +1,6 @@
-﻿using MultipleDesktop.Mvc.Controller;
+﻿using MultipleDesktop.Application.View;
+using MultipleDesktop.Application.ViewModel;
+using MultipleDesktop.Mvc.Controller;
 using MultipleDesktop.Mvc.View;
 using MultipleDesktop.Windows.PresentationFoundation.View;
 using System;
@@ -11,11 +13,17 @@ namespace MultipleDesktop.Windows.PresentationFoundation
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IAppView
+    public partial class MainWindow : Window, IAppView, IMainView
     {
         IAppController IAppView.Controller
         {
-            get { return (IAppController)DataContext; }
+            get { return null; }
+            set { }
+        }
+
+        public IMainViewModel ViewModel
+        {
+            get { return DataContext as IMainViewModel; }
             set { DataContext = value; }
         }
 

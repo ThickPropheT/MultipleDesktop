@@ -1,5 +1,6 @@
-﻿using MultipleDesktop.Configuration;
-using MultipleDesktop.Mvc;
+﻿using MultipleDesktop.Application.View;
+using MultipleDesktop.Application.ViewModel;
+using MultipleDesktop.Configuration;
 using MultipleDesktop.Mvc.Controller;
 using MultipleDesktop.Mvc.View;
 using MultipleDesktop.Windows;
@@ -11,7 +12,7 @@ namespace MultipleDesktop.Application
 {
     public static class CompositionRoot
     {
-        public static TAppView Compose<TAppView>() where TAppView : IAppView, new()
+        public static TAppView Compose<TAppView>() where TAppView : IAppView, IMainView, new()
         {
             var view = new TAppView();
 
@@ -39,7 +40,10 @@ namespace MultipleDesktop.Application
 
                 configurationFactory);
 
+            var viewModel = new MainViewModel();
+
             view.Controller = controller;
+            view.ViewModel = viewModel;
 
             view.Loaded += Event.HandleOnce(
                 e => view.Loaded -= e,

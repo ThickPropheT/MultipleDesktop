@@ -1,4 +1,6 @@
-﻿using MultipleDesktop.Mvc.Controller;
+﻿using MultipleDesktop.Application.View;
+using MultipleDesktop.Application.ViewModel;
+using MultipleDesktop.Mvc.Controller;
 using MultipleDesktop.Mvc.View;
 using System;
 using System.ComponentModel;
@@ -7,11 +9,12 @@ using uApplication = System.Windows.Forms.Application;
 
 namespace MultipleDesktop.Windows.Forms.View
 {
-    public partial class AppView : Form, IAppView
+    public partial class AppView : Form, IAppView, IMainView
     {
         private bool _didLoad;
 
         private IAppController _controller;
+        private IMainViewModel _viewModel;
 
         IAppController IAppView.Controller
         {
@@ -32,6 +35,23 @@ namespace MultipleDesktop.Windows.Forms.View
                 {
                     value.PropertyChanged += Controller_PropertyChanged;
                 }
+            }
+        }
+
+        public IMainViewModel ViewModel
+        {
+            get { return _viewModel; }
+            set
+            {
+                if (_viewModel == value)
+                    return;
+
+                _viewModel = value;
+
+                if (value == null)
+                    return;
+
+                Text = value.Title;
             }
         }
 
