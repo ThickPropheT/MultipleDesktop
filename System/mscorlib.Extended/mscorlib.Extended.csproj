@@ -41,6 +41,7 @@
     <Compile Include="System.IO\FileSystem.cs" />
     <Compile Include="System.IO\IFile.cs" />
     <Compile Include="System.IO\IFileSystem.cs" />
+    <Compile Include="System.Windows.Input\DelegateCommand.cs" />
     <Compile Include="System\Event.cs" />
     <Compile Include="System\Invoke.cs" />
     <Compile Include="System\ProxyEventHandler.cs" />

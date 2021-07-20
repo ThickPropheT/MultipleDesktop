@@ -34,7 +34,7 @@ namespace MultipleDesktop.Application
 
                 configurationFactory);
 
-            var viewModel = new MainViewModel();
+            var viewModel = new MainViewModel(controller);
 
             view.Controller = controller;
 
@@ -46,9 +46,7 @@ namespace MultipleDesktop.Application
 
             view.ViewModel = viewModel;
 
-            view.Loaded += Event.HandleOnce(
-                e => view.Loaded -= e,
-                (o, e) => controller.Load());
+            controller.Load();
 
             return view;
         }

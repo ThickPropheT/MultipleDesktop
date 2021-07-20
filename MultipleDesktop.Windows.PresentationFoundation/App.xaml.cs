@@ -1,4 +1,5 @@
 ﻿using MultipleDesktop.Application;
+using MultipleDesktop.Windows.PresentationFoundation.View;
 using System;
 using uApplication = System.Windows.Application;
 

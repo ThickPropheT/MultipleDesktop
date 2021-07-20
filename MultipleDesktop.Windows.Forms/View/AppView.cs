@@ -4,6 +4,7 @@ using MultipleDesktop.Mvc.Controller;
 using MultipleDesktop.Mvc.View;
 using System;
 using System.ComponentModel;
+using System.Extended;
 using System.Windows.Forms;
 using uApplication = System.Windows.Forms.Application;
 
@@ -71,12 +72,6 @@ namespace MultipleDesktop.Windows.Forms.View
 
                 WindowStateChanged?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        event EventHandler IAppView.Loaded
-        {
-            add { Load += value; }
-            remove { Load -= value; }
         }
 
         public event EventHandler WindowStateChanged;

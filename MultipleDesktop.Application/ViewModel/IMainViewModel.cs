@@ -1,4 +1,6 @@
-﻿namespace MultipleDesktop.Application.ViewModel
+﻿using System.Windows.Input;
+
+namespace MultipleDesktop.Application.ViewModel
 {
     public interface IMainViewModel
     {
@@ -6,5 +8,7 @@
 
         bool CanMinimize { get; }
         bool CanMaximize { get; }
+
+        ICommand LoadCommand { get; }
     }
 }

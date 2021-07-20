@@ -8,7 +8,7 @@ using System.Windows;
 using uWindowState = MultipleDesktop.Mvc.View.WindowState;
 using WpfWindowState = System.Windows.WindowState;
 
-namespace MultipleDesktop.Windows.PresentationFoundation
+namespace MultipleDesktop.Windows.PresentationFoundation.View
 {
     public partial class MainWindow : Window, IAppView, IMainView
     {
@@ -31,6 +31,7 @@ namespace MultipleDesktop.Windows.PresentationFoundation
             get { return DataContext as IMainViewModel; }
             set
             {
+                return;
                 DataContext = value;
 
                 if (value == null)
@@ -70,13 +71,6 @@ namespace MultipleDesktop.Windows.PresentationFoundation
             }
         }
 
-        private EventHandler _loaded;
-        event EventHandler IAppView.Loaded
-        {
-            add { _loaded += value; }
-            remove { _loaded -= value; }
-        }
-
         event EventHandler IAppView.WindowStateChanged
         {
             add { StateChanged += value; }
@@ -86,12 +80,7 @@ namespace MultipleDesktop.Windows.PresentationFoundation
         public MainWindow()
         {
             InitializeComponent();
-
-            Loaded += MainWindow_Loaded;
         }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-            => _loaded?.Invoke(sender, e);
 
         void IAppView.HideView()
         {

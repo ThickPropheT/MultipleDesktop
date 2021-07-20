@@ -10,7 +10,6 @@ namespace MultipleDesktop.Mvc.View
 
         WindowState WindowState { get; }
 
-        event EventHandler Loaded;
         event EventHandler WindowStateChanged;
         event CancelEventHandler Closing;
 
